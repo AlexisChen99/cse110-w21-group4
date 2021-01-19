@@ -17,5 +17,5 @@ Absent:
 
 "[Decision] proposed by [p1] seconded by [p2]"
 
-Meeting adjourned at: [time]
+Meeting adjourned at: [time]  
 Time elapsed: [end-beginning]
