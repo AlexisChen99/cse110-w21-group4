@@ -6,7 +6,15 @@ Meeting commenced at: [time] on Zoom
 
 Present:
 
-Absent:
+Absent:  
+Alexis Chen  
+Kevin Jang  
+Marco Kuan  
+Aaron Li  
+Ahmad Milad  
+Rohan Patel  
+Miaoqiu Sun  
+Jessie Zou
 
 # Agenda
 1. todo
