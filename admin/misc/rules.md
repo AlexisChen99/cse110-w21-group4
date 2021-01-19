@@ -10,6 +10,7 @@ Slack and Zoom
 Every Saturday at 7pm
 #### 4) Team Responsibilities
 Get the work assigned to you done before the next meeting
+
 UI/Front End: Kevin Jang
 
 Backend: Rohan Patel, Ahmad Milad, Marco Kuan, Miaoqiu Sun, Aaron Li
