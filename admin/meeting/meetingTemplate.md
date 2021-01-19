@@ -4,10 +4,11 @@
 
 Meeting commenced at: [time] on Zoom
 
-Present:
+Present:  
 
 Absent:  
 Alexis Chen  
+Elizabeth Cho  
 Kevin Jang  
 Marco Kuan  
 Aaron Li  
