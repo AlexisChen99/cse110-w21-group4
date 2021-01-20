@@ -28,7 +28,5 @@ Miaoqiu Sun
 - Every member should write a self introduction and a link to their GitHub.
 - Every member should create their own introduction slide for the group video.
 
-"[Decision] proposed by [p1] seconded by [p2]"
-
 Meeting adjourned at: 6:00 PM  
 Time elapsed: 31 minutes
