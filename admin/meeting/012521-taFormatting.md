@@ -33,11 +33,13 @@ Ahmad Milad
     - Plan to complete basic function of timer in two weeks from now (Week 5).
     - Design board for webpage, wireframes, research existing apps, state diagram.
 - If there were delays - discuss where you are on the roadmap, any modifications necessary?
+    - N/A
 - Any questions for me? With respect to course expectations, code review, architecture review, etc.
-
+    - N/A
 - QA should take about a week to complete.
 - Have a coordinator establish a daily standup notetaking every morning to keep track of everyone's progress.
     - date.md to standups folder
-- Notify Deepak before TA meeting if you can't make it, otherwise you lose a participation point for that meeting.
+- Notify Deepak before TA meeting if you can't make it, otherwise you lose a participation point for that meeting.  
+
 Meeting adjourned at: 9:26 PM PST / 10:56 AM IST
 Time elapsed: 26 minutes
