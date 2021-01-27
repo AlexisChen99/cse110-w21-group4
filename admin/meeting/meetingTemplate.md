@@ -2,7 +2,7 @@
 ## Meeting Minutes
 ## DOW, month dd, 2021
 
-Meeting commenced at: [time] on Zoom
+Meeting commenced at: [time] PST on Zoom
 
 Present:  
 
@@ -11,11 +11,12 @@ Alexis Chen
 Elizabeth Cho  
 Kevin Jang  
 Marco Kuan  
-Aaron Li  
 Ahmad Milad  
 Rohan Patel  
 Miaoqiu Sun  
-Jessie Zou
+Jessie Zou  
+
+Aaron Li  
 
 # Agenda
 1. todo
@@ -24,7 +25,5 @@ Jessie Zou
 # Notes
 - todo
 
-"[Decision] proposed by [p1] seconded by [p2]"
-
-Meeting adjourned at: [time]  
+Meeting adjourned at: [time] PST  
 Time elapsed: [end-beginning]
