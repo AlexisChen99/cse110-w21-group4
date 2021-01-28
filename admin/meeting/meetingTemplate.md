@@ -16,8 +16,6 @@ Rohan Patel
 Miaoqiu Sun  
 Jessie Zou  
 
-Aaron Li  
-
 # Agenda
 1. todo
 2. todo
