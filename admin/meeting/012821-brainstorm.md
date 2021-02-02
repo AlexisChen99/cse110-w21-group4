@@ -26,5 +26,5 @@ Miaoqiu Sun
 - Can we add the reset feature to our timer after our basic functionalities?
 - Are we allowed to add the pause feature after basic functionality?
 
-Meeting adjourned at: 7:14 PM PST  
-Time elapsed: 25 minutes
+Meeting adjourned at: 7:34 PM PST  
+Time elapsed: 44 minutes
