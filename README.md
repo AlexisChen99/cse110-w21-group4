@@ -4,4 +4,4 @@
 
 [Public Miro link](https://miro.com/app/board/o9J_lX_m1Ts=/)
 
-[Link to Tool](https://alexischen99.github.io/cse110-w21-group4/source/index.html)
+[Link to Potatimer](https://alexischen99.github.io/cse110-w21-group4/source/index.html)
