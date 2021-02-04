@@ -8,10 +8,17 @@
  * 0-1-0-1-0-1-0-2
  */
 
-var tasks = [];
-var task;
-var phase = "work";
-var tasksDone = 0;
+let tasks = [];
+let task;
+let phase = "work";
+let tasksDone = 0;
+
+/**
+ * Break lengths
+ */
+let work_length = 5;            // work time (seconds)   15 mins (900)
+let small_break_length = 7;     // small break time      5 mins  (300)
+let big_break_length = 10;      // big break time        25 mins (1500)
 
 /**
  * Start the timer and update the timer every second
@@ -21,20 +28,29 @@ function start() {
     phase = "work";
     tasksDone = 0;
 
-    let timer = setInterval(function () {
-        // once all the tasks have ended, clear the timer
-        if (tasks.length == 0) clearInterval(timer);
+    if (tasks.length > 0) {
+        let timer = setInterval(function () {
+            // once all the tasks have ended, clear the timer
+            if (tasks.length == 0) {
+                clearInterval(timer);
+            } else {
 
-        document.getElementById('timerDisplay').innerHTML = convertSeconds(secondsRemaining);
-        secondsRemaining--;
-        if (secondsRemaining < 0) {
-            if (phase == "work") {
-                task = tasks.shift();
-            }
-            updatePhase();
-            secondsRemaining = setTimeRemaining();
-        }
-    }, 1000); //update the timer every second
+            // Display the time MM:SS
+            document.getElementById('timerDisplay').innerHTML = convertSeconds(secondsRemaining);
+            secondsRemaining--;
+
+            if (secondsRemaining < 0) {
+                if (phase == "work") {
+                    task = tasks.shift();
+                }
+
+                updatePhase();
+                secondsRemaining = setTimeRemaining();
+            }}
+        }, 1000); //update the timer every second
+
+        document.getElementById('timerDisplay').innerHTML = '00:00';
+    }
 }
 
 /**
@@ -54,6 +70,14 @@ function convertSeconds(secondsRemaining) {
     timerString += seconds;
 
     return timerString;
+}
+
+/**
+ * Resets the timer and empties the task queue
+ */
+function reset() {
+    tasks = [];
+    document.getElementById('timerDisplay').innerHTML='00:00';
 }
 
 /** 
@@ -90,7 +114,7 @@ function updatePhase() {
  * @return the break time
  */
 function setTimeRemaining() {
-    return (phase == "work") ? 65 :     // work time (seconds)   15 mins (900)
-        (phase == "small_break") ? 30 : // small break time      5 mins  (300)
-            120;                        // big break time        25 mins (1500)
+    return (phase == "work") ? work_length :     
+        (phase == "small_break") ? small_break_length : 
+        big_break_length;                        
 }
