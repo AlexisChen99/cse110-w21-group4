@@ -20,15 +20,24 @@ let work_length = 5;            // work time (seconds)   15 mins (900)
 let small_break_length = 7;     // small break time      5 mins  (300)
 let big_break_length = 10;      // big break time        25 mins (1500)
 
+window.onload = function() {
+    document.getElementById("work-slider").addEventListener("input", setWork);
+    document.getElementById("small-slider").addEventListener("input", setSmallBreak);
+    document.getElementById("big-slider").addEventListener("input", setBigBreak);
+}
+
+
+
 /**
  * Start the timer and update the timer every second
  */
 function start() {
     phase = "work";
-    let secondsRemaining = setTimeRemaining();
+    document.getElementById('phaseDisplay').innerHTML = phase;
+    var secondsRemaining = setTimeRemaining();
     tasksDone = 0;
-    document.getElementById("reset").style.display = 'block';
-    document.getElementById('start').style.display = 'none';
+    document.getElementById("reset").disabled = false;
+    document.getElementById('start').disabled = true;
 
     if (tasks.length > 0) {
         let timer = setInterval(function () {
@@ -36,28 +45,31 @@ function start() {
             if (tasks.length == 0) {
                 clearInterval(timer);
                 phase = "idle";
-                // Hide reset button
-                document.getElementById('reset').style.display = 'none';
+
+                // Update the phase
+                document.getElementById('phaseDisplay').innerHTML = phase;
+
+                // Disable the reset button
+                document.getElementById('reset').disabled = true;
             } else {
                 // Display the time MM:SS
                 document.getElementById('timerDisplay').innerHTML = convertSeconds(secondsRemaining);
                 secondsRemaining--;
 
-                if (secondsRemaining < 0) {
+                if (secondsRemaining <= 0) {
                     if (phase == "work") {
+                        // Update the tasks array (shift)
                         task = tasks.shift();
+                        document.getElementById('listTasks').innerHTML = tasks;
                     }
 
                     updatePhase();
+                    document.getElementById('phaseDisplay').innerHTML = phase;
                     secondsRemaining = setTimeRemaining();
                 }
            }
         }, 1000); //update the timer every second
-
-
     }
-
-
 }
 
 /**
@@ -70,7 +82,7 @@ function convertSeconds(secondsRemaining) {
     minutes = Math.floor(secondsRemaining / 60);
     seconds = secondsRemaining - (60 * minutes);
 
-    var timerString;
+    var timerString ='';
     if (minutes < 10) { timerString = '0'; }
     timerString += minutes + ':';
     if (seconds < 10) { timerString += '0'; }
@@ -86,8 +98,19 @@ function reset() {
     tasks = [];
     phase = 'idle';
     document.getElementById('timerDisplay').innerHTML='00:00';
-    document.getElementById('start').style.display = 'none';
-    document.getElementById('reset').style.display = 'none';
+    document.getElementById('start').disabled = true;
+    document.getElementById('reset').disabled = true;
+    document.getElementById('listTasks').innerHTML = tasks;
+}
+
+/**
+ * Skip to the next task
+ */
+function skip() {
+    tasks.shift();
+    phase = "idle"
+    secondsRemaining = 0;
+    document.getElementById('listTasks').innerHTML = tasks;
 }
 
 /** 
@@ -96,11 +119,12 @@ function reset() {
 function addTask() {
     // Load the start button if it's not running
     if (phase == 'idle') {
-        document.getElementById("start").style.display = 'block';
+        document.getElementById("start").disabled = false;
     }
-
     tasks.push(document.getElementById("task").value);
+    document.getElementById('listTasks').innerHTML = tasks;
     alert('task added');
+    document.getElementById('task').value='';
 }
 
 /**
@@ -134,14 +158,14 @@ function setTimeRemaining() {
         big_break_length;                        
 }
 
-function setBigBreak() {
-    big_break_length = document.getElementById("big_break_length").value;
+function setBigBreak(event) {
+    big_break_length = event.target.value * 60;
 }
 
-function setSmallBreak() {
-    small_break_length = document.getElementById("small_break_length").value;
+function setSmallBreak(event) {
+    small_break_length = event.target.value * 60;
 }
 
-function setBigBreak() {
-    work_length = document.getElementById("work_length").value;
+function setWork(event) {
+    work_length = event.target.value * 60;
 }
