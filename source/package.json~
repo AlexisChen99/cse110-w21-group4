@@ -1,0 +1,19 @@
+{
+  "name": "source",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "pretest": "eslint -c .eslintrc.json --ignore-path .gitignore example.js --fix",
+    "test": "jest",
+    "gendocs": "jsdoc example.js -c conf.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-config-strongloop": "^2.1.0",
+    "jest": "^26.6.3",
+    "jsdoc": "^3.6.6"
+  }
+}
