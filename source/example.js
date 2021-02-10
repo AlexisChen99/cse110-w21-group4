@@ -4,6 +4,8 @@
  * @property {('meat' | 'veggie' | 'other')} type - The food's type
  */
 
+//Adding a comment!
+
 'use strict';
 
 const math = {
