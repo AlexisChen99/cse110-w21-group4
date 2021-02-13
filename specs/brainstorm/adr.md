@@ -48,6 +48,8 @@ Chose option 3, coding around the possibility for user changes in the future, be
 * Bad, because it is more difficult and time-consuming than hard-coding
 * Bad, because we may not benefit from this time investment down the line
 
+***
+
 # Create Dev Mode to Test and View Features
 
 * Status: [accepted, not implemented]
@@ -97,3 +99,94 @@ Chose option 3, "developer mode", because it gives us the freedom to make design
 * Good, because it allows for a variety of feature designs
 * Bad, because it creates potential security issues (if users gain access)
 * Bad, because it diverges from use diagrams (may affect how developers see UX/UI)
+
+***
+
+# Include Accessibility Features
+
+* Status: [accepted]
+* Deciders: [team decision]
+* Date: [2021-1-30]
+
+## Context and Problem Statement
+
+We want our product to be accessible to all kinds of users, including those with disabilities or personal preferences that make standard website design inaccessible. What features can we implement to reach this goal?
+
+## Considered Options
+
+* Dark mode option that is different from the standard bright/white screen
+* Colorblind option that makes color distinctions clear for those with any of various kinds of colorblindness
+* Sound options to allow those with sound sensitivity or other circumstances to turn off the aural alarm
+
+## Decision Outcome
+
+All of the above, to best include every user (and their story) that we can.
+
+### Positive Consequences
+
+* N/A (yet)
+* …
+
+### Negative Consequences 
+
+* N/A (yet)
+* …
+
+## Pros and Cons of the Options
+
+### All 
+
+* Good, because it broadens our audience and allows more of our users to enjoy our features
+* Bad, because it is not a comprehensive inclusion of all accessibility features
+
+***
+
+# Product design layout/ideology
+
+* Status: [accepted]
+* Deciders: [froend-end developer decision]
+* Date: [2021-1-31]
+
+## Context and Problem Statement
+
+We want to have a consistent design plan in place to structure our UI around. What sort of design ideology should we keep in mind while developing our front end?
+
+## Considered Options
+
+* Minimalism -- very simple layout, minimal features/images
+* Themed -- play with animations, images, colors, etc
+
+## Decision Outcome
+
+Chose option 1, minimalism, at least for the time being--this will prevent distractions on the part of the user and allow us to streamline the user story. 
+
+### Positive Consequences
+
+* N/A (yet)
+* …
+
+### Negative Consequences 
+
+* N/A (yet)
+* …
+
+## Pros and Cons of the Options
+
+### Minimalism
+
+* Good, because it is simple, functional, and ideally intuitive for the user
+* Good, because it prevents distractions for the user
+* Good, because it embodies our purpose of being productive and efficient
+* Bad, because it can be boring or unattractive
+* Bad, because it can emphasize flaws (nothing to hide behind)
+
+### Creative design
+
+* Good, because it is exciting, attractive, and engaging
+* Good, because an appealing design can encourage users to return or even share our product with others
+* Good, because it can be used to show our team's personality and ideology through creativity
+* Good, because themes and designs give us more to work on/with
+* Bad, because themes can divide the audience (appealing to some but not to others)
+* Bad, because design requires experience and significant time to see returns
+* Bad, because design can distract the team and the user from the actual purpose of the product
+* Bad, because poor design can complicate the user story or how we implement our features

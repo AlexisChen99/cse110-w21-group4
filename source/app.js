@@ -45,10 +45,8 @@ function start() {
             if (tasks.length == 0) {
                 clearInterval(timer);
                 phase = "idle";
-
                 // Update the phase
                 document.getElementById('phaseDisplay').innerHTML = phase;
-
                 // Disable the reset button
                 document.getElementById('reset').disabled = true;
             } else {
