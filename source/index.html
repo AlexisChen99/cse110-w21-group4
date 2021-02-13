@@ -15,16 +15,33 @@
     	
 
     <div id = "timer">
-        <h2 id = "phaseDisplay"> Work </h2>
-        <p id = "timerDisplay">0:00</p>
+        <h2 id = "phaseDisplay"> idle </h2>
+        <p id = "timerDisplay">00:00</p>
     </div>
 
-    <button onclick="start()">start</button>
+    <button id = "start" onclick="start()" disabled>start</button>
+    <button id = "reset" onclick="reset()" disabled>reset</button>
+    <button id = "skip" onclick="skip()">skip</button>
+
 
     <div id = "taskAdder">
-        <input id = "task">
+        <input id = "task" required>
         <button id = "taskAdder" onclick="addTask()">Add Task</button>
     </div>
+
+    <label id = "listTasks"></label>
+
+    <!--input id="work-slider" name="work-slider" type="range" min="0" max="30"
+    value="25"-->
+
+    <!--input id="small-slider" name="small-slider" type="range" min="0" max="30"
+    value="5"-->
+
+    <!--input id="big-slider" name="big-slider" type="range" min="0" max="30"
+    value="15"-->
+
+
+
 </body>
 
 <script>
