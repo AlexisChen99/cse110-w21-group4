@@ -60,7 +60,7 @@ body[data-light-mode=dark] {
   padding: 5px 15px 10px 15px;
 }
 
-#start {
+button {
   border-radius: 15px;
   padding: 5px 15px 10px 15px;
 }
