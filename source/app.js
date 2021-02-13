@@ -56,7 +56,7 @@ function start() {
                 document.getElementById('timerDisplay').innerHTML = convertSeconds(secondsRemaining);
                 secondsRemaining--;
 
-                if (secondsRemaining <= 0) {
+                if (secondsRemaining < 0) {
                     if (phase == "work") {
                         // Update the tasks array (shift)
                         task = tasks.shift();
@@ -64,8 +64,8 @@ function start() {
                     }
 
                     updatePhase();
-                    document.getElementById('phaseDisplay').innerHTML = phase;
                     secondsRemaining = setTimeRemaining();
+                    document.getElementById('phaseDisplay').innerHTML = phase;
                 }
            }
         }, 1000); //update the timer every second
@@ -123,7 +123,7 @@ function addTask() {
     }
     tasks.push(document.getElementById("task").value);
     document.getElementById('listTasks').innerHTML = tasks;
-    alert('task added');
+    //alert('task added');
     document.getElementById('task').value='';
 }
 
