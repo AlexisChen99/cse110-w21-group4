@@ -12,13 +12,14 @@ let tasks = [];
 let task;
 let phase = "idle";
 let tasksDone = 0;
+let secondsRemaining = 0;
 
 /**
  * Break lengths
  */
-let work_length = 5;            // work time (seconds)   15 mins (900)
-let small_break_length = 7;     // small break time      5 mins  (300)
-let big_break_length = 10;      // big break time        25 mins (1500)
+let work_length = 10;            // work time (seconds)   15 mins (900)
+let small_break_length = 5;     // small break time      5 mins  (300)
+let big_break_length = 15;      // big break time        25 mins (1500)
 
 window.onload = function() {
     document.getElementById("work-slider").addEventListener("input", setWork);
@@ -34,7 +35,7 @@ window.onload = function() {
 function start() {
     phase = "work";
     document.getElementById('phaseDisplay').innerHTML = phase;
-    var secondsRemaining = setTimeRemaining();
+    secondsRemaining = setTimeRemaining();
     tasksDone = 0;
     document.getElementById("reset").disabled = false;
     document.getElementById('start').disabled = true;
@@ -105,9 +106,12 @@ function reset() {
  * Skip to the next task
  */
 function skip() {
-    tasks.shift();
-    phase = "idle"
-    secondsRemaining = 0;
+    if(phase == "work") {
+        tasks.shift();
+        document.getElementById('phaseDisplay').innerHTML = phase;
+    }
+    phase = "work"
+    secondsRemaining = setTimeRemaining();
     document.getElementById('listTasks').innerHTML = tasks;
 }
 
