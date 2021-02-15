@@ -47,9 +47,25 @@
   function toggle_light_mode() {
       var app = document.getElementsByTagName("BODY")[0];
       if (localStorage.lightMode == "dark") {
+        //button tag when page is in light mode 
+         let darkModeButton = document.getElementById('dark-mode-button');
+            darkModeButton.innerText = "Dark Mode";
+
+        //Page color in light mode
+        let timerColor = document.getElementById('timer');
+            timerColor.style.color =  'black';
+
         localStorage.lightMode = "light";
         app.setAttribute("data-light-mode", "light");
+
       } else {
+         //button tag when page is in dark mode 
+         let darkModeButton = document.getElementById('dark-mode-button');
+         darkModeButton.innerText = "Light Mode";
+         //Page color in dark mode
+         let timerColor = document.getElementById('timer');
+         timerColor.style.color =  'white'; 
+
         localStorage.lightMode = "dark";
         app.setAttribute("data-light-mode", "dark");
       }
