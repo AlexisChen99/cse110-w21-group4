@@ -8,55 +8,66 @@
     <script src="app.js"></script> 
 </head>
 
-<body class = "body">
+<body>
     <div class = "mode">
       <button class = "darkModeButton" id = "dark-mode-button"  onclick="toggle_light_mode()">Dark Mode </button>
-    </div>   	
+    </div>
+    	
 
     <div id = "timer">
-        <h2 id = "phaseDisplay"> Work </h2>
-        <p id = "timerDisplay">0:00</p>
+        <h2 id = "phaseDisplay"> idle </h2>
+        <p id = "timerDisplay">00:00</p>
     </div>
 
     <button id = "start" class = "controlButton" onclick="start()" disabled>start</button>
     <button id = "reset" class = "controlButton" onclick="reset()" disabled>reset</button>
     <button id = "skip"  class = "controlButton" onclick="skip()">skip</button>
 
-
-
     <div id = "taskAdder">
-        <input id = "task">
+        <input id = "task" required>
         <button id = "taskAdder" onclick="addTask()">Add Task</button>
     </div>
+
+    <label id = "listTasks"></label>
+
+    <!--input id="work-slider" name="work-slider" type="range" min="0" max="30"
+    value="25"-->
+
+    <!--input id="small-slider" name="small-slider" type="range" min="0" max="30"
+    value="5"-->
+
+    <!--input id="big-slider" name="big-slider" type="range" min="0" max="30"
+    value="15"-->
+
+
+
 </body>
 
 <script>
-  //light/dark mode code block 
   function toggle_light_mode() {
       var app = document.getElementsByTagName("BODY")[0];
       if (localStorage.lightMode == "dark") {
         //button tag when page is in light mode 
-        let darkModeButton = document.getElementById('dark-mode-button');
+         let darkModeButton = document.getElementById('dark-mode-button');
             darkModeButton.innerText = "Dark Mode";
 
         //Page color in light mode
         let timerColor = document.getElementById('timer');
-        timerColor.style.color =  'black';
-        
-        
+            timerColor.style.color =  'black';
+
         localStorage.lightMode = "light";
         app.setAttribute("data-light-mode", "light");
+
       } else {
          //button tag when page is in dark mode 
-        let darkModeButton = document.getElementById('dark-mode-button');
-            darkModeButton.innerText = "Light Mode";
+         let darkModeButton = document.getElementById('dark-mode-button');
+         darkModeButton.innerText = "Light Mode";
          //Page color in dark mode
          let timerColor = document.getElementById('timer');
-             timerColor.style.color =  'white'; 
+         timerColor.style.color =  'white'; 
 
         localStorage.lightMode = "dark";
         app.setAttribute("data-light-mode", "dark");
-        
       }
   }
 

@@ -36,7 +36,6 @@ body[data-light-mode=dark] {
 	position:relative;
 	top:1px;
 }
-
 .controlButton {
 	box-shadow:inset 0px 1px 0px 0px #ffffff;
 	background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
@@ -83,9 +82,7 @@ body[data-light-mode=dark] {
   padding: 5px 15px 10px 15px;
 }
 
-#start {
+button {
   border-radius: 15px;
   padding: 5px 15px 10px 15px;
 }
-
-
