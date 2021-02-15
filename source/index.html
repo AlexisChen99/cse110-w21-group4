@@ -18,7 +18,11 @@
         <p id = "timerDisplay">0:00</p>
     </div>
 
-    <button id = "startButton" onclick="start()">start</button> <br><br>
+    <button id = "start" class = "controlButton" onclick="start()" disabled>start</button>
+    <button id = "reset" class = "controlButton" onclick="reset()" disabled>reset</button>
+    <button id = "skip"  class = "controlButton" onclick="skip()">skip</button>
+
+
 
     <div id = "taskAdder">
         <input id = "task">
