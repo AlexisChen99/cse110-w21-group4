@@ -13,7 +13,7 @@
     <!-- <img src="" id="sky">
     <div class="field" id="field"></div> -->
     <div class="content-wrapper">
-        <h1 class="title">Potato Timer</h1>
+        <h1 class="title" id="title">Potato Timer</h1>
 
         <h2 class="phase" id="phaseDisplay">Work</h2>
         <img src="img/settings.png" id="settings-icon">
@@ -33,7 +33,7 @@
         <h1 id="close"> Close</h1>
         <div class="choose-theme" id="choose-theme">
             <button id="theme-light" onclick="light()">Light Theme</button>
-            <button id="theme-dark">Dark Theme</button>
+            <button id="theme-dark" onclick="dark()">Dark Theme</button>
             <button id="theme-potato" onclick="potato()">Potato Theme</button>
         </div>
 
@@ -75,6 +75,44 @@
             document.getElementById('settings-menu').style.display = 'none';
         })
     }
-</script>
 
-</html>
+    function potato(){
+        var app = document.getElementsByTagName("BODY")[0];
+        app.setAttribute("data-light-mode", "potato");
+        var circle = document.getElementById('circle');
+        circle.style.backgroundColor = '#ff0';
+        circle.style["boxShadow"] = '0 0 20px 20px #ff0';
+        circle.style.border = '5px solid #ff0';
+
+        document.getElementById('timerDisplay').style.color = '#333';
+        document.getElementById('title').style.color = '#333';
+        document.getElementById('phaseDisplay').style.color = '#333';
+    }
+
+    function dark() {
+          var app = document.getElementsByTagName("BODY")[0];
+          app.setAttribute("data-light-mode", "dark");
+          var circle = document.getElementById('circle');
+          circle.style.backgroundColor = '#333';
+          circle.style["boxShadow"] = '0 0 10px 10px white';
+          circle.style.border = '5px solid white';
+
+          document.getElementById('timerDisplay').style.color =  'white';
+          document.getElementById('title').style.color = 'white';
+          document.getElementById('phaseDisplay').style.color = 'white';
+    }
+
+    function light(){
+          var app = document.getElementsByTagName("BODY")[0];
+          app.setAttribute("data-light-mode", "light");
+          var circle = document.getElementById('circle');
+          circle.style.backgroundColor = 'white';
+          circle.style["boxShadow"] = '0 0 10px 10px #333';
+          circle.style.border = '5px solid #333';
+
+          document.getElementById('timerDisplay').style.color =  '#333';
+          document.getElementById('title').style.color = '#333';
+          document.getElementById('phaseDisplay').style.color = '#333';
+    }
+
+</script>
