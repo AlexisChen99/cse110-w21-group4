@@ -4,7 +4,26 @@ body {
     background-image: -webkit-gradient(linear, left top, left bottom, from(#86ffff), to(#fff));
     background-image: linear-gradient(180deg, #86ffff, #fff);
     text-align: center;
-    color: #333;    
+    color: #333;
+}
+
+body[data-light-mode=potato]{
+    height: 100vh;
+    background-color: #b9e1f0;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#86ffff), to(#fff));
+    background-image: linear-gradient(180deg, #86ffff, #fff);
+    text-align: center;
+    color: #333;
+}
+
+body[data-light-mode=dark] {
+    background-color: #333333;
+    background-image: none;
+}
+
+body[data-light-mode=light] {
+    background-color: white;
+    background-image: none;
 }
 
 .field {
@@ -18,7 +37,7 @@ body {
 }
 
 /*---------------------------------
-         Main Page Display 
+         Main Page Display
 ---------------------------------*/
 .content-wrapper {
     position: absolute;
@@ -91,7 +110,7 @@ body {
     margin-left: 10px;
 }
 /*---------------------------------
-         Settings Menu Display 
+         Settings Menu Display
 ---------------------------------*/
 #settings-menu {
     position: absolute;
@@ -111,7 +130,7 @@ body {
 }
 
 #close {
-    position: absolute; 
+    position: absolute;
     left: auto;
     top: 0%;
     right: 0%;
@@ -146,11 +165,9 @@ button:hover {
     grid-template-columns: 0.5fr 0.5fr;
     grid-template-rows: auto auto auto auto;
 }
-
 .custom-settings {
     text-align: right;
 }
-
 .custom-time {
     justify-self: left;
     padding-left: 10px;
