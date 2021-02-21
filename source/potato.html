@@ -10,31 +10,71 @@
 </head>
 
 <body>
-    <img src="" id="sky">
-    <div class="field" id="field"></div>
+    <!-- <img src="" id="sky">
+    <div class="field" id="field"></div> -->
     <div class="content-wrapper">
         <h1 class="title">Potato Timer</h1>
-        <h2 class="phase" id="phase">Work</h2>
-        <img src="" id="settings-icon">
+
+        <h2 class="phase" id="phaseDisplay">Work</h2>
+        <img src="img/settings.png" id="settings-icon">
         <div class="circle" id="circle">
-            <h1 class="timer" id="timer">25:00</h1>
+            <h1 class="timer" id="timerDisplay">25:00</h1>
         </div>
+
         <div class="button-wrapper">
-                <button class="reset" id="reset">Reset</button>
-                <button class="start-stop" id="start">Start</button>
+            <button class="reset" id="reset" onclick="reset()">Reset</button>
+            <button class="start-stop" id="start" onclick="start()">Start</button>
         </div>
 
     </div>
 
-    <div class="settings-wrapper" id="settings-menu">
+    <div id="settings-menu">
         <h1 class="settings-text">Settings</h1>
-        <h1 class="close-text" id="close"> Close</h1>
+        <h1 id="close"> Close</h1>
         <div class="choose-theme" id="choose-theme">
-            <button id="theme-light">Light Theme</button>
+            <button id="theme-light" onclick="light()">Light Theme</button>
             <button id="theme-dark">Dark Theme</button>
-            <button id="theme-potato">Potato Theme</button>
+            <button id="theme-potato" onclick="potato()">Potato Theme</button>
         </div>
+
+        <!-- <div class="form-container"> -->
+            <form class="form-container" id="user-input">
+                <label for="work" class="field-label">Work Time</label>
+                <input type="text" class="custom-time" id="work_length" value="25:00">
+                <label for="work" class="field-label">Short Break</label>
+                <input type="text" class="custom-time" id="short_break" value="05:00">
+                <label for="work" class="field-label">Long Break</label>
+                <input type="text" class="custom-time" id="long_break" value="15:00">
+                <label for="work" class="field-label">Volume</label>
+                <input type="text" class="custom-volume" id="work_length" value="50">
+                <h1>%</h1>
+            </form>
+        <!-- </div> -->
+        <!-- <div class="grid-container">
+            <h1 class="custom-settings">Work Time:</h1>
+            <input type="text" class="custom-time" id="work_length" value="25:00">
+            <h1 class="custom-settings">Short Break:</h1>
+            <input type="text" class="custom-time" id="work_length" value="05:00">
+            <h1 class="custom-settings">Long Break:</h1>
+            <input type="text" class="custom-time" id="work_length" value="15:00">
+            <h1 class="custom-settings">Volume:</h1>
+        </div> -->
+
     </div>
 </body>
+
+<script>
+    window.onload = function () {
+        const settings = document.getElementById('settings-icon');
+        settings.addEventListener("click", function () {
+            document.getElementById('settings-menu').style.display = 'block';
+        });
+
+        const close = document.getElementById('close');
+        close.addEventListener('click', function () {
+            document.getElementById('settings-menu').style.display = 'none';
+        })
+    }
+</script>
 
 </html>
