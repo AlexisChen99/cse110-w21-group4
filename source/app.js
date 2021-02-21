@@ -60,6 +60,8 @@ function start() {
                         // Update the tasks array (shift)
                         task = tasks.shift();
                         document.getElementById('listTasks').innerHTML = tasks;
+                        var audio = new Audio('audio/Rooster Crow.wav');
+                        audio.play();
                     }
 
                     updatePhase();
@@ -123,7 +125,9 @@ function addTask() {
     if (phase == 'idle') {
         document.getElementById("start").disabled = false;
     }
-    tasks.push(document.getElementById("task").value);
+    if(document.getElementById("task").value != '') {
+        tasks.push(document.getElementById("task").value);
+    }
     document.getElementById('listTasks').innerHTML = tasks;
     //alert('task added');
     document.getElementById('task').value='';
