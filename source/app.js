@@ -8,7 +8,27 @@
  * i-0-1-0-1-0-1-0-2
  */
 
+var pushEvent = function(arr, callback) {
+    arr.push = function(e) {
+        Array.prototype.push.call(arr,e);
+        callback(arr);
+    };
+};
+
+var popEvent = function(arr, callback) {
+    arr.shift = function(e) {
+        Array.prototype.shift.call(arr,e);
+        callback(arr);
+    };
+};
+
 let tasks = [];
+pushEvent(tasks, function(tasks) {
+    displayArray();
+});
+popEvent(tasks, function(tasks) {
+    displayArray();
+});
 let task;
 let phase = "idle";
 let tasksDone = 0;
@@ -60,6 +80,8 @@ function start() {
                         // Update the tasks array (shift)
                         task = tasks.shift();
                         document.getElementById('listTasks').innerHTML = tasks;
+                        var audio = new Audio('audio/Rooster Crow.wav');
+                        audio.play();
                     }
 
                     updatePhase();
@@ -95,6 +117,7 @@ function convertSeconds(secondsRemaining) {
  */
 function reset() {
     tasks = [];
+    displayArray();
     phase = 'idle';
     document.getElementById('timerDisplay').innerHTML='00:00';
     document.getElementById('start').disabled = true;
@@ -123,7 +146,9 @@ function addTask() {
     if (phase == 'idle') {
         document.getElementById("start").disabled = false;
     }
-    tasks.push(document.getElementById("task").value);
+    if(document.getElementById("task").value != '') {
+        tasks.push(document.getElementById("task").value);
+    }
     document.getElementById('listTasks').innerHTML = tasks;
     //alert('task added');
     document.getElementById('task').value='';
@@ -170,4 +195,16 @@ function setSmallBreak(event) {
 
 function setWork(event) {
     work_length = event.target.value * 60;
+}
+
+function displayArray() {
+    let ul = document.getElementById('allTasks');
+    while(ul.firstChild) {
+        ul.removeChild(ul.firstChild);
+    }
+    for(let i = 0; i <tasks.length; i++) {
+        let newLi = document.createElement('li')
+        newLi.innerHTML = tasks[i];
+        ul.appendChild(newLi);
+    }
 }
