@@ -49,6 +49,14 @@
             <img src="img/volume.png" alt="Mute?" class="volume-icon" id="volume-icon">
         </form>
     </div>
+
+    <div id = "taskAdder">
+        <input id = "task" required>
+        <button id = "taskAdder" onclick="addTask()">Add Task</button>
+    </div>
+
+    <label id = "listTasks"></label>
+
 </body>
 
 <script>
@@ -65,6 +73,15 @@
         const app = document.getElementsByTagName("BODY")[0];
         app.setAttribute("data-light-mode", "potato");
         // Moved the default setting into the on-page load.
+
+        /* refresh issue */
+        // if (localStorage.mode == 'dark'){
+        //   dark();
+        // } else if (localStorage.mode == 'light') {
+        //   light();
+        // } else if (localStograge.mode == 'potato') {
+        //   potato();
+        // }
     }
 
     function potato() {
@@ -74,6 +91,24 @@
         circle.style.backgroundColor = '#ff0';
         circle.style["boxShadow"] = '0 0 20px 20px #ff0';
         circle.style.border = '5px solid #ff0';
+
+        /* buttons */
+        var btn1 = document.getElementsByTagName("button")[0];
+        btn1.setAttribute("mode", "potato");
+        var btn2 = document.getElementsByTagName("button")[1];
+        btn2.setAttribute("mode", "potato");
+        var btn3 = document.getElementsByTagName("button")[2];
+        btn3.setAttribute("mode", "potato");
+        var btn4 = document.getElementsByTagName("button")[3];
+        btn4.setAttribute("mode", "potato");
+        var btn5 = document.getElementsByTagName("button")[4];
+        btn5.setAttribute("mode", "potato");
+
+        /* setting menu */
+        var settings = document.getElementById('settings-menu');
+        settings.style.background ='white';
+        settings.style.color = 'black';
+        settings.style.border = '5px solid #000';
 
         document.getElementById('timerDisplay').style.color = '#333';
         document.getElementById('title').style.color = '#333';
@@ -88,6 +123,25 @@
         circle.style["boxShadow"] = '0 0 10px 10px white';
         circle.style.border = '5px solid white';
 
+        /* buttons */
+        var btn1 = document.getElementsByTagName("button")[0];
+        btn1.setAttribute("mode", "dark");
+        var btn2 = document.getElementsByTagName("button")[1];
+        btn2.setAttribute("mode", "dark");
+        var btn3 = document.getElementsByTagName("button")[2];
+        btn3.setAttribute("mode", "dark");
+        var btn4 = document.getElementsByTagName("button")[3];
+        btn4.setAttribute("mode", "dark");
+        var btn5 = document.getElementsByTagName("button")[4];
+        btn5.setAttribute("mode", "dark");
+
+        /* setting menu */
+        var settings = document.getElementById('settings-menu');
+        settings.style.background ='#444';
+        settings.style.color = 'white';
+        settings.style.border = '5px solid white';
+
+
         document.getElementById('timerDisplay').style.color = 'white';
         document.getElementById('title').style.color = 'white';
         document.getElementById('phaseDisplay').style.color = 'white';
@@ -100,6 +154,24 @@
         circle.style.backgroundColor = 'white';
         circle.style["boxShadow"] = '0 0 10px 10px #333';
         circle.style.border = '5px solid #333';
+
+        /* resset and start button */
+        var btn1 = document.getElementsByTagName("button")[0];
+        btn1.setAttribute("mode", "light");
+        var btn2 = document.getElementsByTagName("button")[1];
+        btn2.setAttribute("mode", "light");
+        var btn3 = document.getElementsByTagName("button")[2];
+        btn3.setAttribute("mode", "light");
+        var btn4 = document.getElementsByTagName("button")[3];
+        btn4.setAttribute("mode", "light");
+        var btn5 = document.getElementsByTagName("button")[4];
+        btn5.setAttribute("mode", "light");
+
+        /* setting menu */
+        var settings = document.getElementById('settings-menu');
+        settings.style.background ='white';
+        settings.style.color = 'black';
+        settings.style.border = '5px solid #000';
 
         document.getElementById('timerDisplay').style.color = '#333';
         document.getElementById('title').style.color = '#333';
