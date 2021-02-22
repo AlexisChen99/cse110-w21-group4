@@ -16,7 +16,6 @@ Jessie Zou
 Deepak Karki  
 
 Absent:  
-Aaron Li  
 
 # Agenda
 1. Introductions

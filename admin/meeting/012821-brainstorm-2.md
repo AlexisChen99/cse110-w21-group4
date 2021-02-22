@@ -2,7 +2,7 @@
 ## Meeting Minutes
 ## Tuesday, January 26, 2021
 
-Meeting commenced at:6:50 PM PST on Zoom
+Meeting commenced at: 6:50 PM PST on Zoom
 
 Present:  
 Alexis Chen  
@@ -13,10 +13,8 @@ Marco Kuan
 Kevin Jang
 
 Absent:
-
 Rohan Patel  
 Miaoqiu Sun 
-
 
 # Agenda
 1. Assign roles for interface design documents, overarching decisions, user centered thinking documents.

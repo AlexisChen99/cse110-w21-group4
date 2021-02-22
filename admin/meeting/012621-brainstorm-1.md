@@ -15,7 +15,6 @@ Miaoqiu Sun
 
 Absent:  
 Jessie Zou (Busy)  
-Aaron Li  
 
 # Agenda
 1. "What problem do we want to solve?"

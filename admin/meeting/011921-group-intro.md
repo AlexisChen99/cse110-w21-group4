@@ -14,7 +14,6 @@ Rohan Patel
 Jessie Zou  
 
 Absent:  
-Aaron Li  
 Miaoqiu Sun  
 
 # Agenda
