@@ -61,9 +61,10 @@ p {
     text-shadow: 1px 1px 1px #000;
 }
 
-#settings-icon {;
+#settings-icon {
     margin-left: 80px;
 }
+
 #settings-icon:hover {
     cursor: pointer;
 }
@@ -237,6 +238,6 @@ form input {
 }
 
 #taskAdder{
-  margin-top: 300px;
-  font-size: 16px;
+    margin-top: 20px;
+    font-size: 16px;
 }

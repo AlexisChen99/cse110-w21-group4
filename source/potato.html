@@ -26,6 +26,13 @@
             <button class="start-stop" id="start" onclick="start()">Start</button>
         </div>
 
+        <div id = "taskAdder">
+            <input type="text" id = "task" placeholder="Enter Task" required>
+            <button id = "taskAdder" onclick="addTask()">Add Task</button>
+        </div>
+        <label id = "listTasks"></label>
+
+        <!-- End of content wrapper -->
     </div>
 
     <div id="settings-menu">
@@ -48,14 +55,8 @@
             <input type="text" class="custom-volume" id="volume" value="50">
             <img src="img/volume.png" alt="Mute?" class="volume-icon" id="volume-icon">
         </form>
+        <!-- End of settings menu -->
     </div>
-
-    <div id = "taskAdder">
-        <input id = "task" required>
-        <button id = "taskAdder" onclick="addTask()">Add Task</button>
-    </div>
-
-    <label id = "listTasks"></label>
 
 </body>
 
