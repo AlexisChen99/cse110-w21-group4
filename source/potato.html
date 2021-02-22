@@ -10,15 +10,15 @@
 </head>
 
 <body>
-    <!-- <img src="" id="sky">
-    <div class="field" id="field"></div> -->
+    <!-- <img src="" id="sky"> -->
     <div class="content-wrapper">
-        <h1 class="title" id="title">Potato Timer</h1>
+        <p class="title" id="title">Potato Timer</p>
 
-        <h2 class="phase" id="phaseDisplay">Work</h2>
-        <img src="img/settings.png" id="settings-icon">
+        <p class="phase" id="phaseDisplay">Work</p>
+        <img src="img/settings.png" alt="Settings" id="settings-icon">
+
         <div class="circle" id="circle">
-            <h1 class="timer" id="timerDisplay">25:00</h1>
+            <p class="timer" id="timerDisplay">25:00</p>
         </div>
 
         <div class="button-wrapper">
@@ -29,37 +29,25 @@
     </div>
 
     <div id="settings-menu">
-        <h1 class="settings-text">Settings</h1>
-        <h1 id="close"> Close</h1>
+        <p>Settings</p>
+        <p id="close"> Close</p>
         <div class="choose-theme" id="choose-theme">
             <button id="theme-light" onclick="light()">Light Theme</button>
             <button id="theme-dark" onclick="dark()">Dark Theme</button>
             <button id="theme-potato" onclick="potato()">Potato Theme</button>
         </div>
 
-        <!-- <div class="form-container"> -->
-            <form class="form-container" id="user-input">
-                <label for="work" class="field-label">Work Time</label>
-                <input type="text" class="custom-time" id="work_length" value="25:00">
-                <label for="work" class="field-label">Short Break</label>
-                <input type="text" class="custom-time" id="short_break" value="05:00">
-                <label for="work" class="field-label">Long Break</label>
-                <input type="text" class="custom-time" id="long_break" value="15:00">
-                <label for="work" class="field-label">Volume</label>
-                <input type="text" class="custom-volume" id="work_length" value="50">
-                <h1>%</h1>
-            </form>
-        <!-- </div> -->
-        <!-- <div class="grid-container">
-            <h1 class="custom-settings">Work Time:</h1>
+        <form class="form-container" id="user-input">
+            <label for="work" class="field-label">Work Time</label>
             <input type="text" class="custom-time" id="work_length" value="25:00">
-            <h1 class="custom-settings">Short Break:</h1>
-            <input type="text" class="custom-time" id="work_length" value="05:00">
-            <h1 class="custom-settings">Long Break:</h1>
-            <input type="text" class="custom-time" id="work_length" value="15:00">
-            <h1 class="custom-settings">Volume:</h1>
-        </div> -->
-
+            <label for="work" class="field-label">Short Break</label>
+            <input type="text" class="custom-time" id="short_break" value="05:00">
+            <label for="work" class="field-label">Long Break</label>
+            <input type="text" class="custom-time" id="long_break" value="15:00">
+            <label for="work" class="field-label">Volume (%)</label>
+            <input type="text" class="custom-volume" id="volume" value="50">
+            <img src="img/volume.png" alt="Mute?" class="volume-icon" id="volume-icon">
+        </form>
     </div>
 </body>
 
@@ -74,9 +62,12 @@
         close.addEventListener('click', function () {
             document.getElementById('settings-menu').style.display = 'none';
         })
+        const app = document.getElementsByTagName("BODY")[0];
+        app.setAttribute("data-light-mode", "potato");
+        // Moved the default setting into the on-page load.
     }
 
-    function potato(){
+    function potato() {
         var app = document.getElementsByTagName("BODY")[0];
         app.setAttribute("data-light-mode", "potato");
         var circle = document.getElementById('circle');
@@ -90,29 +81,29 @@
     }
 
     function dark() {
-          var app = document.getElementsByTagName("BODY")[0];
-          app.setAttribute("data-light-mode", "dark");
-          var circle = document.getElementById('circle');
-          circle.style.backgroundColor = '#333';
-          circle.style["boxShadow"] = '0 0 10px 10px white';
-          circle.style.border = '5px solid white';
+        var app = document.getElementsByTagName("BODY")[0];
+        app.setAttribute("data-light-mode", "dark");
+        var circle = document.getElementById('circle');
+        circle.style.backgroundColor = '#333';
+        circle.style["boxShadow"] = '0 0 10px 10px white';
+        circle.style.border = '5px solid white';
 
-          document.getElementById('timerDisplay').style.color =  'white';
-          document.getElementById('title').style.color = 'white';
-          document.getElementById('phaseDisplay').style.color = 'white';
+        document.getElementById('timerDisplay').style.color = 'white';
+        document.getElementById('title').style.color = 'white';
+        document.getElementById('phaseDisplay').style.color = 'white';
     }
 
-    function light(){
-          var app = document.getElementsByTagName("BODY")[0];
-          app.setAttribute("data-light-mode", "light");
-          var circle = document.getElementById('circle');
-          circle.style.backgroundColor = 'white';
-          circle.style["boxShadow"] = '0 0 10px 10px #333';
-          circle.style.border = '5px solid #333';
+    function light() {
+        var app = document.getElementsByTagName("BODY")[0];
+        app.setAttribute("data-light-mode", "light");
+        var circle = document.getElementById('circle');
+        circle.style.backgroundColor = 'white';
+        circle.style["boxShadow"] = '0 0 10px 10px #333';
+        circle.style.border = '5px solid #333';
 
-          document.getElementById('timerDisplay').style.color =  '#333';
-          document.getElementById('title').style.color = '#333';
-          document.getElementById('phaseDisplay').style.color = '#333';
+        document.getElementById('timerDisplay').style.color = '#333';
+        document.getElementById('title').style.color = '#333';
+        document.getElementById('phaseDisplay').style.color = '#333';
     }
 
 </script>
