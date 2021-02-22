@@ -4,9 +4,9 @@
   "description": "<a href=\"https://www.youtube.com/watch?v=Gd6j-zVnezI&feature=youtu.be\" target=\"_blank\">Intro Video</a>",
   "main": "index.js",
   "scripts": {
-    "pretest": "eslint -c .eslintrc.json --ignore-path .lintgitignore ./source/example.js --fix",
+    "pretest": "eslint -c .eslintrc.json --ignore-path .lintgitignore ./source --fix",
     "test": "jest",
-    "gendocs": "jsdoc -d ./docs ./source/example.js"
+    "gendocs": "jsdoc -d ./docs ./source"
   },
   "repository": {
     "type": "git",
