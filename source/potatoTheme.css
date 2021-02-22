@@ -21,6 +21,7 @@ body[data-light-mode=potato]{
 body[data-light-mode=dark] {
     background-color: #333333;
     background-image: none;
+    color: white;
 }
 
 body[data-light-mode=light] {
@@ -110,6 +111,12 @@ p {
     height: 75px;
     margin-left: 10px;
 }
+
+#taskAdder{
+    margin-top: 20px;
+    font-size: 16px;
+}
+
 /*---------------------------------
          Settings Menu Display
 ---------------------------------*/
@@ -229,15 +236,11 @@ input {
 .volume-icon {
     display: inline-block;
     width: 40px;
+    cursor: pointer;
 }
 
 form input {
     border-radius: 20px;
     border-style: solid black;
     border-width: 5px;
-}
-
-#taskAdder{
-    margin-top: 20px;
-    font-size: 16px;
 }
