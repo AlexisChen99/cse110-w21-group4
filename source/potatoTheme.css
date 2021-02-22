@@ -52,6 +52,7 @@ p {
     margin-top: 40px;
     margin-bottom: 20px;
     text-shadow: 1px 1px 1px #000;
+    font-family: sans-serif;
 }
 
 .phase {
@@ -60,7 +61,7 @@ p {
     text-shadow: 1px 1px 1px #000;
 }
 
-#settings-icon {
+#settings-icon {;
     margin-left: 80px;
 }
 #settings-icon:hover {
@@ -119,7 +120,7 @@ p {
     bottom: auto;
     display: none; /* Change block/none */
     height: 90vh;
-    margin-top: 10vh;
+    margin-top: 15vh;
     border: 5px solid #000;
     border-radius: 50px 50px 0 0;
     background-color: white;
@@ -149,8 +150,46 @@ button {
     padding: 10px 15px;
     border: 2px solid #000;
     border-radius: 50px;
-    background-color: #333; 
+    background-color: #333;
     /* background-color: #999; For dark mode */
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+}
+
+button[mode=light] {
+    margin: 0 10px;
+    padding: 10px 15px;
+    border: 2px solid #000;
+    border-radius: 50px;
+    background-color: #333;
+    /* background-color: #999; For dark mode */
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+}
+
+button[mode=potato] {
+    margin: 0 10px;
+    padding: 10px 15px;
+    border: 2px solid #000;
+    border-radius: 50px;
+    background-color: #333;
+    /* background-color: #999; For dark mode */
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+}
+
+button[mode=dark] {
+    margin: 0 10px;
+    padding: 10px 15px;
+    border: 2px solid #fff;
+    border-radius: 50px;
+    background-color: #999;
     font-size: 24px;
     font-weight: bold;
     color: #fff;
@@ -195,4 +234,9 @@ form input {
     border-radius: 20px;
     border-style: solid black;
     border-width: 5px;
+}
+
+#taskAdder{
+  margin-top: 300px;
+  font-size: 16px;
 }
