@@ -28,11 +28,11 @@ Since the start of our sprint on week three, the MVP timer is complete. A user m
 The frontend (Kevin, Ahmad, Miaoqiu) supports three different themes: light, dark, and potato. It also has a displayable settings menu that contains the theme changer and customized user inputs. The backend has included a playable rooster audio for the potato theme.
 
 ## What's Not Done
-The UI and frontend of our timer is incomplete.  It has to implement the task system to display the top three most important tasks that the user wants to work on. Then the displayable task list can be opened for the user to mark their tasks as complete and reassign priority to new tasks. The current frontend has to be pushed to the main branch and go through unit testing. Minor visuals for the potato theme, such as the background and potato icons should be included to resemble a true potato theme.
+The UI and frontend of our timer is incomplete. It has to implement the task system to display the top three most important tasks that the user wants to work on. Then the displayable task list can be opened for the user to mark their tasks as complete and reassign priority to new tasks. The current frontend has to be pushed to the main branch and go through unit testing. Minor visuals for the potato theme, such as the background and potato icons should be included to resemble a true potato theme.
 
 Due to the frontend finishing after the backend, the backend (Marco, Rohan) must synchronize the changes and additions that the frontend will provide through element id's.
 
-As of today, the CI/CD pipeline does not pass its own linting and document generation of the backend, so our QA (Elizabeth) is fixing this for the current deployment.
+As of today, the CI/CD pipeline does not pass its own linting and document generation of the backend (uses an old version), so our QA (Elizabeth) is fixing this for the current deployment.
 
 ## Demo
 See the first sprint status video as /admin/videos/statusvideo1.mp4.
