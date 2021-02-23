@@ -37,9 +37,10 @@ let secondsRemaining = 0;
 /**
  * Break lengths
  */
-let work_length = 10;            // work time (seconds)   15 mins (900)
-let small_break_length = 5;     // small break time      5 mins  (300)
-let big_break_length = 15;      // big break time        25 mins (1500)
+
+let work_length; // = document.getElementById("work_length");            // work time (seconds)   15 mins (900)
+let small_break_length; // = 5;     // small break time      5 mins  (300)
+let big_break_length; // = 15;      // big break time        25 mins (1500)
 
 window.onload = function() {
     document.getElementById("work-slider").addEventListener("input", setWork);
@@ -53,12 +54,25 @@ window.onload = function() {
  * Start the timer and update the timer every second
  */
 function start() {
+    let ms = (document.getElementById("work_length").value).split(":");
+    work_length = (+ms[0]) * 60 + (+ms[1]);
+    ms = (document.getElementById("short_break").value).split(":");;
+    small_break_length = (+ms[0]) * 60 + (+ms[1]);
+    ms = (document.getElementById("long_break").value).split(":");;
+    big_break_length = (+ms[0]) * 60 + (+ms[1]);
+    console.log(work_length);
+    console.log(small_break_length);
+    console.log(big_break_length);
+
     phase = "work";
     document.getElementById('phaseDisplay').innerHTML = phase;
     secondsRemaining = setTimeRemaining();
     tasksDone = 0;
     document.getElementById("reset").disabled = false;
     document.getElementById('start').disabled = true;
+
+    
+
 
     if (tasks.length > 0) {
         let timer = setInterval(function () {

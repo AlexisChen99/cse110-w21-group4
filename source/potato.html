@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Potato Timer</title>
+    <link rel="stylesheet" href="potatoTheme.css">
+    <script src="app.js"></script>
+</head>
+
+<body>
+    <!-- <img src="" id="sky"> -->
+    <div class="content-wrapper">
+        <p class="title" id="title">Potato Timer</p>
+
+        <p class="phase" id="phaseDisplay">Work</p>
+        <img src="img/settings.png" alt="Settings" id="settings-icon">
+
+        <div class="circle" id="circle">
+            <p class="timer" id="timerDisplay">25:00</p>
+        </div>
+
+        <div class="button-wrapper">
+            <button class="reset" id="reset" onclick="reset()">Reset</button>
+            <button class="start-stop" id="start" onclick="start()">Start</button>
+        </div>
+
+        <div id = "taskAdder">
+            <input type="text" id = "task" placeholder="Enter Task" required>
+            <button id = "taskAdder" onclick="addTask()">Add Task</button>
+        </div>
+        <label id = "listTasks"></label>
+
+        <!-- End of content wrapper -->
+    </div>
+
+    <div id="settings-menu">
+        <p>Settings</p>
+        <p id="close"> Close</p>
+        <div class="choose-theme" id="choose-theme">
+            <button id="theme-light" onclick="light()">Light Theme</button>
+            <button id="theme-dark" onclick="dark()">Dark Theme</button>
+            <button id="theme-potato" onclick="potato()">Potato Theme</button>
+        </div>
+
+        <form class="form-container" id="user-input">
+            <label for="work" class="field-label">Work Time</label>
+            <input type="text" class="custom-time" id="work_length" value="25:00">
+            <label for="work" class="field-label">Short Break</label>
+            <input type="text" class="custom-time" id="short_break" value="05:00">
+            <label for="work" class="field-label">Long Break</label>
+            <input type="text" class="custom-time" id="long_break" value="15:00">
+            <label for="work" class="field-label">Volume (%)</label>
+            <input type="text" class="custom-volume" id="volume" value="50">
+            <img src="img/volume.png" alt="Mute?" class="volume-icon" id="volume-icon">
+        </form>
+        <!-- End of settings menu -->
+    </div>
+
+</body>
+
+<script>
+    window.onload = function () {
+        const settings = document.getElementById('settings-icon');
+        settings.addEventListener("click", function () {
+            document.getElementById('settings-menu').style.display = 'block';
+        });
+
+        const close = document.getElementById('close');
+        close.addEventListener('click', function () {
+            document.getElementById('settings-menu').style.display = 'none';
+        })
+        const app = document.getElementsByTagName("BODY")[0];
+        app.setAttribute("data-light-mode", "potato");
+        // Moved the default setting into the on-page load.
+
+        /* refresh issue */
+        // if (localStorage.mode == 'dark'){
+        //   dark();
+        // } else if (localStorage.mode == 'light') {
+        //   light();
+        // } else if (localStograge.mode == 'potato') {
+        //   potato();
+        // }
+    }
+
+    function potato() {
+        var app = document.getElementsByTagName("BODY")[0];
+        app.setAttribute("data-light-mode", "potato");
+        var circle = document.getElementById('circle');
+        circle.style.backgroundColor = '#ff0';
+        circle.style["boxShadow"] = '0 0 20px 20px #ff0';
+        circle.style.border = '5px solid #ff0';
+
+        /* buttons */
+        var btn1 = document.getElementsByTagName("button")[0];
+        btn1.setAttribute("mode", "potato");
+        var btn2 = document.getElementsByTagName("button")[1];
+        btn2.setAttribute("mode", "potato");
+        var btn3 = document.getElementsByTagName("button")[2];
+        btn3.setAttribute("mode", "potato");
+        var btn4 = document.getElementsByTagName("button")[3];
+        btn4.setAttribute("mode", "potato");
+        var btn5 = document.getElementsByTagName("button")[4];
+        btn5.setAttribute("mode", "potato");
+
+        /* setting menu */
+        var settings = document.getElementById('settings-menu');
+        settings.style.background ='white';
+        settings.style.color = 'black';
+        settings.style.border = '5px solid #000';
+
+        document.getElementById('timerDisplay').style.color = '#333';
+        document.getElementById('title').style.color = '#333';
+        document.getElementById('phaseDisplay').style.color = '#333';
+    }
+
+    function dark() {
+        var app = document.getElementsByTagName("BODY")[0];
+        app.setAttribute("data-light-mode", "dark");
+        var circle = document.getElementById('circle');
+        circle.style.backgroundColor = '#333';
+        circle.style["boxShadow"] = '0 0 10px 10px white';
+        circle.style.border = '5px solid white';
+
+        /* buttons */
+        var btn1 = document.getElementsByTagName("button")[0];
+        btn1.setAttribute("mode", "dark");
+        var btn2 = document.getElementsByTagName("button")[1];
+        btn2.setAttribute("mode", "dark");
+        var btn3 = document.getElementsByTagName("button")[2];
+        btn3.setAttribute("mode", "dark");
+        var btn4 = document.getElementsByTagName("button")[3];
+        btn4.setAttribute("mode", "dark");
+        var btn5 = document.getElementsByTagName("button")[4];
+        btn5.setAttribute("mode", "dark");
+
+        /* setting menu */
+        var settings = document.getElementById('settings-menu');
+        settings.style.background ='#444';
+        settings.style.color = 'white';
+        settings.style.border = '5px solid white';
+
+
+        document.getElementById('timerDisplay').style.color = 'white';
+        document.getElementById('title').style.color = 'white';
+        document.getElementById('phaseDisplay').style.color = 'white';
+    }
+
+    function light() {
+        var app = document.getElementsByTagName("BODY")[0];
+        app.setAttribute("data-light-mode", "light");
+        var circle = document.getElementById('circle');
+        circle.style.backgroundColor = 'white';
+        circle.style["boxShadow"] = '0 0 10px 10px #333';
+        circle.style.border = '5px solid #333';
+
+        /* resset and start button */
+        var btn1 = document.getElementsByTagName("button")[0];
+        btn1.setAttribute("mode", "light");
+        var btn2 = document.getElementsByTagName("button")[1];
+        btn2.setAttribute("mode", "light");
+        var btn3 = document.getElementsByTagName("button")[2];
+        btn3.setAttribute("mode", "light");
+        var btn4 = document.getElementsByTagName("button")[3];
+        btn4.setAttribute("mode", "light");
+        var btn5 = document.getElementsByTagName("button")[4];
+        btn5.setAttribute("mode", "light");
+
+        /* setting menu */
+        var settings = document.getElementById('settings-menu');
+        settings.style.background ='white';
+        settings.style.color = 'black';
+        settings.style.border = '5px solid #000';
+
+        document.getElementById('timerDisplay').style.color = '#333';
+        document.getElementById('title').style.color = '#333';
+        document.getElementById('phaseDisplay').style.color = '#333';
+    }
+
+</script>
