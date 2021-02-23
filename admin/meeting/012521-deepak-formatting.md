@@ -15,7 +15,6 @@ Jessie Zou
 Deepak Karki  
 
 Absent:  
-Aaron Li  
 Ahmad Milad  
 
 # Agenda
