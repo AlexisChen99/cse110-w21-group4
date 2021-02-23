@@ -72,12 +72,12 @@ function start() {
     console.log(smallBreakLength);
     console.log(longBreakLength);
     phase = "work";
-    document.getElementById('phaseDisplay').innerHTML = phase;
+    document.getElementById("phaseDisplay").innerHTML = phase;
     secondsRemaining = setTimeRemaining();
     console.log(secondsRemaining);
     tasksDone = 0;
     document.getElementById("reset").disabled = false;
-    document.getElementById('start').disabled = true;
+    document.getElementById("start").disabled = true;
 
     if (tasks.length > 0) {
         let timer = setInterval(function () {
@@ -86,26 +86,26 @@ function start() {
                 clearInterval(timer);
                 phase = "idle";
                 // Update the phase
-                document.getElementById('phaseDisplay').innerHTML = phase;
+                document.getElementById("phaseDisplay").innerHTML = phase;
                 // Disable the reset button
-                document.getElementById('reset').disabled = true;
+                document.getElementById("reset").disabled = true;
             } else {
                 // Display the time MM:SS
-                document.getElementById('timerDisplay').innerHTML = convertSeconds(secondsRemaining);
+                document.getElementById("timerDisplay").innerHTML = convertSeconds(secondsRemaining);
                 secondsRemaining--;
 
                 if (secondsRemaining < 0) {
                     if (phase == "work") {
                         // Update the tasks array (shift)
                         task = tasks.shift();
-                        document.getElementById('mainTasks').innerHTML = tasks;
-                        var audio = new Audio('audio/Rooster Crow.wav');
+                        document.getElementById("mainTasks").innerHTML = tasks;
+                        var audio = new Audio("audio/Rooster Crow.wav");
                         audio.play();
                     }
 
                     updatePhase();
                     secondsRemaining = setTimeRemaining();
-                    document.getElementById('phaseDisplay').innerHTML = phase;
+                    document.getElementById("phaseDisplay").innerHTML = phase;
                 }
            }
         }, 1000); //update the timer every second
@@ -118,26 +118,26 @@ function start() {
                 clearInterval(timer);
                 phase = "idle";
                 // Update the phase
-                document.getElementById('phaseDisplay').innerHTML = phase;
+                document.getElementById("phaseDisplay").innerHTML = phase;
                 // Disable the reset button
-                document.getElementById('reset').disabled = true;
+                document.getElementById("reset").disabled = true;
             } else {
                 // Display the time MM:SS
-                document.getElementById('timerDisplay').innerHTML = convertSeconds(secondsRemaining);
+                document.getElementById("timerDisplay").innerHTML = convertSeconds(secondsRemaining);
                 secondsRemaining--;
 
                 if (secondsRemaining < 0) {
                     if (phase == "work") {
                         // Update the tasks array (shift)
                         task = tasks.shift();
-                        document.getElementById('mainTasks').innerHTML = tasks;
-                        var audio = new Audio('audio/Rooster Crow.wav');
+                        document.getElementById("mainTasks").innerHTML = tasks;
+                        var audio = new Audio("audio/Rooster Crow.wav");
                         audio.play();
                     }
 
                     updatePhase();
                     secondsRemaining = setTimeRemaining();
-                    document.getElementById('phaseDisplay').innerHTML = phase;
+                    document.getElementById("phaseDisplay").innerHTML = phase;
                 }
            }
         }, 1000); //update the timer every second
@@ -154,15 +154,18 @@ function convertSeconds(secondsRemaining) {
     minutes = Math.floor(secondsRemaining / 60);
     seconds = secondsRemaining - (60 * minutes);
 
-    var timerString ='';
-    if (minutes < 10) { timerString = '0'; }
-    timerString += minutes + ':';
-    if (seconds < 10) { timerString += '0'; }
+    var timerString ="";
+    if (minutes < 10) { timerString = "0"; }
+    timerString += minutes + ":";
+    if (seconds < 10) { timerString += "0"; }
     timerString += seconds;
 
     return timerString;
 }
 
+function stop() {
+    
+}
 /**
  * Resets the timer and empties the task queue
  */
@@ -170,11 +173,11 @@ function reset() {
     tasks = [];
     uniqueID = 1;
     // displayArray();
-    phase = 'idle';
-    document.getElementById('timerDisplay').innerHTML='00:00';
-    document.getElementById('start').disabled = true;
-    document.getElementById('reset').disabled = true;
-    document.getElementById('mainTasks').innerHTML = tasks;
+    phase = "idle";
+    document.getElementById("timerDisplay").innerHTML="00:00";
+    document.getElementById("start").disabled = true;
+    document.getElementById("reset").disabled = true;
+    document.getElementById("mainTasks").innerHTML = tasks;
 }
 
 /**
@@ -183,62 +186,88 @@ function reset() {
 function skip() {
     if(phase == "work") {
         tasks.shift();
-        document.getElementById('phaseDisplay').innerHTML = phase;
+        document.getElementById("phaseDisplay").innerHTML = phase;
     }
     phase = "work"
     secondsRemaining = setTimeRemaining();
-    document.getElementById('mainTasks').innerHTML = tasks;
+    document.getElementById("mainTasks").innerHTML = tasks;
 }
 
 /** 
  * Adds a task to the task queue
  */
 function addTask() {
-    // Load the start button if it's not running
-    if (phase == 'idle') {
+    // Load the start button if it"s not running
+    if (phase == "idle") {
         document.getElementById("start").disabled = false;
     }
     const task = document.getElementById("enterTask").value;
-    if(task != '') {
-        createTask(task);
+    if(task != "") {
+        createTask(task, -1);
     }
-    document.getElementById("mainTasks").innerHTML = tasks;
-    //alert('task added');
+    // document.getElementById("mainTasks").innerHTML = tasks;
+    //alert("task added");
 }
 
-function createTask(text) {
+function createTask(text, existingID) {
     taskList = document.querySelector("#taskListContainer");
     let newTask = document.createElement("div");
     newTask.className = "userTask";
-    newTask.id = uniqueID++;
-    let img = ["img/unmarked-circle-outline.png", "img/pin.png", "img/delete-task.png"];
+
+    if(existingID != -1 ) {
+        newTask.id = document.getElementById(""+existingID).id;
+    } else {
+        newTask.id = uniqueID++;
+    }
+
+    let img = ["img/unmarked-circle-outline.png", "img/unpinned.png", "img/delete-task.png"];
+    let altImg = ["img/marked-done.png", "img/pinned.png"];
     let id = ["markDone", "pin", "singleDel"];
+
     let i = 0;
-    let mark = document.createElement("img");
-    mark.src = img[i];
-    mark.id = id[i++];
-    mark.addEventListener('click', function() {
-        mark.src = "img/marked-done.png";
-    });
-    let pin = document.createElement("img");
-    pin.src = img[i];
-    pin.id = id[i++];
-    // Event listener
-    let del = document.createElement("img");
-    del.src = img[i];
-    del.id = id[i++];
-    //Event Listener
+    let mark = addTaskComponents(i++, "mark", img, altImg, id);
+    let pin = addTaskComponents(i++, "pin", img, altImg, id);
+    let del = addTaskComponents(i++, "del", img, altImg, id);
     let content = document.createElement("p");
     content.innerHTML = text;
-    tasks.push(text);
+    tasks.push(content.innerHTML);
+
+    pin.addEventListener("click", function() {
+        createTask(text, newTask.id);
+    });
+
+    del.addEventListener("click", function() {
+        let deleteTask = newTask;
+        deleteTask.parentNode.removeChild(deleteTask);
+    });
 
     newTask.appendChild(mark);
     newTask.appendChild(pin);
     newTask.appendChild(del);
     newTask.appendChild(content);
-    taskList.appendChild(newTask);
+    if(existingID == -1) {
+        taskList.appendChild(newTask);
+    } else {
+        let mainTasks = document.getElementById("mainTasks");
+        mainTasks.appendChild(newTask);
+    }
 }
 
+function addTaskComponents(index, func, img, altImg, id) {
+    let part = document.createElement("img");
+    part.src = img[index];
+    part.id = id[index];
+    switch(func) {
+        case "mark":
+            // Switch images back and forth
+            break;
+        case "pin":
+            // Switch images back and forth
+
+            break;
+    }
+    return part;
+}
 /**
  * Update the global phases and tasks complete
  */
@@ -283,12 +312,12 @@ function setWork(event) {
 }
 
 // function displayArray() {
-//     let ul = document.getElementById('task-list');
+//     let ul = document.getElementById("task-list");
 //     while(ul.firstChild) {
 //         ul.removeChild(ul.firstChild);
 //     }
 //     for(let i = 0; i <tasks.length; i++) {
-//         let newLi = document.createElement('li')
+//         let newLi = document.createElement("li")
 //         newLi.innerHTML = tasks[i];
 //         ul.appendChild(newLi);
 //     }

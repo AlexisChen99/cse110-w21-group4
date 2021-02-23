@@ -89,51 +89,51 @@
 </body>
 
 <script>
-    /* save user's preference locally after theme changing */
+    /* save user"s preference locally after theme changing */
     // function LoadData() {
-    //     let theme = window.localStorage.getItem('theme');
+    //     let theme = window.localStorage.getItem("theme");
     //     const app = document.getElementsByTagName("BODY")[0];
     //     if (!theme) {
     //         app.setAttribute("data-light-mode", "potato");
-    //         window.localStorage.setItem('theme', 'potato');
-    //         console.log('null');
-    //     } else if (theme == 'potato'){
+    //         window.localStorage.setItem("theme", "potato");
+    //         console.log("null");
+    //     } else if (theme == "potato"){
     //         potato();
-    //         window.localStorage.setItem('theme', 'potato');
-    //         console.log('potato');
-    //     } else if (theme == 'dark'){
+    //         window.localStorage.setItem("theme", "potato");
+    //         console.log("potato");
+    //     } else if (theme == "dark"){
     //         dark();
-    //         window.localStorage.setItem('theme', 'dark');
-    //         console.log('dark');
-    //     } else if (theme == 'light'){
+    //         window.localStorage.setItem("theme", "dark");
+    //         console.log("dark");
+    //     } else if (theme == "light"){
     //         light();
-    //         window.localStorage.setItem('theme', 'light');
-    //         console.log('light');
+    //         window.localStorage.setItem("theme", "light");
+    //         console.log("light");
     //     }
     // }
 
     window.onload = function () {
-        const settings = document.getElementById('settingsIcon');
+        const settings = document.getElementById("settingsIcon");
         settings.addEventListener("click", function () {
-            document.getElementById('settingsMenu').style.display = 'block';
+            document.getElementById("settingsMenu").style.display = "block";
         });
-        const closeSettings = document.getElementById('closeSettings');
-        closeSettings.addEventListener('click', function () {
-            document.getElementById('settingsMenu').style.display = 'none';
-        });
-
-        const displayTasks = document.getElementById('tasks');
-        displayTasks.addEventListener('click', function () {
-            document.getElementById('taskMenu').style.display = 'block';
+        const closeSettings = document.getElementById("closeSettings");
+        closeSettings.addEventListener("click", function () {
+            document.getElementById("settingsMenu").style.display = "none";
         });
 
-        const closeTasks = document.getElementById('closeTasks');
-        closeTasks.addEventListener('click', function () {
-            document.getElementById('taskMenu').style.display = 'none';
+        const displayTasks = document.getElementById("tasks");
+        displayTasks.addEventListener("click", function () {
+            document.getElementById("taskMenu").style.display = "block";
+        });
+
+        const closeTasks = document.getElementById("closeTasks");
+        closeTasks.addEventListener("click", function () {
+            document.getElementById("taskMenu").style.display = "none";
         })
 
-        const volumeIcon = document.getElementById('volumeIcon');
-        volumeIcon.addEventListener('click', mute());
+        const volumeIcon = document.getElementById("volumeIcon");
+        volumeIcon.addEventListener("click", mute());
 
         const app = document.getElementsByTagName("BODY")[0];
         app.setAttribute("data-light-mode", "potato");
@@ -143,16 +143,16 @@
     }
 
     function potato() {
-        window.localStorage.setItem('theme', 'potato');
+        window.localStorage.setItem("theme", "potato");
         var app = document.getElementsByTagName("BODY")[0];
         app.setAttribute("data-light-mode", "potato");
         var bg = document.getElementById("bg");
         bg.style.backgroundImage = 'url("img/background.png")';
-        bg.style.background = '100% center no-repeat cover'
-        var circle = document.getElementById('circleTimer');
-        circle.style.backgroundColor = '#ff0';
-        circle.style["boxShadow"] = '0 0 20px 20px #ff0';
-        circle.style.border = '5px solid #ff0';
+        bg.style.background = "100% center no-repeat cover"
+        var circle = document.getElementById("circleTimer");
+        circle.style.backgroundColor = "#ff0";
+        circle.style["boxShadow"] = "0 0 20px 20px #ff0";
+        circle.style.border = "5px solid #ff0";
 
         /* buttons */
         var btn = document.getElementsByTagName("button");
@@ -165,27 +165,27 @@
         btn[6].setAttribute("mode", "potato");
 
         /* setting menu */
-        var settings = document.getElementById('settingsMenu');
-        settings.style.background = 'white';
-        settings.style.color = 'black';
-        settings.style.border = '5px solid #000';
+        var settings = document.getElementById("settingsMenu");
+        settings.style.background = "white";
+        settings.style.color = "black";
+        settings.style.border = "5px solid #000";
 
-        document.getElementById('timerDisplay').style.color = '#333';
-        document.getElementById('title').style.color = '#333';
-        document.getElementById('phaseDisplay').style.color = '#333';
-        document.getElementById('settingsMenu').style.display = 'none';
+        document.getElementById("timerDisplay").style.color = "#333";
+        document.getElementById("title").style.color = "#333";
+        document.getElementById("phaseDisplay").style.color = "#333";
+        document.getElementById("settingsMenu").style.display = "none";
     }
 
     function dark() {
-        window.localStorage.setItem('theme', 'dark');
+        window.localStorage.setItem("theme", "dark");
         var app = document.getElementsByTagName("BODY")[0];
         app.setAttribute("data-light-mode", "dark");
         var bg = document.getElementById("bg");
-        bg.style.background = 'none';
-        var circle = document.getElementById('circleTimer');
-        circle.style.backgroundColor = '#333';
-        circle.style["boxShadow"] = '0 0 10px 10px white';
-        circle.style.border = '5px solid white';
+        bg.style.background = "none";
+        var circle = document.getElementById("circleTimer");
+        circle.style.backgroundColor = "#333";
+        circle.style["boxShadow"] = "0 0 10px 10px white";
+        circle.style.border = "5px solid white";
 
         /* buttons */
         var btn = document.getElementsByTagName("button");
@@ -198,30 +198,30 @@
         btn[6].setAttribute("mode", "dark");
 
         /* setting menu */
-        var settings = document.getElementById('settingsMenu');
-        settings.style.background = '#444';
-        settings.style.color = 'white';
-        settings.style.border = '5px solid white';
+        var settings = document.getElementById("settingsMenu");
+        settings.style.background = "#444";
+        settings.style.color = "white";
+        settings.style.border = "5px solid white";
 
 
-        document.getElementById('timerDisplay').style.color = 'white';
-        document.getElementById('title').style.color = 'white';
-        document.getElementById('phaseDisplay').style.color = 'white';
-        document.getElementById('settingsMenu').style.display = 'none';
-        document.getElementById('taskMenu').style.color='#333';
+        document.getElementById("timerDisplay").style.color = "white";
+        document.getElementById("title").style.color = "white";
+        document.getElementById("phaseDisplay").style.color = "white";
+        document.getElementById("settingsMenu").style.display = "none";
+        document.getElementById("taskMenu").style.color="#333";
 
     }
 
     function light() {
-        window.localStorage.setItem('theme', 'light');
+        window.localStorage.setItem("theme", "light");
         var app = document.getElementsByTagName("BODY")[0];
         app.setAttribute("data-light-mode", "light");
         var bg = document.getElementById("bg");
-        bg.style.background = 'none';
-        var circle = document.getElementById('circleTimer');
-        circle.style.backgroundColor = 'white';
-        circle.style["boxShadow"] = '0 0 10px 10px #333';
-        circle.style.border = '5px solid #333';
+        bg.style.background = "none";
+        var circle = document.getElementById("circleTimer");
+        circle.style.backgroundColor = "white";
+        circle.style["boxShadow"] = "0 0 10px 10px #333";
+        circle.style.border = "5px solid #333";
 
         /* resset and start button */
         var btn = document.getElementsByTagName("button");
@@ -234,25 +234,25 @@
         btn[6].setAttribute("mode", "light");
 
         /* setting menu */
-        var settings = document.getElementById('settingsMenu');
-        settings.style.background = 'white';
-        settings.style.color = 'black';
-        settings.style.border = '5px solid #000';
+        var settings = document.getElementById("settingsMenu");
+        settings.style.background = "white";
+        settings.style.color = "black";
+        settings.style.border = "5px solid #000";
 
-        document.getElementById('timerDisplay').style.color = '#333';
-        document.getElementById('title').style.color = '#333';
-        document.getElementById('phaseDisplay').style.color = '#333';
-        document.getElementById('settingsMenu').style.display = 'none';
+        document.getElementById("timerDisplay").style.color = "#333";
+        document.getElementById("title").style.color = "#333";
+        document.getElementById("phaseDisplay").style.color = "#333";
+        document.getElementById("settingsMenu").style.display = "none";
     }
 
     function displayTasks() {
-        document.getElementById('taskMenu').style.display = 'block';
+        document.getElementById("taskMenu").style.display = "block";
     }
 
     function mute() {
-        const volumeIcon = document.getElementById('volumeIcon');
+        const volumeIcon = document.getElementById("volumeIcon");
         volumeIcon.src = "img/volume-mute.png";
-        const volume = document.getElementById('volume');
+        const volume = document.getElementById("volume");
         volume.value = 0;
     }
 </script>
