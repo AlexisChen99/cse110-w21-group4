@@ -24,20 +24,21 @@
         <div class="button-wrapper">
             <button class="reset" id="reset" onclick="reset()">Reset</button>
             <button class="start-stop" id="start" onclick="start()">Start</button>
+            <button id="tasks" onclick="displayTasks()">Tasks</button>
         </div>
 
-        <div id = "taskAdder">
-            <input type="text" id = "task" placeholder="Enter Task" required>
-            <button id = "taskAdder" onclick="addTask()">Add Task</button>
+        <div id="task-container">
+            <input type="text" id="enter-task" placeholder="Enter Task" required>
+            <button id="taskAdder" onclick="addTask()">Add</button>
         </div>
-        <label id = "listTasks"></label>
+        <label id="listTasks"></label>
 
         <!-- End of content wrapper -->
     </div>
 
-    <div id="settings-menu">
+    <div class="menu" id="settings-menu">
         <p>Settings</p>
-        <p id="close"> Close</p>
+        <p class="close" id="close-settings">Close</p>
         <div class="choose-theme" id="choose-theme">
             <button id="theme-light" onclick="light()">Light Theme</button>
             <button id="theme-dark" onclick="dark()">Dark Theme</button>
@@ -45,17 +46,42 @@
         </div>
 
         <form class="form-container" id="user-input">
-            <label for="work" class="field-label">Work Time</label>
-            <input type="text" class="custom-time" id="work_length" value="25:00">
-            <label for="work" class="field-label">Short Break</label>
-            <input type="text" class="custom-time" id="short_break" value="05:00">
-            <label for="work" class="field-label">Long Break</label>
-            <input type="text" class="custom-time" id="long_break" value="15:00">
-            <label for="work" class="field-label">Volume (%)</label>
-            <input type="text" class="custom-volume" id="volume" value="50">
-            <img src="img/volume.png" alt="Mute?" class="volume-icon" id="volume-icon">
+            <div>
+                <label for="work" class="field-label">Work Time</label>
+                <input type="number" class="custom-time" id="work-min" value="25">
+                <p>:</p>
+                <input type="number" class="custom-time" id="work-sec" value="00">
+            </div>
+
+            <div>
+                <label for="work" class="field-label">Short Break</label>
+                <input type="number" class="custom-time" id="work-min" value="5">
+                <p>:</p>
+                <input type="number" class="custom-time" id="work-sec" value="00">
+            </div>
+
+            <div>
+                <label for="work" class="field-label">Long Break</label>
+                <input type="number" class="custom-time" id="work-min" value="25">
+                <p>:</p>
+                <input type="number" class="custom-time" id="work-sec" value="00">
+            </div>
+            <div>
+                <label for="work" class="field-label">Volume (%)</label>
+                <input type="number" class="custom-volume" id="volume" value="50">
+                <img src="img/volume.png" alt="Mute?" class="volume-icon" id="volume-icon">
+            </div>
         </form>
         <!-- End of settings menu -->
+    </div>
+
+    <div class="menu" id="task-menu">
+        <p>Tasks</p>
+        <p class="close" id="close-tasks">Close</p>
+        <p id="delete-all">Delete All</p>
+        <div class="task-list-container" id="task-list-container">
+
+        </div>
     </div>
 
 </body>
@@ -67,10 +93,24 @@
             document.getElementById('settings-menu').style.display = 'block';
         });
 
-        const close = document.getElementById('close');
-        close.addEventListener('click', function () {
+        const closeSettings = document.getElementById('close-settings');
+        closeSettings.addEventListener('click', function () {
             document.getElementById('settings-menu').style.display = 'none';
+        });
+
+        const displayTasks = document.getElementById('tasks');
+        displayTasks.addEventListener('click', function () {
+            document.getElementById('task-menu').style.display = 'block';
+        });
+
+        const closeTasks = document.getElementById('close-tasks');
+        closeTasks.addEventListener('click', function () {
+            document.getElementById('task-menu').style.display = 'none';
         })
+
+        const volumeIcon = document.getElementById('volume-icon');
+        volumeIcon.addEventListener('click', mute());
+        
         const app = document.getElementsByTagName("BODY")[0];
         app.setAttribute("data-light-mode", "potato");
         // Moved the default setting into the on-page load.
@@ -107,13 +147,14 @@
 
         /* setting menu */
         var settings = document.getElementById('settings-menu');
-        settings.style.background ='white';
+        settings.style.background = 'white';
         settings.style.color = 'black';
         settings.style.border = '5px solid #000';
 
         document.getElementById('timerDisplay').style.color = '#333';
         document.getElementById('title').style.color = '#333';
         document.getElementById('phaseDisplay').style.color = '#333';
+        document.getElementById('settings-menu').style.display = 'none';
     }
 
     function dark() {
@@ -138,7 +179,7 @@
 
         /* setting menu */
         var settings = document.getElementById('settings-menu');
-        settings.style.background ='#444';
+        settings.style.background = '#444';
         settings.style.color = 'white';
         settings.style.border = '5px solid white';
 
@@ -146,6 +187,8 @@
         document.getElementById('timerDisplay').style.color = 'white';
         document.getElementById('title').style.color = 'white';
         document.getElementById('phaseDisplay').style.color = 'white';
+        document.getElementById('settings-menu').style.display = 'none';
+
     }
 
     function light() {
@@ -170,13 +213,24 @@
 
         /* setting menu */
         var settings = document.getElementById('settings-menu');
-        settings.style.background ='white';
+        settings.style.background = 'white';
         settings.style.color = 'black';
         settings.style.border = '5px solid #000';
 
         document.getElementById('timerDisplay').style.color = '#333';
         document.getElementById('title').style.color = '#333';
         document.getElementById('phaseDisplay').style.color = '#333';
+        document.getElementById('settings-menu').style.display = 'none';
     }
 
+    function displayTasks() {
+        document.getElementById('task-menu').style.display = 'block';
+    }
+    function mute() {
+        const volumeIcon = document.getElementById('volume-icon');
+        volumeIcon.src = "img/volume-mute.png";
+        const volume = document.getElementById('volume');
+        volume.value = 0;
+    }
 </script>
+

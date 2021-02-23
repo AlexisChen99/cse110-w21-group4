@@ -8,12 +8,32 @@
  * i-0-1-0-1-0-1-0-2
  */
 
+var pushEvent = function(arr, callback) {
+    arr.push = function(e) {
+        Array.prototype.push.call(arr,e);
+        callback(arr);
+    };
+};
+
+var popEvent = function(arr, callback) {
+    arr.shift = function(e) {
+        Array.prototype.shift.call(arr,e);
+        callback(arr);
+    };
+};
+
 let tasks = [];
+// pushEvent(tasks, function(tasks) {
+//     displayArray();
+// });
+// popEvent(tasks, function(tasks) {
+//     displayArray();
+// });
 let task;
 let phase = "idle";
 let tasksDone = 0;
 let secondsRemaining = 0;
-
+let taskList;
 /**
  * Break lengths
  */
@@ -74,6 +94,8 @@ function start() {
                         // Update the tasks array (shift)
                         task = tasks.shift();
                         document.getElementById('listTasks').innerHTML = tasks;
+                        var audio = new Audio('audio/Rooster Crow.wav');
+                        audio.play();
                     }
 
                     updatePhase();
@@ -109,6 +131,7 @@ function convertSeconds(secondsRemaining) {
  */
 function reset() {
     tasks = [];
+    displayArray();
     phase = 'idle';
     document.getElementById('timerDisplay').innerHTML='00:00';
     document.getElementById('start').disabled = true;
@@ -137,12 +160,44 @@ function addTask() {
     if (phase == 'idle') {
         document.getElementById("start").disabled = false;
     }
-    tasks.push(document.getElementById("task").value);
-    document.getElementById('listTasks').innerHTML = tasks;
+    const task = document.getElementById("enter-task").value;
+    if(task != '') {
+        createTask(task);
+    }
+    document.getElementById("listTasks").innerHTML = tasks;
     //alert('task added');
-    document.getElementById('task').value='';
 }
 
+function createTask(text) {
+    taskList = document.querySelector("#task-list-container");
+    let newTask = document.createElement("div");
+    newTask.className = "user-task";
+    let img = ["img/unmarked-circle-outline.png", "img/pin.png", "img/delete-task.png"];
+    let id = ["mark-done", "pin", "single-del"];
+    let i = 0;
+    let mark = document.createElement("img");
+    mark.src = img[i];
+    mark.id = id[i++];
+    mark.addEventListener('click', function() {
+        mark.src = "img/marked-done.png";
+    });
+    let pin = document.createElement("img");
+    pin.src = img[i];
+    pin.id = id[i++];
+    // Event listener
+    let del = document.createElement("img");
+    del.src = img[i];
+    del.id = id[i++];
+    //Event Listener
+    let content = document.createElement("p");
+    content.innerHTML = text;
+
+    newTask.appendChild(mark);
+    newTask.appendChild(pin);
+    newTask.appendChild(del);
+    newTask.appendChild(content);
+    taskList.appendChild(newTask);
+}
 /**
  * Update the global phases and tasks complete
  */
@@ -152,7 +207,7 @@ function updatePhase() {
 
         if (tasksDone % 4 != 0) {
             // If the tasks completed is less than 4 (1-3)
-            phase = "small_break";
+            phase = "short_break";
         } else {
             // If the tasks completed is 4
             phase = "long_break";
@@ -170,7 +225,7 @@ function updatePhase() {
  */
 function setTimeRemaining() {
     return (phase == "work") ? work_length :     
-        (phase == "small_break") ? small_break_length : 
+        (phase == "short_break") ? small_break_length : 
         big_break_length;                        
 }
 
@@ -185,3 +240,15 @@ function setSmallBreak(event) {
 function setWork(event) {
     work_length = event.target.value * 60;
 }
+
+// function displayArray() {
+//     let ul = document.getElementById('task-list');
+//     while(ul.firstChild) {
+//         ul.removeChild(ul.firstChild);
+//     }
+//     for(let i = 0; i <tasks.length; i++) {
+//         let newLi = document.createElement('li')
+//         newLi.innerHTML = tasks[i];
+//         ul.appendChild(newLi);
+//     }
+// }

@@ -98,50 +98,59 @@ p {
     margin-top: 50px;
 }
 
-.reset {
+.button-wrapper button {
     display: inline-block;
     width: 150px;
     height: 75px;
-    margin-right: 10px;
+    margin: auto;
 }
 
-.start-stop {
-    display: inline-block;
-    width: 150px;
-    height: 75px;
-    margin-left: 10px;
-}
-
-#taskAdder{
+#taskAdder {
     margin-top: 20px;
-    font-size: 16px;
 }
 
+@media screen and (max-width: 479px) {
+    .button-wrapper button {
+        width: 100px;
+        height: 50px;
+    }
+    #task-container {
+        width: 100vw;
+        text-align: left;
+    }
+    #enter-task {
+        width: 60%;
+    }
+    #taskAdder {
+        width: 100px;
+        height: 50px;
+    }
+}
 /*---------------------------------
          Settings Menu Display
 ---------------------------------*/
-#settings-menu {
+.menu {
     position: absolute;
     left: 0%;
     top: 0%;
     right: 0%;
     bottom: auto;
     display: none; /* Change block/none */
-    height: 90vh;
+    max-width: 768px;
     margin-top: 15vh;
     border: 5px solid #000;
-    border-radius: 50px 50px 0 0;
+    border-radius: 50px 50px 50px 50px;
     background-color: white;
     background-image: -webkit-gradient(linear, left bottom, left top, from(#eee), to(#fff));
     background-image: linear-gradient(0deg, #eee, #fff);
     box-shadow: inset 0 -1px 10px 3px #6d6d6d;
 }
 
-#settings-menu p {
+.menu p {
     margin-top: 20px;
 }
 
-#close {
+.close {
     position: absolute;
     left: auto;
     top: 0%;
@@ -209,10 +218,9 @@ button:hover {
 }
 
 .form-container {
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 300px;
+    margin: 20px auto;
+    padding-right: 20px;
+    max-width: 350px;
     text-align: right;
 }
 
@@ -225,7 +233,7 @@ input {
     font-size: 34px;
 }
 .custom-time {
-    width: 125px;
+    width: 60px;
 }
 
 #volume {
@@ -236,11 +244,75 @@ input {
 .volume-icon {
     display: inline-block;
     width: 40px;
+    margin-right: 20px;
     cursor: pointer;
 }
 
-form input {
+form div { 
+    display: block;
+}
+.menu form input {
     border-radius: 20px;
     border-style: solid black;
     border-width: 5px;
 }
+
+form p {
+    display: inline;
+    margin: 0 -10px;
+}
+
+/* @media screen and (max-width: 768px) {
+    menu {
+        width: 100vw;
+    }
+} */
+@media screen and (max-width: 479px) {
+    .menu {
+        width: 100%;
+    }
+
+    .form-container {
+        width: 100%;
+    }
+    form input {
+        font-size: 24px;
+    }
+    form p {
+        margin: 0 -10px;
+    }
+}
+/* //////////////////
+       Task Menu
+/////////////////// */
+#delete-all {
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    right: auto;
+    bottom: auto;
+    padding-left: 20px;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.user-task {
+    margin: 10px 20px;
+    border-style: solid;
+    border-width: 2px;
+    text-align: left;
+}
+.user-task img {
+    display: inline-block;
+    height: 50px;
+    cursor: pointer;
+}
+
+.user-task p {
+    display: inline;
+    font-size: 1em;
+}
+
+
