@@ -1,3 +1,7 @@
+/*---------------------------------
+         Background Display
+---------------------------------*/
+
 body {
     height: 100vh;
     /* background-color: #b9e1f0;
@@ -9,21 +13,16 @@ body {
     font-size: 3em;
 }
 
-.bg {
-    background-image: url("img/background.png");
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
 
 body[data-light-mode=potato]{
     height: 100vh;
-    background-color: #b9e1f0;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#86ffff), to(#fff));
-    background-image: linear-gradient(180deg, #86ffff, #fff);
+    background-color: #73d918;
     text-align: center;
     color: #333;
+    background-image: url("img/background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 body[data-light-mode=dark] {
@@ -44,7 +43,7 @@ p {
 /*---------------------------------
          Main Page Display
 ---------------------------------*/
-.content-wrapper {
+.contentWrapper {
     position: absolute;
     left: 0%;
     top: 0%;
@@ -56,7 +55,7 @@ p {
     border-color: red; */
 }
 
-.title {
+#title {
     display: block;
     margin-top: 40px;
     margin-bottom: 3px;
@@ -65,20 +64,21 @@ p {
     font-size: 30px;
 }
 
-.phase {
+#phaseDisplay {
     display: inline-block;
     margin: 20px 0;
     text-shadow: 1px 1px 1px #000;
 }
 
-#settings-icon {
+#settingsIcon {
     margin-left: 80px;
 }
 
-#settings-icon:hover {
+#settingsIcon:hover {
     cursor: pointer;
 }
-.circle {
+
+#circleTimer {
     width: 200px;
     height: 200px;
     margin-right: auto;
@@ -90,7 +90,7 @@ p {
     border-radius: 50%;
 }
 
-.timer {
+#timerDisplay {
     margin: 40px auto;
     padding: 25px 0px;
     font-size: 50px;
@@ -98,16 +98,11 @@ p {
     font-weight: bold;
 }
 
-.image {
-    display: inline-block;
-    cursor: pointer;
-}
-
-.button-wrapper {
+.buttonWrapper {
     margin-top: 50px;
 }
 
-.button-wrapper button {
+.buttonWrapper button {
     display: inline-block;
     width: 150px;
     height: 75px;
@@ -120,15 +115,15 @@ p {
 }
 
 @media screen and (max-width: 479px) {
-    .button-wrapper button {
+    .buttonWrapper button {
         width: 100px;
         height: 50px;
     }
-    #task-container {
+    .taskContainer {
         width: 100vw;
         text-align: left;
     }
-    #enter-task {
+    #enterTask {
         width: 60%;
     }
     #taskAdder {
@@ -153,6 +148,7 @@ input[type="text"] {
     right: 0%;
     bottom: auto;
     display: none; /* Change block/none */
+    min-height: 200px;
     max-width: 768px;
     margin-top: 15vh;
     border: 5px solid #000;
@@ -236,14 +232,14 @@ button:hover {
     background-color: rgb(100, 100, 100);
 }
 
-.form-container {
+.userInputContainer {
     margin: 20px auto;
     padding-right: 20px;
     max-width: 350px;
     text-align: right;
 }
 
-.field-label {
+.fieldLabel {
     font-size: 24px;
 }
 
@@ -251,7 +247,7 @@ input {
     text-align: center;
     font-size: 20px;
 }
-.custom-time {
+.customTime {
     width: 60px;
 }
 
@@ -260,7 +256,7 @@ input {
     width: 75px;
 }
 
-.volume-icon {
+#volumeIcon {
     display: inline-block;
     width: 40px;
     margin-right: 20px;
@@ -291,7 +287,7 @@ form p {
         width: 100%;
     }
 
-    .form-container {
+    .formContainer {
         width: 100%;
     }
     form input {
@@ -301,10 +297,10 @@ form p {
         margin: 0 -10px;
     }
 }
-/* //////////////////
-       Task Menu
-/////////////////// */
-#delete-all {
+/*---------------------------------
+         Task Menu Display
+---------------------------------*/
+#deleteAll {
     position: absolute;
     left: 0%;
     top: 0%;
@@ -317,19 +313,25 @@ form p {
     cursor: pointer;
 }
 
-.user-task {
+.userTask {
     margin: 10px 20px;
     border-style: solid;
     border-width: 2px;
     text-align: left;
 }
-.user-task img {
+.userTask img {
     display: inline-block;
     height: 50px;
     cursor: pointer;
 }
 
-.user-task p {
+.userTask p {
     display: inline;
     font-size: 1em;
+}
+
+@media screen and (max-width: 479px) {    
+    #taskMenu p {
+        font-size: 25px;
+    }
 }

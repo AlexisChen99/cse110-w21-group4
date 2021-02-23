@@ -10,84 +10,83 @@
 </head>
 
 <body>
-    <!-- <img src="" id="sky"> -->
-    <div class="content-wrapper">
-        <p class="title" id="title">Potato Timer</p>
+    <div class="contentWrapper">
+        <p id="title">Potato Timer</p>
 
-        <p class="phase" id="phaseDisplay">Work</p>
-        <img src="img/settings.png" alt="Settings" id="settings-icon">
+        <p id="phaseDisplay">Work</p>
+        <img src="img/settings.png" alt="Settings" id="settingsIcon">
 
-        <div class="circle" id="circle">
+        <div id="circleTimer">
             <p class="timer" id="timerDisplay">25:00</p>
         </div>
 
-        <div class="button-wrapper">
-            <button class="reset" id="reset" onclick="reset()">Reset</button>
-            <button class="start-stop" id="start" onclick="start()">Start</button>
+        <div class="buttonWrapper">
+            <button id="reset" onclick="reset()">Reset</button>
+            <button id="start" onclick="start()">Start</button>
             <button id="tasks" onclick="displayTasks()">Tasks</button>
         </div>
 
-        <div id="task-container">
-            <input type="text" id="enter-task" placeholder="Enter Task" required>
+        <div class="taskContainer">
+            <input type="text" id="enterTask" placeholder="Enter Task" required>
             <button id="taskAdder" onclick="addTask()">Add</button>
         </div>
-        <label id="listTasks"></label>
+        <div id="mainTasks">
+
+        </div>
 
         <!-- End of content wrapper -->
     </div>
 
-    <div class="menu" id="settings-menu">
+    <div class="menu" id="settingsMenu">
         <p>Settings</p>
-        <p class="close" id="close-settings">Close</p>
-        <div class="choose-theme" id="choose-theme">
-            <button id="theme-dark" onclick="light()">Light Theme</button>
-            <button id="theme-dark" onclick="dark()">Dark Theme</button>
-            <button id="theme-potato" onclick="potato()">Potato Theme</button>
+        <p class="close" id="closeSettings">Close</p>
+        <div id="chooseTheme">
+            <p style="margin: 0 0; font-size: 18px;">Select a Theme</p>
+            <button id="themeDark" onclick="light()">Light</button>
+            <button id="themeDark" onclick="dark()">Dark</button>
+            <button id="themePotato" onclick="potato()">Potato</button>
         </div>
 
-        <form class="form-container" id="user-input">
+        <form class="userInputContainer">
             <div>
-                <label for="work" class="field-label">Work Time</label>
-                <input type="number" class="custom-time" id="work-min" value="25">
+                <label for="work" class="fieldLabel">Work Time</label>
+                <input type="number" class="customTime" id="workMin" value="25">
                 <p>:</p>
-                <input type="number" class="custom-time" id="work-sec" value="00">
+                <input type="number" class="customTime" id="workSec" value="00">
             </div>
 
             <div>
-                <label for="work" class="field-label">Short Break</label>
-                <input type="number" class="custom-time" id="work-min" value="5">
+                <label for="shortBreak" class="fieldLabel">Short Break</label>
+                <input type="number" class="customTime" id="shortMin" value="5">
                 <p>:</p>
-                <input type="number" class="custom-time" id="work-sec" value="00">
+                <input type="number" class="customTime" id="shortSec" value="00">
             </div>
 
             <div>
-                <label for="work" class="field-label">Long Break</label>
-                <input type="number" class="custom-time" id="work-min" value="25">
+                <label for="longBreak" class="fieldLabel">Long Break</label>
+                <input type="number" class="customTime" id="longMin" value="25">
                 <p>:</p>
-                <input type="number" class="custom-time" id="work-sec" value="00">
+                <input type="number" class="customTime" id="longSec" value="00">
             </div>
             <div>
-                <label for="work" class="field-label">Volume (%)</label>
-                <input type="number" class="custom-volume" id="volume" value="50">
-                <img src="img/volume.png" alt="Mute?" class="volume-icon" id="volume-icon">
+                <label for="volume" class="fieldLabel">Volume (%)</label>
+                <input type="number" class="customVolume" id="volume" value="50">
+                <img src="img/volume.png" alt="Mute?" id="volumeIcon">
             </div>
         </form>
         <!-- End of settings menu -->
     </div>
 
-    <div class="menu" id="task-menu">
+    <div class="menu" id="taskMenu">
         <p>Tasks</p>
-        <p class="close" id="close-tasks">Close</p>
-        <p id="delete-all">Delete All</p>
-        <div class="task-list-container" id="task-list-container">
+        <p class="close" id="closeTasks">Close</p>
+        <p id="deleteAll">Delete All</p>
+        <div id="taskListContainer">
 
         </div>
     </div>
 
 </body>
-
-<div class="bg" id="bg">
-</div>
 
 <script>
     /* save user's preference locally after theme changing */
@@ -114,26 +113,26 @@
     // }
 
     window.onload = function () {
-        const settings = document.getElementById('settings-icon');
+        const settings = document.getElementById('settingsIcon');
         settings.addEventListener("click", function () {
-            document.getElementById('settings-menu').style.display = 'block';
+            document.getElementById('settingsMenu').style.display = 'block';
         });
-        const closeSettings = document.getElementById('close-settings');
+        const closeSettings = document.getElementById('closeSettings');
         closeSettings.addEventListener('click', function () {
-            document.getElementById('settings-menu').style.display = 'none';
+            document.getElementById('settingsMenu').style.display = 'none';
         });
 
         const displayTasks = document.getElementById('tasks');
         displayTasks.addEventListener('click', function () {
-            document.getElementById('task-menu').style.display = 'block';
+            document.getElementById('taskMenu').style.display = 'block';
         });
 
-        const closeTasks = document.getElementById('close-tasks');
+        const closeTasks = document.getElementById('closeTasks');
         closeTasks.addEventListener('click', function () {
-            document.getElementById('task-menu').style.display = 'none';
+            document.getElementById('taskMenu').style.display = 'none';
         })
 
-        const volumeIcon = document.getElementById('volume-icon');
+        const volumeIcon = document.getElementById('volumeIcon');
         volumeIcon.addEventListener('click', mute());
 
         const app = document.getElementsByTagName("BODY")[0];
@@ -150,7 +149,7 @@
         var bg = document.getElementById("bg");
         bg.style.backgroundImage = 'url("img/background.png")';
         bg.style.background = '100% center no-repeat cover'
-        var circle = document.getElementById('circle');
+        var circle = document.getElementById('circleTimer');
         circle.style.backgroundColor = '#ff0';
         circle.style["boxShadow"] = '0 0 20px 20px #ff0';
         circle.style.border = '5px solid #ff0';
@@ -166,7 +165,7 @@
         btn[6].setAttribute("mode", "potato");
 
         /* setting menu */
-        var settings = document.getElementById('settings-menu');
+        var settings = document.getElementById('settingsMenu');
         settings.style.background = 'white';
         settings.style.color = 'black';
         settings.style.border = '5px solid #000';
@@ -174,7 +173,7 @@
         document.getElementById('timerDisplay').style.color = '#333';
         document.getElementById('title').style.color = '#333';
         document.getElementById('phaseDisplay').style.color = '#333';
-        document.getElementById('settings-menu').style.display = 'none';
+        document.getElementById('settingsMenu').style.display = 'none';
     }
 
     function dark() {
@@ -183,7 +182,7 @@
         app.setAttribute("data-light-mode", "dark");
         var bg = document.getElementById("bg");
         bg.style.background = 'none';
-        var circle = document.getElementById('circle');
+        var circle = document.getElementById('circleTimer');
         circle.style.backgroundColor = '#333';
         circle.style["boxShadow"] = '0 0 10px 10px white';
         circle.style.border = '5px solid white';
@@ -199,7 +198,7 @@
         btn[6].setAttribute("mode", "dark");
 
         /* setting menu */
-        var settings = document.getElementById('settings-menu');
+        var settings = document.getElementById('settingsMenu');
         settings.style.background = '#444';
         settings.style.color = 'white';
         settings.style.border = '5px solid white';
@@ -208,8 +207,8 @@
         document.getElementById('timerDisplay').style.color = 'white';
         document.getElementById('title').style.color = 'white';
         document.getElementById('phaseDisplay').style.color = 'white';
-        document.getElementById('settings-menu').style.display = 'none';
-        document.getElementById('task-menu').style.color='#333';
+        document.getElementById('settingsMenu').style.display = 'none';
+        document.getElementById('taskMenu').style.color='#333';
 
     }
 
@@ -219,7 +218,7 @@
         app.setAttribute("data-light-mode", "light");
         var bg = document.getElementById("bg");
         bg.style.background = 'none';
-        var circle = document.getElementById('circle');
+        var circle = document.getElementById('circleTimer');
         circle.style.backgroundColor = 'white';
         circle.style["boxShadow"] = '0 0 10px 10px #333';
         circle.style.border = '5px solid #333';
@@ -235,7 +234,7 @@
         btn[6].setAttribute("mode", "light");
 
         /* setting menu */
-        var settings = document.getElementById('settings-menu');
+        var settings = document.getElementById('settingsMenu');
         settings.style.background = 'white';
         settings.style.color = 'black';
         settings.style.border = '5px solid #000';
@@ -243,15 +242,15 @@
         document.getElementById('timerDisplay').style.color = '#333';
         document.getElementById('title').style.color = '#333';
         document.getElementById('phaseDisplay').style.color = '#333';
-        document.getElementById('settings-menu').style.display = 'none';
+        document.getElementById('settingsMenu').style.display = 'none';
     }
 
     function displayTasks() {
-        document.getElementById('task-menu').style.display = 'block';
+        document.getElementById('taskMenu').style.display = 'block';
     }
 
     function mute() {
-        const volumeIcon = document.getElementById('volume-icon');
+        const volumeIcon = document.getElementById('volumeIcon');
         volumeIcon.src = "img/volume-mute.png";
         const volume = document.getElementById('volume');
         volume.value = 0;

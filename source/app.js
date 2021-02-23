@@ -1,8 +1,8 @@
 
 /**
- * Phases: idle, work, small_break, long_break (lowercase)
+ * Phases: idle, work, small break, long break (lowercase)
  * 
- * i = idle, W = work, b = small break, B = big break
+ * i = idle, W = work, b = small break, B = long break
  * 
  * i-W-b-W-b-W-b-W-B (1 cycle)
  * i-0-1-0-1-0-1-0-2
@@ -34,18 +34,19 @@ let phase = "idle";
 let tasksDone = 0;
 let secondsRemaining = 0;
 let taskList;
+var uniqueID = 1;
 /**
  * Break lengths
  */
 
-let work_length; // = document.getElementById("work_length");            // work time (seconds)   15 mins (900)
-let small_break_length; // = 5;     // small break time      5 mins  (300)
-let big_break_length; // = 15;      // big break time        25 mins (1500)
+let workLength; // = document.getElementById("workLength");            // work time (seconds)   15 mins (900)
+let smallBreakLength; // = 5;     // small break time      5 mins  (300)
+let longBreakLength; // = 15;      // long break time        25 mins (1500)
 
 window.onload = function() {
     document.getElementById("work-slider").addEventListener("input", setWork);
     document.getElementById("small-slider").addEventListener("input", setSmallBreak);
-    document.getElementById("big-slider").addEventListener("input", setBigBreak);
+    document.getElementById("long-slider").addEventListener("input", setLongBreak);
 }
 
 
@@ -54,25 +55,29 @@ window.onload = function() {
  * Start the timer and update the timer every second
  */
 function start() {
-    let ms = (document.getElementById("work_length").value).split(":");
-    work_length = (+ms[0]) * 60 + (+ms[1]);
-    ms = (document.getElementById("short_break").value).split(":");;
-    small_break_length = (+ms[0]) * 60 + (+ms[1]);
-    ms = (document.getElementById("long_break").value).split(":");;
-    big_break_length = (+ms[0]) * 60 + (+ms[1]);
-    console.log(work_length);
-    console.log(small_break_length);
-    console.log(big_break_length);
+    // let ms = (document.getElementById("workLength").value).split(":");
+    // workLength = (+ms[0]) * 60 + (+ms[1]);
+    // ms = (document.getElementById("shortBreak").value).split(":");;
+    // smallBreakLength = (+ms[0]) * 60 + (+ms[1]);
+    // ms = (document.getElementById("longBreak").value).split(":");;
+    // longBreakLength = (+ms[0]) * 60 + (+ms[1]);
+    // console.log(workLength);
+    // console.log(smallBreakLength);
+    // console.log(longBreakLength);
 
+    workLength = 3;
+    smallBreakLength = 5;
+    longBreakLength = 10;
+    console.log(workLength);
+    console.log(smallBreakLength);
+    console.log(longBreakLength);
     phase = "work";
     document.getElementById('phaseDisplay').innerHTML = phase;
     secondsRemaining = setTimeRemaining();
+    console.log(secondsRemaining);
     tasksDone = 0;
     document.getElementById("reset").disabled = false;
     document.getElementById('start').disabled = true;
-
-    
-
 
     if (tasks.length > 0) {
         let timer = setInterval(function () {
@@ -93,7 +98,39 @@ function start() {
                     if (phase == "work") {
                         // Update the tasks array (shift)
                         task = tasks.shift();
-                        document.getElementById('listTasks').innerHTML = tasks;
+                        document.getElementById('mainTasks').innerHTML = tasks;
+                        var audio = new Audio('audio/Rooster Crow.wav');
+                        audio.play();
+                    }
+
+                    updatePhase();
+                    secondsRemaining = setTimeRemaining();
+                    document.getElementById('phaseDisplay').innerHTML = phase;
+                }
+           }
+        }, 1000); //update the timer every second
+    }
+
+    if (tasks.length > 0) {
+        let timer = setInterval(function () {
+            // once all the tasks have ended, clear the timer
+            if (tasks.length == 0) {
+                clearInterval(timer);
+                phase = "idle";
+                // Update the phase
+                document.getElementById('phaseDisplay').innerHTML = phase;
+                // Disable the reset button
+                document.getElementById('reset').disabled = true;
+            } else {
+                // Display the time MM:SS
+                document.getElementById('timerDisplay').innerHTML = convertSeconds(secondsRemaining);
+                secondsRemaining--;
+
+                if (secondsRemaining < 0) {
+                    if (phase == "work") {
+                        // Update the tasks array (shift)
+                        task = tasks.shift();
+                        document.getElementById('mainTasks').innerHTML = tasks;
                         var audio = new Audio('audio/Rooster Crow.wav');
                         audio.play();
                     }
@@ -131,12 +168,13 @@ function convertSeconds(secondsRemaining) {
  */
 function reset() {
     tasks = [];
-    displayArray();
+    uniqueID = 1;
+    // displayArray();
     phase = 'idle';
     document.getElementById('timerDisplay').innerHTML='00:00';
     document.getElementById('start').disabled = true;
     document.getElementById('reset').disabled = true;
-    document.getElementById('listTasks').innerHTML = tasks;
+    document.getElementById('mainTasks').innerHTML = tasks;
 }
 
 /**
@@ -149,7 +187,7 @@ function skip() {
     }
     phase = "work"
     secondsRemaining = setTimeRemaining();
-    document.getElementById('listTasks').innerHTML = tasks;
+    document.getElementById('mainTasks').innerHTML = tasks;
 }
 
 /** 
@@ -160,20 +198,21 @@ function addTask() {
     if (phase == 'idle') {
         document.getElementById("start").disabled = false;
     }
-    const task = document.getElementById("enter-task").value;
+    const task = document.getElementById("enterTask").value;
     if(task != '') {
         createTask(task);
     }
-    document.getElementById("listTasks").innerHTML = tasks;
+    document.getElementById("mainTasks").innerHTML = tasks;
     //alert('task added');
 }
 
 function createTask(text) {
-    taskList = document.querySelector("#task-list-container");
+    taskList = document.querySelector("#taskListContainer");
     let newTask = document.createElement("div");
-    newTask.className = "user-task";
+    newTask.className = "userTask";
+    newTask.id = uniqueID++;
     let img = ["img/unmarked-circle-outline.png", "img/pin.png", "img/delete-task.png"];
-    let id = ["mark-done", "pin", "single-del"];
+    let id = ["markDone", "pin", "singleDel"];
     let i = 0;
     let mark = document.createElement("img");
     mark.src = img[i];
@@ -191,6 +230,7 @@ function createTask(text) {
     //Event Listener
     let content = document.createElement("p");
     content.innerHTML = text;
+    tasks.push(text);
 
     newTask.appendChild(mark);
     newTask.appendChild(pin);
@@ -198,6 +238,7 @@ function createTask(text) {
     newTask.appendChild(content);
     taskList.appendChild(newTask);
 }
+
 /**
  * Update the global phases and tasks complete
  */
@@ -207,10 +248,10 @@ function updatePhase() {
 
         if (tasksDone % 4 != 0) {
             // If the tasks completed is less than 4 (1-3)
-            phase = "short_break";
+            phase = "shortBreak";
         } else {
             // If the tasks completed is 4
-            phase = "long_break";
+            phase = "longBreak";
         }
     }
     else {
@@ -224,21 +265,21 @@ function updatePhase() {
  * @return the break time
  */
 function setTimeRemaining() {
-    return (phase == "work") ? work_length :     
-        (phase == "short_break") ? small_break_length : 
-        big_break_length;                        
+    return (phase == "work") ? workLength :     
+        (phase == "shortBreak") ? smallBreakLength : 
+        longBreakLength;                        
 }
 
-function setBigBreak(event) {
-    big_break_length = event.target.value * 60;
+function setLongBreak(event) {
+    longBreakLength = event.target.value * 60;
 }
 
 function setSmallBreak(event) {
-    small_break_length = event.target.value * 60;
+    smallBreakLength = event.target.value * 60;
 }
 
 function setWork(event) {
-    work_length = event.target.value * 60;
+    workLength = event.target.value * 60;
 }
 
 // function displayArray() {
