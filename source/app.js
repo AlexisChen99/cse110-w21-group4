@@ -30,7 +30,7 @@ let tasks = [];
 //     displayArray();
 // });
 let task;
-let phase = "idle";
+let phase = 'idle';
 let timer;
 let MMSS;
 let tasksDone = 0;
@@ -41,14 +41,14 @@ var uniqueID = 1;
  * Break lengths
  */
 
-let workLength; // = document.getElementById("workLength");            // work time (seconds)   15 mins (900)
+let workLength; // = document.getElementById('workLength');            // work time (seconds)   15 mins (900)
 let shortBreakLength; // = 5;     // short break time      5 mins  (300)
 let longBreakLength; // = 15;      // long break time        25 mins (1500)
 
 // window.onload = function() {
-//     document.getElementById("work-slider").addEventListener("input", setWork);
-//     document.getElementById("short-slider").addEventListener("input", setshortBreak);
-//     document.getElementById("long-slider").addEventListener("input", setLongBreak);
+//     document.getElementById('work-slider').addEventListener('input', setWork);
+//     document.getElementById('short-slider').addEventListener('input', setshortBreak);
+//     document.getElementById('long-slider').addEventListener('input', setLongBreak);
 // }
 
 
@@ -58,8 +58,8 @@ let longBreakLength; // = 15;      // long break time        25 mins (1500)
  * @returns {number} The input time in seconds associated with the phase
  */
 function setInputTimes(phase) {
-    let minutes = document.getElementById(phase+"Min").value;
-    let seconds = document.getElementById(phase+"Sec").value;
+    let minutes = document.getElementById(phase+'Min').value;
+    let seconds = document.getElementById(phase+'Sec').value;
     return (+minutes) * 60 + (+seconds);
 }
 
@@ -68,49 +68,49 @@ function setInputTimes(phase) {
  * If the timer was stopped and resumed, the input times are not modified.
  */
 function start() {
-    if(phase != "stopped") {
-        console.log("Setting input times");
-        workLength = setInputTimes("work");
-        shortBreakLength = setInputTimes("short");
-        longBreakLength = setInputTimes("long");
+    if(phase != 'stopped') {
+        console.log('Setting input times');
+        workLength = setInputTimes('work');
+        shortBreakLength = setInputTimes('short');
+        longBreakLength = setInputTimes('long');
     }
 
     secondsRemaining = setTimeRemaining();
-    document.getElementById("reset").disabled = true;
-    document.getElementById("start").innerHTML = "Stop";
-    document.getElementById("start").onclick = stop;
-    phase = "work";
-    document.getElementById("phaseDisplay").innerHTML = phase;
+    document.getElementById('reset').disabled = true;
+    document.getElementById('start').innerHTML = 'Stop';
+    document.getElementById('start').onclick = stop;
+    phase = 'work';
+    document.getElementById('phaseDisplay').innerHTML = phase;
 
     if (tasks.length > 0) {
         timer = setInterval(function () {
             // once all the tasks have ended, clear the timer
             if (tasks.length == 0) {
                 clearInterval(timer);
-                phase = "idle";
+                phase = 'idle';
                 // Update the phase
-                document.getElementById("phaseDisplay").innerHTML = phase;
+                document.getElementById('phaseDisplay').innerHTML = phase;
                 // Disable the reset button
-                document.getElementById("reset").disabled = true;
+                document.getElementById('reset').disabled = true;
             } else {
                 // Display the time MM:SS
                 MMSS = convertSeconds(secondsRemaining);
-                document.getElementById("timerDisplay").innerHTML = MMSS;
+                document.getElementById('timerDisplay').innerHTML = MMSS;
                 setPageTitle(MMSS);
                 secondsRemaining--;
 
                 if (secondsRemaining < 0) {
-                    if (phase == "work") {
+                    if (phase == 'work') {
                         // Update the tasks array (shift)
                         task = tasks.shift();
-                        document.getElementById("mainTasks").innerHTML = tasks;
-                        var audio = new Audio("audio/Rooster Crow.wav");
+                        document.getElementById('mainTasks').innerHTML = tasks;
+                        var audio = new Audio('audio/Rooster Crow.wav');
                         audio.play();
                     }
 
                     updatePhase();
                     secondsRemaining = setTimeRemaining();
-                    document.getElementById("phaseDisplay").innerHTML = phase;
+                    document.getElementById('phaseDisplay').innerHTML = phase;
                 }
            }
         }, 1000); //update the timer every second
@@ -127,10 +127,10 @@ function convertSeconds(secondsRemaining) {
     minutes = Math.floor(secondsRemaining / 60);
     seconds = secondsRemaining - (60 * minutes);
 
-    var timerString ="";
-    if (minutes < 10) { timerString = "0"; }
-    timerString += minutes + ":";
-    if (seconds < 10) { timerString += "0"; }
+    var timerString ='';
+    if (minutes < 10) { timerString = '0'; }
+    timerString += minutes + ':';
+    if (seconds < 10) { timerString += '0'; }
     timerString += seconds;
 
     return timerString;
@@ -141,12 +141,12 @@ function convertSeconds(secondsRemaining) {
  */
 function stop() {
     clearInterval(timer);
-    phase = "stopped";
+    phase = 'stopped';
     setPageTitle(MMSS);
-    document.getElementById("phaseDisplay").innerHTML = phase;
-    document.getElementById("reset").disabled = false;
-    document.getElementById("start").innerHTML = "Start";
-    document.getElementById("start").onclick = start;
+    document.getElementById('phaseDisplay').innerHTML = phase;
+    document.getElementById('reset').disabled = false;
+    document.getElementById('start').innerHTML = 'Start';
+    document.getElementById('start').onclick = start;
 }
 /**
  * Resets the timer and empties the task queue.
@@ -155,8 +155,8 @@ function reset() {
     tasks = [];
     uniqueID = 1;
     // displayArray();
-    phase = "idle";
-    document.getElementById("timerDisplay").innerHTML="00:00";
+    phase = 'idle';
+    document.getElementById('timerDisplay').innerHTML='00:00';
     deleteAllTasks();
 }
 
@@ -164,13 +164,13 @@ function reset() {
  * Skip to the next task
  */
 function skip() {
-    if(phase == "work") {
+    if(phase == 'work') {
         tasks.shift();
-        document.getElementById("phaseDisplay").innerHTML = phase;
+        document.getElementById('phaseDisplay').innerHTML = phase;
     }
-    phase = "work"
+    phase = 'work'
     secondsRemaining = setTimeRemaining();
-    document.getElementById("mainTasks").innerHTML = tasks;
+    document.getElementById('mainTasks').innerHTML = tasks;
 }
 
 /** 
@@ -178,40 +178,40 @@ function skip() {
  * TODO: If the taskCount is less than 4, add the task to the main page.
  */
 function addTask() {
-    const task = document.getElementById("enterTask").value;
-    if(task != "") {
+    const task = document.getElementById('enterTask').value;
+    if(task != '') {
         createTask(task, -1);
     }
 }
 
 function createTask(text, existingID) {
-    taskList = document.querySelector("#taskListContainer");
-    let newTask = document.createElement("div");
-    newTask.className = "userTask";
+    taskList = document.querySelector('#taskListContainer');
+    let newTask = document.createElement('div');
+    newTask.className = 'userTask';
 
     if(existingID != -1 ) {
-        newTask.id = document.getElementById(""+existingID).id;
+        newTask.id = document.getElementById(''+existingID).id;
     } else {
         newTask.id = uniqueID++;
     }
 
-    let img = ["img/unmarked-circle-outline.png", "img/unpinned.png", "img/delete-task.png"];
-    let altImg = ["img/marked-done.png", "img/pinned.png"];
-    let id = ["markDone", "pin", "singleDel"];
+    let img = ['img/unmarked-circle-outline.png', 'img/unpinned.png', 'img/delete-task.png'];
+    let altImg = ['img/marked-done.png', 'img/pinned.png'];
+    let id = ['markDone', 'pin', 'singleDel'];
 
     let i = 0;
-    let mark = addTaskComponents(i++, "mark", img, altImg, id);
-    let pin = addTaskComponents(i++, "pin", img, altImg, id);
-    let del = addTaskComponents(i++, "del", img, altImg, id);
-    let content = document.createElement("p");
+    let mark = addTaskComponents(i++, 'mark', img, altImg, id);
+    let pin = addTaskComponents(i++, 'pin', img, altImg, id);
+    let del = addTaskComponents(i++, 'del', img, altImg, id);
+    let content = document.createElement('p');
     content.innerHTML = text;
     tasks.push(content.innerHTML);
 
-    pin.addEventListener("click", function() {
+    pin.addEventListener('click', function() {
         createTask(text, newTask.id);
     });
 
-    del.addEventListener("click", function() {
+    del.addEventListener('click', function() {
         let deleteTask = newTask;
         deleteTask.parentNode.removeChild(deleteTask);
         // TODO: Delete both tasks if it is pinned
@@ -224,20 +224,20 @@ function createTask(text, existingID) {
     if(existingID == -1) {
         taskList.appendChild(newTask);
     } else {
-        let mainTasks = document.getElementById("mainTasks");
+        let mainTasks = document.getElementById('mainTasks');
         mainTasks.appendChild(newTask);
     }
 }
 
 function addTaskComponents(index, func, img, altImg, id) {
-    let part = document.createElement("img");
+    let part = document.createElement('img');
     part.src = img[index];
     part.id = id[index];
     switch(func) {
-        case "mark":
+        case 'mark':
             // TODO: Switch images back and forth
             break;
-        case "pin":
+        case 'pin':
             // TODO: Switch images back and forth
 
             break;
@@ -254,57 +254,57 @@ function deleteAllTasks() {
 }
 
 /**
- * Update the global phases and tasks complete
+ * Update the phase and number of tasks complete.
  */
 function updatePhase() {
-    if (phase == "work") {
+    if (phase == 'work') {
         tasksDone++;
 
         if (tasksDone % 4 != 0) {
             // If the tasks completed is less than 4 (1-3)
-            phase = "short break";
+            phase = 'short break';
         } else {
             // If the tasks completed is 4
-            phase = "long break";
+            phase = 'long break';
         }
     }
     else {
-        phase = "work";
+        phase = 'work';
     }
 }
 
 /**
- * Function that returns the break times after the completion of "work times"
+ * Function that returns the break times after the completion of 'work times'
  * 
- * @return the break time
+ * @return {number} The time remaining for the current timer state
  */
 function setTimeRemaining() {
-    return (phase == "work") ? workLength :     
-        (phase == "short break") ? shortBreakLength : 
-        (phase == "stopped") ? secondsRemaining :
+    return (phase == 'work') ? workLength :     
+        (phase == 'short break') ? shortBreakLength : 
+        (phase == 'stopped') ? secondsRemaining :
         longBreakLength;                        
 }
 
 /**
  * Sets the <title> element for users to see remaining time off-page.
- * @param {string} MMSS "MM:SS" form
+ * @param {string} MMSS 'MM:SS' form
  */
 function setPageTitle(MMSS) {
     let phaseSymbol;
     switch(phase) {
-        case "work":
-            phaseSymbol = " Work - ";
+        case 'work':
+            phaseSymbol = ' Work - ';
             break;
-        case "short break":
-        case "long break":
-            phaseSymbol = " Break -";
+        case 'short break':
+        case 'long break':
+            phaseSymbol = ' Break -';
             break;
-        case "stopped":
-            phaseSymbol = " Stopped - "
+        case 'stopped':
+            phaseSymbol = ' Stopped - '
             break;
     }
 
-    document.title = MMSS + phaseSymbol + "Potato Timer";
+    document.title = MMSS + phaseSymbol + 'Potato Timer';
 }
 // function setLongBreak(event) {
 //     longBreakLength = event.target.value * 60;
@@ -319,12 +319,12 @@ function setPageTitle(MMSS) {
 // }
 
 // function displayArray() {
-//     let ul = document.getElementById("task-list");
+//     let ul = document.getElementById('task-list');
 //     while(ul.firstChild) {
 //         ul.removeChild(ul.firstChild);
 //     }
 //     for(let i = 0; i <tasks.length; i++) {
-//         let newLi = document.createElement("li")
+//         let newLi = document.createElement('li')
 //         newLi.innerHTML = tasks[i];
 //         ul.appendChild(newLi);
 //     }
