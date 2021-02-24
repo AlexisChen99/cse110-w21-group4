@@ -9,7 +9,7 @@
     <script src="app.js"></script>
 </head>
 
-<body>
+<body id="background">
     <div class="contentWrapper">
         <p id="title">Potato Timer</p>
 
@@ -42,9 +42,9 @@
         <p class="close" id="closeSettings">Close</p>
         <div id="chooseTheme">
             <p style="margin: 0 0; font-size: 18px;">Select a Theme</p>
-            <button id="themeDark" onclick="light()">Light</button>
-            <button id="themeDark" onclick="dark()">Dark</button>
-            <button id="themePotato" onclick="potato()">Potato</button>
+            <button id="themeDark" onclick="lightTheme()">Light</button>
+            <button id="themeDark" onclick="darkTheme()">Dark</button>
+            <button id="themePotato" onclick="potatoTheme()">Potato</button>
         </div>
 
         <form class="userInputContainer">
@@ -89,29 +89,6 @@
 </body>
 
 <script>
-    /* save user"s preference locally after theme changing */
-    // function LoadData() {
-    //     let theme = window.localStorage.getItem("theme");
-    //     const app = document.getElementsByTagName("BODY")[0];
-    //     if (!theme) {
-    //         app.setAttribute("data-light-mode", "potato");
-    //         window.localStorage.setItem("theme", "potato");
-    //         console.log("null");
-    //     } else if (theme == "potato"){
-    //         potato();
-    //         window.localStorage.setItem("theme", "potato");
-    //         console.log("potato");
-    //     } else if (theme == "dark"){
-    //         dark();
-    //         window.localStorage.setItem("theme", "dark");
-    //         console.log("dark");
-    //     } else if (theme == "light"){
-    //         light();
-    //         window.localStorage.setItem("theme", "light");
-    //         console.log("light");
-    //     }
-    // }
-
     window.onload = function () {
         const settings = document.getElementById("settingsIcon");
         settings.addEventListener("click", function () {
@@ -135,115 +112,134 @@
         const volumeIcon = document.getElementById("volumeIcon");
         volumeIcon.addEventListener("click", mute());
 
-        const app = document.getElementsByTagName("BODY")[0];
-        app.setAttribute("data-light-mode", "potato");
-
         // deciding on which theme to use
-        // LoadData();
+        loadData();
     }
 
-    function potato() {
+    /* save user's preference locally after theme changing */
+    function loadData() {
+        let theme = window.localStorage.getItem("theme");
+        const app = document.getElementById("brackground");
+        if (!theme) {
+            app.className = "potatoTheme";
+            window.localStorage.setItem("theme", "potato");
+            console.log("null");
+        } else if (theme == "potato"){
+            potatoTheme();
+            window.localStorage.setItem("theme", "potato");
+            console.log("potato");
+        } else if (theme == "dark"){
+            darkTheme();
+            window.localStorage.setItem("theme", "dark");
+            console.log("dark");
+        } else if (theme == "light"){
+            lightTheme();
+            window.localStorage.setItem("theme", "light");
+            console.log("light");
+        }
+    }
+    
+    function potatoTheme() {
         window.localStorage.setItem("theme", "potato");
-        var app = document.getElementsByTagName("BODY")[0];
-        app.setAttribute("data-light-mode", "potato");
-        var bg = document.getElementById("bg");
-        bg.style.backgroundImage = 'url("img/background.png")';
-        bg.style.background = "100% center no-repeat cover"
-        var circle = document.getElementById("circleTimer");
+        const body = document.getElementById("background");
+        body.className = "potatoTheme";
+
+        let circle = document.getElementById("circleTimer");
         circle.style.backgroundColor = "#ff0";
         circle.style["boxShadow"] = "0 0 20px 20px #ff0";
         circle.style.border = "5px solid #ff0";
 
         /* buttons */
-        var btn = document.getElementsByTagName("button");
-        btn[0].setAttribute("mode", "potato");
-        btn[1].setAttribute("mode", "potato");
-        btn[2].setAttribute("mode", "potato");
-        btn[3].setAttribute("mode", "potato");
-        btn[4].setAttribute("mode", "potato");
-        btn[5].setAttribute("mode", "potato");
-        btn[6].setAttribute("mode", "potato");
+        let btn = document.getElementsByTagName("button");
+        for(let i = 0; i < btn.length; i ++) {
+            if(btn[i].classList.contains("darkButton")) {
+                btn[i].classList.remove("darkButton");
+            }
+        }
 
-        /* setting menu */
-        var settings = document.getElementById("settingsMenu");
-        settings.style.background = "white";
-        settings.style.color = "black";
-        settings.style.border = "5px solid #000";
+        /* settings menu */
+        let settings = document.getElementById("settingsMenu");
+        settings.classList.add("menuLight");
+        if(settings.classList.contains("darkTheme")) {
+            settings.classList.remove("darkTheme");
+        }
 
-        document.getElementById("timerDisplay").style.color = "#333";
-        document.getElementById("title").style.color = "#333";
-        document.getElementById("phaseDisplay").style.color = "#333";
-        document.getElementById("settingsMenu").style.display = "none";
+        // Task Menu 
+        let tasks = document.getElementById("taskMenu");
+        tasks.classList.add("menuLight");
+        if(tasks.classList.contains("darkTheme")) {
+            tasks.classList.remove("darkTheme");
+        }
+
+        settings.style.display = "none";
     }
 
-    function dark() {
+    function darkTheme() {
         window.localStorage.setItem("theme", "dark");
-        var app = document.getElementsByTagName("BODY")[0];
-        app.setAttribute("data-light-mode", "dark");
-        var bg = document.getElementById("bg");
-        bg.style.background = "none";
-        var circle = document.getElementById("circleTimer");
+        const body = document.getElementById("background");
+        body.className = "darkTheme";
+
+        let circle = document.getElementById("circleTimer");
         circle.style.backgroundColor = "#333";
         circle.style["boxShadow"] = "0 0 10px 10px white";
         circle.style.border = "5px solid white";
 
         /* buttons */
-        var btn = document.getElementsByTagName("button");
-        btn[0].setAttribute("mode", "dark");
-        btn[1].setAttribute("mode", "dark");
-        btn[2].setAttribute("mode", "dark");
-        btn[3].setAttribute("mode", "dark");
-        btn[4].setAttribute("mode", "dark");
-        btn[5].setAttribute("mode", "dark");
-        btn[6].setAttribute("mode", "dark");
+        let btn = document.getElementsByTagName("button");
+        for(let i = 0; i < btn.length; i ++) {
+            btn[i].className = "darkButton";
+        }
 
-        /* setting menu */
-        var settings = document.getElementById("settingsMenu");
-        settings.style.background = "#444";
-        settings.style.color = "white";
-        settings.style.border = "5px solid white";
+        /* settings menu */
+        let settings = document.getElementById("settingsMenu");
+        settings.classList.add("darkTheme");
+        if(settings.classList.contains("menuLight")) {
+            settings.classList.remove("menuLight");
+        }
 
+        // Task Menu 
+        let tasks = document.getElementById("taskMenu");
+        tasks.classList.add("darkTheme");
+        if(tasks.classList.contains("menuLight")) {
+            tasks.classList.remove("menuLight");
+        }
 
-        document.getElementById("timerDisplay").style.color = "white";
-        document.getElementById("title").style.color = "white";
-        document.getElementById("phaseDisplay").style.color = "white";
-        document.getElementById("settingsMenu").style.display = "none";
-        document.getElementById("taskMenu").style.color="#333";
-
+        settings.style.display = "none";
     }
 
-    function light() {
+    function lightTheme() {
         window.localStorage.setItem("theme", "light");
-        var app = document.getElementsByTagName("BODY")[0];
-        app.setAttribute("data-light-mode", "light");
-        var bg = document.getElementById("bg");
-        bg.style.background = "none";
-        var circle = document.getElementById("circleTimer");
+        const body = document.getElementById("background");
+        body.className = "lightTheme";
+        let circle = document.getElementById("circleTimer");
         circle.style.backgroundColor = "white";
         circle.style["boxShadow"] = "0 0 10px 10px #333";
         circle.style.border = "5px solid #333";
 
         /* resset and start button */
-        var btn = document.getElementsByTagName("button");
-        btn[0].setAttribute("mode", "light");
-        btn[1].setAttribute("mode", "light");
-        btn[2].setAttribute("mode", "light");
-        btn[3].setAttribute("mode", "light");
-        btn[4].setAttribute("mode", "light");
-        btn[5].setAttribute("mode", "light");
-        btn[6].setAttribute("mode", "light");
+        let btn = document.getElementsByTagName("button");
+        for(let i = 0; i < btn.length; i ++) {
+            if(btn[i].classList.contains("darkButton")) {
+                btn[i].classList.remove("darkButton");
+            }
+        }
 
-        /* setting menu */
-        var settings = document.getElementById("settingsMenu");
-        settings.style.background = "white";
-        settings.style.color = "black";
-        settings.style.border = "5px solid #000";
+        /* settings menu */
+        let settings = document.getElementById("settingsMenu");
+        settings.classList.add("menuLight");
+        if(settings.classList.contains("darkTheme")) {
+            settings.classList.remove("darkTheme");
+        }
 
-        document.getElementById("timerDisplay").style.color = "#333";
-        document.getElementById("title").style.color = "#333";
-        document.getElementById("phaseDisplay").style.color = "#333";
-        document.getElementById("settingsMenu").style.display = "none";
-    }
+        // Task Menu 
+        let tasks = document.getElementById("taskMenu");
+        tasks.classList.add("menuLight");
+        if(tasks.classList.contains("darkTheme")) {
+            tasks.classList.remove("darkTheme");
+        }
+
+        settings.style.display = "none";
+   }
 
     function displayTasks() {
         document.getElementById("taskMenu").style.display = "block";

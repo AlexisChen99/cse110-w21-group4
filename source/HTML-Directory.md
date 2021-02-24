@@ -1,5 +1,6 @@
-# A Directory of the Source Files
-## HTML
+# A Directory of the potato.html File
+
+body #background
 ### Main Content
 .contentWrapper
 - p #title Potato Timer
