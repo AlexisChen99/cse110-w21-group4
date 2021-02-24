@@ -213,7 +213,7 @@ function createTask(text) {
     let del = addTaskComponents(i++, 'del');
     let content = document.createElement('p');
     content.innerHTML = text;
-    tasks.push(content.innerHTML);
+    // tasks.push(content.innerHTML);
 
     // TODO MARK TASK
 
