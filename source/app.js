@@ -7,44 +7,49 @@
  * i-W-b-W-b-W-b-W-B (1 cycle)
  * i-0-1-0-1-0-1-0-2
  */
-
+// UNUSED
 // var pushEvent = function(arr, callback) {
 //     arr.push = function(e) {
 //         Array.prototype.push.call(arr,e);
 //         callback(arr);
 //     };
 // };
-
+//
 // var popEvent = function(arr, callback) {
 //     arr.shift = function(e) {
 //         Array.prototype.shift.call(arr,e);
 //         callback(arr);
 //     };
 // };
-
-let tasks = [];
 // pushEvent(tasks, function(tasks) {
 //     displayArray();
 // });
 // popEvent(tasks, function(tasks) {
 //     displayArray();
 // });
-let task;
-let phase = 'idle';
-let timer;
-let MMSS;
-let tasksDone = 0;
-let secondsRemaining = 0;
-let taskList;
-var uniqueID = 1;
+
+let img = ['img/unmarked-circle-outline.png', 'img/unpinned.png', 'img/delete-task.png'];
+                            // Inactive images of a task component
+let altImg = ['img/marked-done.png', 'img/pinned.png'];
+                            // Active images of a task component
+let tasks = [];             // Contains the <p> of each task
+let phase = 'idle';         // idle, work, short break, long break, stopped
+let timer;                  // Represents the interval change of 1s
+let MMSS;                   // {string} MM:SS format
+let tasksDone = 0;          // TODO: Change its application
+let secondsRemaining = 0;   // Displays on timer
+let taskCount = 0;          // Used to keep track of all active tasks
+var uniqueID = 1;           // Used to assign uniqueID's when deleting specific tasks 
+                            // (may be copied from task list to main)
 /**
  * Break lengths
  */
 
-let workLength; // = document.getElementById('workLength');            // work time (seconds)   15 mins (900)
-let shortBreakLength; // = 5;     // short break time      5 mins  (300)
-let longBreakLength; // = 15;      // long break time        25 mins (1500)
+let workLength;             // work time (seconds)   15 mins (900)
+let shortBreakLength;       // short break time      5 mins  (300)
+let longBreakLength;        // long break time       25 mins (1500)
 
+// UNUSED
 // window.onload = function() {
 //     document.getElementById('work-slider').addEventListener('input', setWork);
 //     document.getElementById('short-slider').addEventListener('input', setshortBreak);
@@ -102,7 +107,7 @@ function start() {
                 if (secondsRemaining < 0) {
                     if (phase == 'work') {
                         // Update the tasks array (shift)
-                        task = tasks.shift();
+                        tasks.shift();
                         document.getElementById('mainTasks').innerHTML = tasks;
                         var audio = new Audio('audio/Rooster Crow.wav');
                         audio.play();
@@ -149,28 +154,20 @@ function stop() {
     document.getElementById('start').onclick = start;
 }
 /**
+ *  !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ *          INCOMPLETE: confirmationPrompt
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * 
  * Resets the timer and empties the task queue.
  */
 function reset() {
+    // confirmationPrompt('reset');
     tasks = [];
     uniqueID = 1;
     // displayArray();
     phase = 'idle';
     document.getElementById('timerDisplay').innerHTML='00:00';
     deleteAllTasks();
-}
-
-/**
- * Skip to the next task
- */
-function skip() {
-    if(phase == 'work') {
-        tasks.shift();
-        document.getElementById('phaseDisplay').innerHTML = phase;
-    }
-    phase = 'work'
-    secondsRemaining = setTimeRemaining();
-    document.getElementById('mainTasks').innerHTML = tasks;
 }
 
 /** 
@@ -180,77 +177,178 @@ function skip() {
 function addTask() {
     const task = document.getElementById('enterTask').value;
     if(task != '') {
-        createTask(task, -1);
+        createTask(task);
+        taskCount++;
     }
 }
 
-function createTask(text, existingID) {
-    taskList = document.querySelector('#taskListContainer');
+/**
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+ *          INCOMPLETE
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * Creates a userTask in the taskListContainer. 
+ * This does not display a task on the main page.
+ * A userTask is identified with a unique numerical ID.
+ * Has four child elements: mark to mark as done, pin a copy to main page,
+ * delete from task list and main page, if pinned, and task content.
+ * 
+ * @event addTask()
+ * @param {string} text The task the user entered.
+ */
+function createTask(text) {
+    let taskList = document.getElementById('taskListContainer');
     let newTask = document.createElement('div');
     newTask.className = 'userTask';
-
-    if(existingID != -1 ) {
-        newTask.id = document.getElementById(''+existingID).id;
-    } else {
-        newTask.id = uniqueID++;
-    }
-
-    let img = ['img/unmarked-circle-outline.png', 'img/unpinned.png', 'img/delete-task.png'];
-    let altImg = ['img/marked-done.png', 'img/pinned.png'];
-    let id = ['markDone', 'pin', 'singleDel'];
+    newTask.id = uniqueID++;
 
     let i = 0;
-    let mark = addTaskComponents(i++, 'mark', img, altImg, id);
-    let pin = addTaskComponents(i++, 'pin', img, altImg, id);
-    let del = addTaskComponents(i++, 'del', img, altImg, id);
+    let mark = addTaskComponents(i++, 'mark');
+    let pin = addTaskComponents(i++, 'pin');
+    let del = addTaskComponents(i++, 'del');
     let content = document.createElement('p');
     content.innerHTML = text;
     tasks.push(content.innerHTML);
 
+    // TODO MARK TASK
+
+
     pin.addEventListener('click', function() {
-        createTask(text, newTask.id);
+        pinnedTask = document.getElementById(newTask.id+'pin');
+        if(!pinnedTask) {
+            createExistingTask(text, newTask.id);
+            pin.src = altImg[1];
+        } else {
+            pin.src = img[1];
+            unpinTask(pinnedTask.id);
+        }
     });
 
     del.addEventListener('click', function() {
-        let deleteTask = newTask;
-        deleteTask.parentNode.removeChild(deleteTask);
-        // TODO: Delete both tasks if it is pinned
+        deleteTask(newTask.id);
     });
 
     newTask.appendChild(mark);
     newTask.appendChild(pin);
     newTask.appendChild(del);
     newTask.appendChild(content);
-    if(existingID == -1) {
-        taskList.appendChild(newTask);
-    } else {
-        let mainTasks = document.getElementById('mainTasks');
-        mainTasks.appendChild(newTask);
-    }
+    taskList.appendChild(newTask);
 }
 
-function addTaskComponents(index, func, img, altImg, id) {
+/** 
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!1111
+ * INCOMPLETE
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * Creates "pinned" userTask in the mainTasks container. 
+ * This display an existing task on the main page.
+ * A pinned task is identified as '#pin' where # is the uniqueID.
+ * Inherits the four userTask components, 
+ * The eventListener for pin is different.
+ * 
+ * @param {string} text     A copy of the user's task.
+ * @param {string} uniqueID The existing task's id.
+ */
+function createExistingTask(text, uniqueID) {
+    let mainTasks = document.getElementById('mainTasks');
+    let pinTask = document.createElement('div');
+    pinTask.className = 'userTask';
+    pinTask.id = uniqueID + 'pin';
+
+    let i = 0;
+    let mark = addTaskComponents(i++, 'mark');
+    let pin = addTaskComponents(i++, 'pinned');
+    let del = addTaskComponents(i++, 'del');
+    let content = document.createElement('p');
+    content.innerHTML = text;
+
+    // TODO MARK TASK
+
+    pin.addEventListener('click', function() {
+        unpinTask(uniqueID);
+    });
+
+    del.addEventListener('click', function() {
+        deleteTask(uniqueID);
+    });
+
+    pinTask.appendChild(mark);
+    pinTask.appendChild(pin);
+    pinTask.appendChild(del);
+    pinTask.appendChild(content);
+    mainTasks.appendChild(pinTask);
+}
+
+/**
+ * Append images to task components with image-switching functions
+ * @param {*} index An index used to access the respective img, altImg, id for the part
+ * @param {*} func Adds active/inactive image displays for mark and pin components
+ */
+function addTaskComponents(index, func) {
+    let componentID = ['markDone', 'pin', 'singleDel'];
     let part = document.createElement('img');
+    
     part.src = img[index];
-    part.id = id[index];
+    part.id = componentID[index];
     switch(func) {
         case 'mark':
             // TODO: Switch images back and forth
             break;
-        case 'pin':
-            // TODO: Switch images back and forth
-
+        case 'pinned':
+            part.src = altImg[index];
             break;
+        default:
     }
     return part;
 }
 
-function deleteTask() {
-
+/**
+ * Unpins a task from the main display by deleting the pinned copy.
+ * @param {string} uniqueID The id of the original task.
+ * 
+ * @example Unpin pinned task '1pin' calls function with '1pin'
+ */
+function unpinTask(uniqueID) {
+    let pinnedTask = document.getElementById(uniqueID+'pin');
+    const mainTasks = document.getElementById('mainTasks');
+    mainTasks.removeChild(pinnedTask);
+    let originalTask = document.getElementById(uniqueID).children
+    originalTask[1].src = img[1];
 }
 
-function deleteAllTasks() {
+/**
+ * Deletes a task from both the task list and the main display, if possible.
+ * @param {string} uniqueID The id of the original task.
+ * 
+ * @example Delete pinned task '1pin' calls function with '1'.
+ */
+function deleteTask(uniqueID) {    
+    const pinnedTask = document.getElementById(uniqueID+'pin');
+    console.log(pinnedTask);
+    if(pinnedTask) {
+        const mainTasks = document.getElementById('mainTasks');
+        mainTasks.removeChild(pinnedTask);
+    }
+    const taskList = document.getElementById('taskListContainer');
+    taskList.removeChild(document.getElementById(uniqueID));
+}
 
+/**
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ *          INCOMPLETE: confirmationPrompt
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * Called by the deleteAll button.
+ */
+function deleteAllTasks() {
+    // TODO confirm message
+    const taskList = document.getElementById('taskListContainer');
+    while(taskList.firstChild) {
+        taskList.removeChild(taskList.lastChild);
+    }
+    const mainTasks = document.getElementById('mainTasks');
+    while(mainTasks.firstChild) {
+        mainTasks.removeChild(mainTasks.lastChild);
+    }
+    taskCount = 0;
+    uniqueID = 1;
 }
 
 /**
@@ -267,16 +365,17 @@ function updatePhase() {
             // If the tasks completed is 4
             phase = 'long break';
         }
-    }
-    else {
+    } else {
         phase = 'work';
     }
 }
 
 /**
- * Function that returns the break times after the completion of 'work times'
+ * Checks what the current timer state is from 
+ * 'work', 'short break', 'long break', 'stopped'
+ * to know what the timer should start counting down with.
  * 
- * @return {number} The time remaining for the current timer state
+ * @return {number} The time remaining for the current timer state.
  */
 function setTimeRemaining() {
     return (phase == 'work') ? workLength :     
@@ -287,6 +386,7 @@ function setTimeRemaining() {
 
 /**
  * Sets the <title> element for users to see remaining time off-page.
+ * 
  * @param {string} MMSS 'MM:SS' form
  */
 function setPageTitle(MMSS) {
@@ -306,6 +406,32 @@ function setPageTitle(MMSS) {
 
     document.title = MMSS + phaseSymbol + 'Potato Timer';
 }
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//   TODO: create logic for the prompt process
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//  function confirmationPrompt(action) {
+//     let prompt = document.getElementById('prompt');
+//     prompt.style.display = 'block';
+//     let message = document.getElementById('confirmMessage');
+//     if(action == 'reset') {
+//         message.innerHTML = 'Are you sure you want to reset the timer\'s cycle?';
+//     } else if (action == 'delete') {
+//         message.innerHTML = 'Are you sure you want to delete all tasks?';
+//     }
+
+//  }
+
+// function confirm(action) {
+//     return true;
+// }
+
+// function cancel() {
+//     document.getElementById('prompt').style.display = 'none';
+//     return false;
+// }
+
+
 // function setLongBreak(event) {
 //     longBreakLength = event.target.value * 60;
 // }
@@ -329,3 +455,10 @@ function setPageTitle(MMSS) {
 //         ul.appendChild(newLi);
 //     }
 // }
+
+
+window.onload = function () {
+    const deleteAll = document.getElementById('deleteAll');
+    deleteAll.addEventListener('click', deleteAllTasks);
+
+}

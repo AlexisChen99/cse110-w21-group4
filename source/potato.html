@@ -87,7 +87,19 @@
         </div>
     </div>
 
+    <!-- <div class="menu" id="prompt">
+        <p id="confirmMessage">Unexpected Error</p>
+        <button id="confirm" onclick="confirm()">Confirm</button>
+        <button id="cancel" onclick="cancel()">Cancel</button>
+    </div> -->
 </body>
+
+
+
+
+
+
+
 
 <script>
     window.onload = function () {
@@ -159,20 +171,28 @@
         }
 
         /* settings menu */
-        let settings = document.getElementById("settingsMenu");
-        settings.classList.add("menuLight");
-        if(settings.classList.contains("darkTheme")) {
-            settings.classList.remove("darkTheme");
+        // let settings = document.getElementById("settingsMenu");
+        // settings.classList.add("menuLight");
+        // if(settings.classList.contains("darkTheme")) {
+        //     settings.classList.remove("darkTheme");
+        // }
+
+        // // Task Menu 
+        // let tasks = document.getElementById("taskMenu");
+        // tasks.classList.add("menuLight");
+        // if(tasks.classList.contains("darkTheme")) {
+        //     tasks.classList.remove("darkTheme");
+        // }
+
+        let menuList = document.getElementsByClassName('menu');
+        for(let i = 0; i < menuList.length; i++) {
+            menuList[i].classList.add('menuLight');
+            if(menuList[i].classList.contains("darkTheme")) {
+                menuList[i].classList.remove("darkTheme");
+            }
         }
 
-        // Task Menu 
-        let tasks = document.getElementById("taskMenu");
-        tasks.classList.add("menuLight");
-        if(tasks.classList.contains("darkTheme")) {
-            tasks.classList.remove("darkTheme");
-        }
-
-        settings.style.display = "none";
+        document.getElementById('settingsMenu').style.display = "none";
     }
 
     function darkTheme() {
@@ -191,21 +211,15 @@
             btn[i].className = "darkButton";
         }
 
-        /* settings menu */
-        let settings = document.getElementById("settingsMenu");
-        settings.classList.add("darkTheme");
-        if(settings.classList.contains("menuLight")) {
-            settings.classList.remove("menuLight");
+        let menuList = document.getElementsByClassName('menu');
+        for(let i = 0; i < menuList.length; i++) {
+            menuList[i].classList.add('darkTheme');
+            if(menuList[i].classList.contains("menuLight")) {
+                menuList[i].classList.remove("menuLight");
+            }
         }
 
-        // Task Menu 
-        let tasks = document.getElementById("taskMenu");
-        tasks.classList.add("darkTheme");
-        if(tasks.classList.contains("menuLight")) {
-            tasks.classList.remove("menuLight");
-        }
-
-        settings.style.display = "none";
+        document.getElementById('settingsMenu').style.display = "none";
     }
 
     function lightTheme() {
@@ -224,22 +238,16 @@
                 btn[i].classList.remove("darkButton");
             }
         }
-
-        /* settings menu */
-        let settings = document.getElementById("settingsMenu");
-        settings.classList.add("menuLight");
-        if(settings.classList.contains("darkTheme")) {
-            settings.classList.remove("darkTheme");
+        // Settings, task, prompt
+        let menuList = document.getElementsByClassName('menu');
+        for(let i = 0; i < menuList.length; i++) {
+            menuList[i].classList.add('menuLight');
+            if(menuList[i].classList.contains("darkTheme")) {
+                menuList[i].classList.remove("darkTheme");
+            }
         }
 
-        // Task Menu 
-        let tasks = document.getElementById("taskMenu");
-        tasks.classList.add("menuLight");
-        if(tasks.classList.contains("darkTheme")) {
-            tasks.classList.remove("darkTheme");
-        }
-
-        settings.style.display = "none";
+        document.getElementById('settingsMenu').style.display = "none";
    }
 
     function displayTasks() {
