@@ -122,8 +122,7 @@
             document.getElementById("taskMenu").style.display = "none";
         })
 
-        const volumeIcon = document.getElementById("volumeIcon");
-        volumeIcon.addEventListener("click", mute());
+        
 
         // deciding on which theme to use
         loadData();
@@ -253,11 +252,5 @@
     function displayTasks() {
         document.getElementById("taskMenu").style.display = "block";
     }
-
-    function mute() {
-        const volumeIcon = document.getElementById("volumeIcon");
-        volumeIcon.src = "img/volume-mute.png";
-        const volume = document.getElementById("volume");
-        volume.value = 0;
-    }
+    
 </script>

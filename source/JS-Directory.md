@@ -6,7 +6,7 @@
 ### Globally defined (Local) Let
 - img []                Inactive images of a task component
 - altImg                Active images of a task component
-- tasks = []            Contains the \<p> of each task
+- potatoesEaten         Number of pomo "work" phases completed
 - phase = "idle"        idle, work, short break, long break, stopped
 - timer                 interval change of 1s
 - MMSS                  string MM:SS format
@@ -18,25 +18,31 @@
 - smallBreakLength      short break time    (in seconds)
 - longBreakLength       long break time     (in seconds)
 
-### window.onload UNUSED
+### window.onload
+- Adds eventListeners
+  - deleteAllTasks
+  - mute
 
+### Mute UNFINISHED
+
+### setInputTimes(phase)
 ### start()     Start/Stop button
 ### convertSeconds(secondsRemaining)
 ### stop()      Start/Stop button
 ### reset()     Reset button
 ### addTask()   Add button
-### createTask(text, existingID)    
+### createTask(text)    
 - New: creates task in task list
-### createExistingTask(text, existingID)
+### createExistingTask(text, uniqueID)
 - Existing: creates pinned task in main list
-#### addTaskComponents(index, func, img, altImg, id)
+#### addTaskComponents(index, func)
 - Called by createTask
-### unpinTask(pinTaskID) 
+### unpinTask(uniqueID) 
 ### deleteTask(uniqueID)
 ### deleteAllTasks() deleteAll button
 ### updatePhase()
 ### setTimeRemaining()
-### setPageTitle(MM:SS)
+### setPageTitle(MMSS)
 ### TODO confirmationPrompt(reset/deleteAll) of reset/deleteAll
 ### TODO confirm(reset/deleteAll) return true 
 ### TODO cancel() return false

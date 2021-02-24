@@ -32,7 +32,7 @@ let img = ['img/unmarked-circle-outline.png', 'img/unpinned.png', 'img/delete-ta
                             // Inactive images of a task component
 let altImg = ['img/marked-done.png', 'img/pinned.png'];
                             // Active images of a task component
-let tasks = [];             // Contains the <p> of each task
+let potatoesEaten = 0;      // Number of pomo "work" phases completed.
 let phase = 'idle';         // idle, work, short break, long break, stopped
 let timer;                  // Represents the interval change of 1s
 let MMSS;                   // {string} MM:SS format
@@ -49,14 +49,19 @@ let workLength;             // work time (seconds)   15 mins (900)
 let shortBreakLength;       // short break time      5 mins  (300)
 let longBreakLength;        // long break time       25 mins (1500)
 
-// UNUSED
-// window.onload = function() {
-//     document.getElementById('work-slider').addEventListener('input', setWork);
-//     document.getElementById('short-slider').addEventListener('input', setshortBreak);
-//     document.getElementById('long-slider').addEventListener('input', setLongBreak);
-// }
+window.onload = function() {
+    const deleteAll = document.getElementById('deleteAll');
+    deleteAll.addEventListener('click', deleteAllTasks);
+    const volumeIcon = document.getElementById("volumeIcon");
+    volumeIcon.addEventListener("click", mute);
+}
 
-
+function mute() {
+    const volumeIcon = document.getElementById("volumeIcon");
+    volumeIcon.src = "img/volume-mute.png";
+    const volume = document.getElementById("volume");
+    volume.value = 0;
+}
 /**
  * Sets the input times when the cycle isn't in progress.
  * @param {string} phase The phase to set the input times
@@ -86,11 +91,11 @@ function start() {
     document.getElementById('start').onclick = stop;
     phase = 'work';
     document.getElementById('phaseDisplay').innerHTML = phase;
-
-    if (tasks.length > 0) {
+    // Still synchronous
+    if (taskCount > 0) {    
         timer = setInterval(function () {
             // once all the tasks have ended, clear the timer
-            if (tasks.length == 0) {
+            if (taskCount == 0) {   // FIXME
                 clearInterval(timer);
                 phase = 'idle';
                 // Update the phase
@@ -107,8 +112,9 @@ function start() {
                 if (secondsRemaining < 0) {
                     if (phase == 'work') {
                         // Update the tasks array (shift)
-                        tasks.shift();
-                        document.getElementById('mainTasks').innerHTML = tasks;
+                        // tasks.shift();
+                        // document.getElementById('mainTasks').innerHTML = tasks;
+                        potatoesEaten++;
                         var audio = new Audio('audio/Rooster Crow.wav');
                         audio.play();
                     }
@@ -162,12 +168,12 @@ function stop() {
  */
 function reset() {
     // confirmationPrompt('reset');
-    tasks = [];
-    uniqueID = 1;
     // displayArray();
     phase = 'idle';
     document.getElementById('timerDisplay').innerHTML='00:00';
     deleteAllTasks();
+    taskCount = 0;
+    uniqueID = 1;
 }
 
 /** 
@@ -457,8 +463,3 @@ function setPageTitle(MMSS) {
 // }
 
 
-window.onload = function () {
-    const deleteAll = document.getElementById('deleteAll');
-    deleteAll.addEventListener('click', deleteAllTasks);
-
-}

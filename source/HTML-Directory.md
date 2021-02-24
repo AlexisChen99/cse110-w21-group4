@@ -16,7 +16,12 @@ body #background
   - input text #enterTask required
   - #taskAdder addTask()
   - #mainTasks
-    - TODO
+    - JAVASCRPT createExistingTask()
+      - div .userTask ('uniqueIDpin')
+        - img #markDone
+        - img #pin
+        - img #singleDel
+        - p
 
 ### Settings Menu
 .menu #settingsMenu
