@@ -41,6 +41,7 @@ let secondsRemaining = 0;   // Displays on timer
 let taskCount = 0;          // Used to keep track of all active tasks
 var uniqueID = 1;           // Used to assign uniqueID's when deleting specific tasks 
                             // (may be copied from task list to main)
+
 /**
  * Break lengths
  */
@@ -112,9 +113,11 @@ function start() {
                 if (secondsRemaining < 0) {
                     if (phase == 'work') {
                         // Update the tasks array (shift)
+
                         // tasks.shift();
                         // document.getElementById('mainTasks').innerHTML = tasks;
                         potatoesEaten++;
+
                         var audio = new Audio('audio/Rooster Crow.wav');
                         audio.play();
                     }
@@ -169,6 +172,7 @@ function stop() {
 function reset() {
     // confirmationPrompt('reset');
     // displayArray();
+
     phase = 'idle';
     document.getElementById('timerDisplay').innerHTML='00:00';
     deleteAllTasks();
@@ -303,6 +307,7 @@ function addTaskComponents(index, func) {
             break;
         default:
     }
+  
     return part;
 }
 
@@ -413,6 +418,7 @@ function setPageTitle(MMSS) {
     document.title = MMSS + phaseSymbol + 'Potato Timer';
 }
 
+
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //   TODO: create logic for the prompt process
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -461,5 +467,6 @@ function setPageTitle(MMSS) {
 //         ul.appendChild(newLi);
 //     }
 // }
+
 
 
