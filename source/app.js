@@ -28,42 +28,52 @@
 //     displayArray();
 // });
 
-let img = ['img/unmarked-circle-outline.png', 'img/unpinned.png', 'img/delete-task.png'];
-                            // Inactive images of a task component
-let altImg = ['img/marked-done.png', 'img/pinned.png'];
-                            // Active images of a task component
-let potatoesEaten = 0;      // Number of pomo "work" phases completed.
+
+let potatoesEaten = 0;      // Number of pomo 'work' phases completed.
 let phase = 'idle';         // idle, work, short break, long break, stopped
-let timer;                  // Represents the interval change of 1s
-let MMSS;                   // {string} MM:SS format
-let tasksDone = 0;          // TODO: Change its application
-let secondsRemaining = 0;   // Displays on timer
-let taskCount = 0;          // Used to keep track of all active tasks
-var uniqueID = 1;           // Used to assign uniqueID's when deleting specific tasks 
-                            // (may be copied from task list to main)
-
-/**
- * Break lengths
- */
-
 let workLength;             // work time (seconds)   15 mins (900)
 let shortBreakLength;       // short break time      5 mins  (300)
 let longBreakLength;        // long break time       25 mins (1500)
+let timer;                  // Represents the interval change of 1s
+let secondsRemaining = 0;   // Displays on timer
+let MMSS;                   // {string} MM:SS format
+let tasksDone = 0;          // TODO: Change its application
+let taskCount = 0;          // Used to keep track of all active tasks
+var uniqueID = 1;           // Used to assign uniqueID's when deleting specific tasks 
+                            // (may be copied from task list to main)
+let volume;
+let theme;                  // Potato, Dark, Light, undefined (Capitalized)
 
 window.onload = function() {
+    const volumeIcon = document.getElementById('volumeIcon');
+    volumeIcon.addEventListener('click', mute);
+    const settings = document.getElementById('settingsIcon');
+    settings.addEventListener('click', function () { show('settingsMenu'); });
+    const closeSettings = document.getElementById('closeSettings');
+    closeSettings.addEventListener('click', function () { hide('settingsMenu'); });
+
+    const closeTasks = document.getElementById('closeTasks');
+    closeTasks.addEventListener('click', function () { hide('taskMenu'); });
     const deleteAll = document.getElementById('deleteAll');
     deleteAll.addEventListener('click', deleteAllTasks);
-    const volumeIcon = document.getElementById("volumeIcon");
-    volumeIcon.addEventListener("click", mute);
+    // Load's users theme, TODO previous input settings, taskList, language
+    loadData();
+
 }
 
+/**
+ * Mute currently does nothing
+ */
 function mute() {
-    const volumeIcon = document.getElementById("volumeIcon");
-    volumeIcon.src = "img/volume-mute.png";
-    const volume = document.getElementById("volume");
+    const volumeIcon = document.getElementById('volumeIcon');
+    volumeIcon.src = 'img/volume-mute.png';
+    const volume = document.getElementById('volume');
     volume.value = 0;
 }
+
 /**
+ * MIGHT CHANGE TO LISTEN TO AN 'INPUT' EVENT LISTENER
+ * https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event
  * Sets the input times when the cycle isn't in progress.
  * @param {string} phase The phase to set the input times
  * @returns {number} The input time in seconds associated with the phase
@@ -189,12 +199,14 @@ function addTask() {
     if(task != '') {
         createTask(task);
         taskCount++;
+        console.log('Created task with ID ' + uniqueID);
+        console.log('Task count: ' + taskCount);
     }
 }
 
 /**
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!1
- *          INCOMPLETE
+ *          INCOMPLETE: POTATO THEME MARK TASK TO POTATO IMAGE
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * Creates a userTask in the taskListContainer. 
  * This does not display a task on the main page.
@@ -211,25 +223,40 @@ function createTask(text) {
     newTask.className = 'userTask';
     newTask.id = uniqueID++;
 
-    let i = 0;
-    let mark = addTaskComponents(i++, 'mark');
-    let pin = addTaskComponents(i++, 'pin');
-    let del = addTaskComponents(i++, 'del');
+    let mark = document.createElement('div');
+    mark.id = 'markDone';
+    mark.classList.add('markCircle');
+    let pin = document.createElement('img');
+    pin.id = 'pin';
+    pin.src = 'img/unpinned.png';
+    let del = document.createElement('img');
+    del.id = 'singleDel';
+    if(theme == 'Dark') {
+        mark.classList.add('markDark');
+        del.src = 'img/delete-task-dark.png';
+    } else {
+        mark.classList.add('markLight');
+        del.src = 'img/delete-task.png';
+    }
     let content = document.createElement('p');
     content.innerHTML = text;
-    // tasks.push(content.innerHTML);
 
-    // TODO MARK TASK
-
+    mark.addEventListener('click', function() {
+        if(newTask.children[0].classList.contains('markFill')) {
+            unmark(newTask.id);
+        } else {
+            markDone(newTask.id);
+        }
+    });
 
     pin.addEventListener('click', function() {
         pinnedTask = document.getElementById(newTask.id+'pin');
         if(!pinnedTask) {
             createExistingTask(text, newTask.id);
-            pin.src = altImg[1];
+            pin.src = 'img/pinned.png';
         } else {
-            pin.src = img[1];
-            unpinTask(pinnedTask.id);
+            pin.src = 'img/unpinned.png';
+            unpinTask(newTask.id);
         }
     });
 
@@ -246,9 +273,9 @@ function createTask(text) {
 
 /** 
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!1111
- * INCOMPLETE
+ * INCOMPLETE: POTATO THEME MARK TASK TO POTATO IMAGE
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * Creates "pinned" userTask in the mainTasks container. 
+ * Creates 'pinned' userTask in the mainTasks container. 
  * This display an existing task on the main page.
  * A pinned task is identified as '#pin' where # is the uniqueID.
  * Inherits the four userTask components, 
@@ -263,14 +290,33 @@ function createExistingTask(text, uniqueID) {
     pinTask.className = 'userTask';
     pinTask.id = uniqueID + 'pin';
 
-    let i = 0;
-    let mark = addTaskComponents(i++, 'mark');
-    let pin = addTaskComponents(i++, 'pinned');
-    let del = addTaskComponents(i++, 'del');
+    let mark = document.createElement('div');
+    mark.id = 'markDone';
+    mark.classList.add('markCircle');
+    let pin = document.createElement('img');
+    pin.id = 'pin';
+    pin.src = 'img/pinned.png';
+    let del = document.createElement('img');
+    del.id = 'singleDel';
+
+    if(theme == 'Dark') {
+        mark.classList.add('markDark');
+        del.src = 'img/delete-task-dark.png';
+    } else {
+        mark.classList.add('markLight');
+        del.src = 'img/delete-task.png';
+    }
+
     let content = document.createElement('p');
     content.innerHTML = text;
 
-    // TODO MARK TASK
+    mark.addEventListener('click', function() {
+        if(pinTask.children[0].classList.contains('markFill')) {
+            unmark(uniqueID);
+        } else {
+            markDone(uniqueID);
+        }
+    })
 
     pin.addEventListener('click', function() {
         unpinTask(uniqueID);
@@ -288,32 +334,43 @@ function createExistingTask(text, uniqueID) {
 }
 
 /**
- * Append images to task components with image-switching functions
- * @param {*} index An index used to access the respective img, altImg, id for the part
- * @param {*} func Adds active/inactive image displays for mark and pin components
+ * Visually marks a task if a user completes the task.
+ * This affects the task list and main display, if possible.
+ * Increments the number of tasks completed.
+ * @param {string} uniqueID The existing task's (task list) id.
  */
-function addTaskComponents(index, func) {
-    let componentID = ['markDone', 'pin', 'singleDel'];
-    let part = document.createElement('img');
-    
-    part.src = img[index];
-    part.id = componentID[index];
-    switch(func) {
-        case 'mark':
-            // TODO: Switch images back and forth
-            break;
-        case 'pinned':
-            part.src = altImg[index];
-            break;
-        default:
+function markDone(uniqueID) {
+    let originalTask = document.getElementById(uniqueID);
+    originalTask.children[0].classList.add('markFill');
+    pinnedTask = document.getElementById(uniqueID+'pin');
+
+    if(pinnedTask) {
+        pinnedTask.children[0].classList.add('markFill');
     }
-  
-    return part;
+    tasksDone++;
+    console.log('Tasks done: ' + tasksDone);
+}
+
+/**
+ * Visually unmarks a task if a user did not complete the task.
+ * This affects the task list and main display, if possible.
+ * Decrements the number of tasks complete.
+ * @param {string} uniqueID The existing task's (task list) id.
+ */
+function unmark(uniqueID) {
+    let originalTask = document.getElementById(uniqueID);
+    originalTask.children[0].classList.remove('markFill');
+    pinnedTask = document.getElementById(uniqueID+'pin');
+    if(pinnedTask) {
+        pinnedTask.children[0].classList.remove('markFill');
+    }
+    tasksDone--;
+    console.log('Tasks done: ' + tasksDone);
 }
 
 /**
  * Unpins a task from the main display by deleting the pinned copy.
- * @param {string} uniqueID The id of the original task.
+ * @param {string} uniqueID The existing task's (task list) id.
  * 
  * @example Unpin pinned task '1pin' calls function with '1pin'
  */
@@ -321,30 +378,34 @@ function unpinTask(uniqueID) {
     let pinnedTask = document.getElementById(uniqueID+'pin');
     const mainTasks = document.getElementById('mainTasks');
     mainTasks.removeChild(pinnedTask);
-    let originalTask = document.getElementById(uniqueID).children
-    originalTask[1].src = img[1];
+    let originalTask = document.getElementById(uniqueID).children;
+    originalTask[1].src = 'img/unpinned.png';
 }
 
 /**
  * Deletes a task from both the task list and the main display, if possible.
- * @param {string} uniqueID The id of the original task.
+ * Decreases the number of tasks by one.
+ * @param {string} uniqueID The existing task's (task list) id.
  * 
  * @example Delete pinned task '1pin' calls function with '1'.
  */
 function deleteTask(uniqueID) {    
     const pinnedTask = document.getElementById(uniqueID+'pin');
-    console.log(pinnedTask);
     if(pinnedTask) {
         const mainTasks = document.getElementById('mainTasks');
         mainTasks.removeChild(pinnedTask);
+        console.log('Deleted a pinned task.');
+
     }
     const taskList = document.getElementById('taskListContainer');
     taskList.removeChild(document.getElementById(uniqueID));
+    taskCount--;
+    console.log('Task count: ' + taskCount);
 }
 
 /**
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!
- *          INCOMPLETE: confirmationPrompt
+ *    INCOMPLETE: confirmationPrompt
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * Called by the deleteAll button.
  */
@@ -360,6 +421,8 @@ function deleteAllTasks() {
     }
     taskCount = 0;
     uniqueID = 1;
+    console.log('Deleted all tasks.');
+    console.log('Task Count: ' + taskCount);
 }
 
 /**
@@ -422,6 +485,10 @@ function setPageTitle(MMSS) {
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //   TODO: create logic for the prompt process
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/**
+ * Upon click, open 
+ * @param {*} action 
+ */
 //  function confirmationPrompt(action) {
 //     let prompt = document.getElementById('prompt');
 //     prompt.style.display = 'block';
@@ -434,39 +501,116 @@ function setPageTitle(MMSS) {
 
 //  }
 
-// function confirm(action) {
-//     return true;
+// function doConfirm(flag) {
+//     return flag;
 // }
 
-// function cancel() {
-//     document.getElementById('prompt').style.display = 'none';
-//     return false;
-// }
+/**
+ * Shows an element by changing its display to block.
+ * 
+ * @param {string} id The id of the element to show.
+ */
+function show(id) {
+    const elem = document.getElementById(id);
+    // console.log('showing');
+    elem.style.display = 'block';
+}
 
+/**
+ * Hides an element by changing its display to none.
+ * 
+ * @param {string} id The id of the element to hide.
+ */
+function hide(id) {
+    const elem = document.getElementById(id);
+    // console.log('hiding');
+    elem.style.display = 'none';
+}
 
-// function setLongBreak(event) {
-//     longBreakLength = event.target.value * 60;
-// }
+/** 
+ * Save user's last theme selected locally 
+ * TODO: Previous input settings, taskList, language
+ */
+function loadData() {
+    theme = window.localStorage.getItem('theme');
+    switch(theme) {
+        case 'Potato':
+            changeTheme('Potato');
+            // console.git log(theme);
+            break;
+        case 'Dark':
+            changeTheme('Dark');
+            // console.log(theme);
+            break;
+        case 'Light':
+            changeTheme('Light');
+            // console.log(theme);
+            break;
+        default: 
+            console.log('no previous theme');
+            changeTheme('Potato');
+    }
+}
 
-// function setShortBreak(event) {
-//     shortBreakLength = event.target.value * 60;
-// }
+/**
+ * Changes the theme.
+ * 
+ * @event loadData() When the website is loaded.
+ * @event button    When the user selects a theme.
+ * @param {string} newTheme The theme to change to.
+ */
+function changeTheme(newTheme) {
+    console.log("Changing theme to: " + newTheme);
+    window.localStorage.setItem('theme', newTheme);
+    theme = newTheme;
+    const body = document.getElementById('background');
+    body.className = 'theme' + newTheme;
+    const circle = document.getElementById('circleTimer');
+    circle.className = 'circle' + newTheme;
 
-// function setWork(event) {
-//     workLength = event.target.value * 60;
-// }
+    if(newTheme == 'Dark') {
+        let buttons = document.getElementsByTagName('button');
+        for(let i = 0; i < buttons.length; i ++) {
+            buttons[i].className = 'darkButton';
+        }
+    
+        let menus = document.getElementsByClassName('menu');
+        for(let i = 0; i < menus.length; i++) {
+            menus[i].classList.add('themeDark');
+            if(menus[i].classList.contains('menuLight')) {
+                menus[i].classList.remove('menuLight');
+            }
+        }
 
-// function displayArray() {
-//     let ul = document.getElementById('task-list');
-//     while(ul.firstChild) {
-//         ul.removeChild(ul.firstChild);
-//     }
-//     for(let i = 0; i <tasks.length; i++) {
-//         let newLi = document.createElement('li')
-//         newLi.innerHTML = tasks[i];
-//         ul.appendChild(newLi);
-//     }
-// }
+        let userTasks = document.getElementsByClassName('userTask');
+        for(let i = 0; i < userTasks.length; i++) {
+            
+            userTasks[i].children[0].classList.replace('markLight', 'markDark');
+            userTasks[i].children[2].src = 'img/delete-task-dark.png';
+        }
+    } else if (newTheme == 'Potato' || newTheme == 'Light') {
+        let buttons = document.getElementsByTagName('button');
+        for(let i = 0; i < buttons.length; i ++) {
+            if(buttons[i].classList.contains('darkButton')) {
+                buttons[i].classList.remove('darkButton');
+            }
+        }
+    
+        let menus = document.getElementsByClassName('menu');
+        for(let i = 0; i < menus.length; i++) {
+            menus[i].classList.add('menuLight');
+            if(menus[i].classList.contains('themeDark')) {
+                menus[i].classList.remove('themeDark');
+            }
+        }
 
+        let userTasks = document.getElementsByClassName('userTask');
+        for(let i = 0; i < userTasks.length; i++) {
+            console.log('changing tasks');
+            userTasks[i].children[0].classList.replace('markDark', 'markLight');
+            userTasks[i].children[2].src = 'img/delete-task.png';
+        }
+    }
 
-
+    hide('settingsMenu');
+}

@@ -24,7 +24,7 @@
         <div class="buttonWrapper">
             <button id="reset" onclick="reset()">Reset</button>
             <button id="start" onclick="start()">Start</button>
-            <button id="tasks" onclick="displayTasks()">Tasks</button>
+            <button id="tasks" onclick="show('taskMenu')">Tasks</button>
         </div>
 
         <div class="taskContainer">
@@ -45,12 +45,12 @@
         <p class="close" id="closeSettings">Close</p>
         <div id="chooseTheme">
             <p style="margin: 0 0; font-size: 18px;">Select a Theme</p>
-            <button id="themeDark" onclick="lightTheme()">Light</button>
-            <button id="themeDark" onclick="darkTheme()">Dark</button>
-            <button id="themePotato" onclick="potatoTheme()">Potato</button>
+            <button onclick="changeTheme('Light')">Light</button>
+            <button onclick="changeTheme('Dark')">Dark</button>
+            <button onclick="changeTheme('Potato')">Potato</button>
         </div>
 
-        <form class="userInputContainer">
+        <div class="userInputContainer">
             <div>
                 <label for="work" class="fieldLabel">Work Time</label>
                 <input type="number" class="customTime" id="workMin" value="25">
@@ -76,7 +76,7 @@
                 <input type="number" class="customVolume" id="volume" value="50">
                 <img src="img/volume.png" alt="Mute?" id="volumeIcon">
             </div>
-        </form>
+        </div>
         <!-- End of settings menu -->
     </div>
 
@@ -84,15 +84,17 @@
         <p>Tasks</p>
         <p class="close" id="closeTasks">Close</p>
         <p id="deleteAll">Delete All</p>
+        <div class="markCircle"></div>
         <div id="taskListContainer">
 
         </div>
     </div>
 
     <!-- <div class="menu" id="prompt">
-        <p id="confirmMessage">Unexpected Error</p>
-        <button id="confirm" onclick="confirm()">Confirm</button>
-        <button id="cancel" onclick="cancel()">Cancel</button>
+    <div style="margin-top: 1000px" id="prompt">
+        <div id="confirmMessage">Unexpected Error</div>
+        <button id="confirm" onclick="doConfirm(true)">Confirm</button>
+        <button id="cancel" onclick="doConfirm(false)">Cancel</button>
     </div> -->
 </body>
 
@@ -102,157 +104,6 @@
 
 
 
-
 <script>
-    window.onload = function () {
-        const settings = document.getElementById("settingsIcon");
-        settings.addEventListener("click", function () {
-            document.getElementById("settingsMenu").style.display = "block";
-        });
-        const closeSettings = document.getElementById("closeSettings");
-        closeSettings.addEventListener("click", function () {
-            document.getElementById("settingsMenu").style.display = "none";
-        });
 
-        const displayTasks = document.getElementById("tasks");
-        displayTasks.addEventListener("click", function () {
-            document.getElementById("taskMenu").style.display = "block";
-        });
-
-        const closeTasks = document.getElementById("closeTasks");
-        closeTasks.addEventListener("click", function () {
-            document.getElementById("taskMenu").style.display = "none";
-        })
-
-        
-
-        // deciding on which theme to use
-        loadData();
-    }
-
-    /* save user's preference locally after theme changing */
-    function loadData() {
-        let theme = window.localStorage.getItem("theme");
-        const app = document.getElementById("brackground");
-        if (!theme) {
-            app.className = "potatoTheme";
-            window.localStorage.setItem("theme", "potato");
-            console.log("null");
-        } else if (theme == "potato"){
-            potatoTheme();
-            window.localStorage.setItem("theme", "potato");
-            console.log("potato");
-        } else if (theme == "dark"){
-            darkTheme();
-            window.localStorage.setItem("theme", "dark");
-            console.log("dark");
-        } else if (theme == "light"){
-            lightTheme();
-            window.localStorage.setItem("theme", "light");
-            console.log("light");
-        }
-    }
-    
-    function potatoTheme() {
-        window.localStorage.setItem("theme", "potato");
-        const body = document.getElementById("background");
-        body.className = "potatoTheme";
-
-        let circle = document.getElementById("circleTimer");
-        circle.style.backgroundColor = "#ff0";
-        circle.style["boxShadow"] = "0 0 20px 20px #ff0";
-        circle.style.border = "5px solid #ff0";
-
-        /* buttons */
-        let btn = document.getElementsByTagName("button");
-        for(let i = 0; i < btn.length; i ++) {
-            if(btn[i].classList.contains("darkButton")) {
-                btn[i].classList.remove("darkButton");
-            }
-        }
-
-        /* settings menu */
-        // let settings = document.getElementById("settingsMenu");
-        // settings.classList.add("menuLight");
-        // if(settings.classList.contains("darkTheme")) {
-        //     settings.classList.remove("darkTheme");
-        // }
-
-        // // Task Menu 
-        // let tasks = document.getElementById("taskMenu");
-        // tasks.classList.add("menuLight");
-        // if(tasks.classList.contains("darkTheme")) {
-        //     tasks.classList.remove("darkTheme");
-        // }
-
-        let menuList = document.getElementsByClassName('menu');
-        for(let i = 0; i < menuList.length; i++) {
-            menuList[i].classList.add('menuLight');
-            if(menuList[i].classList.contains("darkTheme")) {
-                menuList[i].classList.remove("darkTheme");
-            }
-        }
-
-        document.getElementById('settingsMenu').style.display = "none";
-    }
-
-    function darkTheme() {
-        window.localStorage.setItem("theme", "dark");
-        const body = document.getElementById("background");
-        body.className = "darkTheme";
-
-        let circle = document.getElementById("circleTimer");
-        circle.style.backgroundColor = "#333";
-        circle.style["boxShadow"] = "0 0 10px 10px white";
-        circle.style.border = "5px solid white";
-
-        /* buttons */
-        let btn = document.getElementsByTagName("button");
-        for(let i = 0; i < btn.length; i ++) {
-            btn[i].className = "darkButton";
-        }
-
-        let menuList = document.getElementsByClassName('menu');
-        for(let i = 0; i < menuList.length; i++) {
-            menuList[i].classList.add('darkTheme');
-            if(menuList[i].classList.contains("menuLight")) {
-                menuList[i].classList.remove("menuLight");
-            }
-        }
-
-        document.getElementById('settingsMenu').style.display = "none";
-    }
-
-    function lightTheme() {
-        window.localStorage.setItem("theme", "light");
-        const body = document.getElementById("background");
-        body.className = "lightTheme";
-        let circle = document.getElementById("circleTimer");
-        circle.style.backgroundColor = "white";
-        circle.style["boxShadow"] = "0 0 10px 10px #333";
-        circle.style.border = "5px solid #333";
-
-        /* resset and start button */
-        let btn = document.getElementsByTagName("button");
-        for(let i = 0; i < btn.length; i ++) {
-            if(btn[i].classList.contains("darkButton")) {
-                btn[i].classList.remove("darkButton");
-            }
-        }
-        // Settings, task, prompt
-        let menuList = document.getElementsByClassName('menu');
-        for(let i = 0; i < menuList.length; i++) {
-            menuList[i].classList.add('menuLight');
-            if(menuList[i].classList.contains("darkTheme")) {
-                menuList[i].classList.remove("darkTheme");
-            }
-        }
-
-        document.getElementById('settingsMenu').style.display = "none";
-   }
-
-    function displayTasks() {
-        document.getElementById("taskMenu").style.display = "block";
-    }
-    
 </script>
