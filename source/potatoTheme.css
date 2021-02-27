@@ -42,6 +42,13 @@ p {
     margin-bottom: 0px;
 }
 
+.hidden {
+    display: none;
+}
+
+.showing {
+    display: block;
+}
 /*---------------------------------
          Main Page Display
 ---------------------------------*/
@@ -163,7 +170,6 @@ input[type="text"] {
     top: 0%;
     right: 0%;
     bottom: auto;
-    display: none; /* Change block/none */
     overflow: hidden;
     min-height: 200px;
     max-width: 768px;

@@ -518,18 +518,18 @@ function setPageTitle(MMSS) {
 function show(id) {
     const elem = document.getElementById(id);
     // console.log('showing');
-    elem.style.display = 'block';
+    elem.classList.replace('hidden', 'showing');
 }
 
 /**
  * Hides an element by changing its display to none.
- * 
+ * CHANGE TO .CLASSLIST REPLACE .SHOW WITH .HIDE
  * @param {string} id The id of the element to hide.
  */
 function hide(id) {
     const elem = document.getElementById(id);
     // console.log('hiding');
-    elem.style.display = 'none';
+    elem.classList.replace('showing', 'hidden');
 }
 
 /** 
