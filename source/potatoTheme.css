@@ -13,10 +13,17 @@ body {
 .themePotato {
     color: #333;
     background-color: #73d918;
-    background-image: url("img/background.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.potatoWork {
+    background-image: url("img/background.png");
+}
+
+.potatoBreak {
+    background-image: url("img/background-break.png");
 }
 
 .themeDark {

@@ -141,11 +141,12 @@ function start() {
                     secondsRemaining = setTimeRemaining();
                     document.getElementById('phaseDisplay').innerHTML = phase;
 
-                    let background = document.getElementById('background');
-                    if(theme == 'Potato' && phase == 'short break' || 'long break') {
-                        background.style.backgroundImage = 'url(img/background-break.png)';
-                    } else if(theme == 'Potato') {
-                        background.style.backgroundImage = 'url(img/background.png)';
+                    // To change to dark background, need to create a new class
+                    const background = document.getElementById('background');
+                    if(theme == 'Potato' && phase == 'short break' || phase == 'long break') {
+                        background.classList.replace('potatoWork', 'potatoBreak');
+                    } else if (theme == 'Potato') {
+                        background.classList.replace('potatoBreak', 'potatoWork');
                     }
                 }
            }
@@ -569,6 +570,11 @@ function changeTheme(newTheme) {
     theme = newTheme;
     const body = document.getElementById('background');
     body.className = 'theme' + newTheme;
+
+    if(newTheme == 'Potato') {
+        body.classList.add('potatoWork');
+    }
+
     const circle = document.getElementById('circleTimer');
     circle.className = 'circle' + newTheme;
 
