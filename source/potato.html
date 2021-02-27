@@ -22,7 +22,7 @@
         </div>
 
         <div class="buttonWrapper">
-            <button id="reset" onclick="reset()">Reset</button>
+            <button id="reset" onclick="confirmationPrompt('Reset')">Reset</button>
             <button id="start" onclick="start()">Start</button>
             <button id="tasks" onclick="show('taskMenu')">Tasks</button>
         </div>
@@ -81,21 +81,19 @@
     </div>
 
     <div class="menu" id="taskMenu">
-        <p>Tasks</p>
+        <p id="taskMenuTasks">Tasks</p>
         <p class="close" id="closeTasks">Close</p>
         <p id="deleteAll">Delete All</p>
-        <div class="markCircle"></div>
         <div id="taskListContainer">
 
         </div>
     </div>
 
-    <!-- <div class="menu" id="prompt">
-    <div style="margin-top: 1000px" id="prompt">
+    <div class="menu" id="prompt">
         <div id="confirmMessage">Unexpected Error</div>
-        <button id="confirm" onclick="doConfirm(true)">Confirm</button>
-        <button id="cancel" onclick="doConfirm(false)">Cancel</button>
-    </div> -->
+        <button id="confirm">Confirm</button>
+        <button id="cancel">Cancel</button>
+    </div>
 </body>
 
 

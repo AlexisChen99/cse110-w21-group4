@@ -51,11 +51,16 @@ window.onload = function() {
     settings.addEventListener('click', function () { show('settingsMenu'); });
     const closeSettings = document.getElementById('closeSettings');
     closeSettings.addEventListener('click', function () { hide('settingsMenu'); });
-
     const closeTasks = document.getElementById('closeTasks');
     closeTasks.addEventListener('click', function () { hide('taskMenu'); });
+
+    const resetBtn = document.getElementById('reset');
+    resetBtn.onclick = function() { confirmationPrompt('Reset'); };
     const deleteAll = document.getElementById('deleteAll');
-    deleteAll.addEventListener('click', deleteAllTasks);
+    deleteAll.addEventListener('click', function () { confirmationPrompt('Delete'); });      // deleteAllTasks
+    const cancelBtn = document.getElementById('cancel');
+    cancelBtn.onclick = function() { hide('prompt'); };
+    
     // Load's users theme, TODO previous input settings, taskList, language
     loadData();
 
@@ -135,6 +140,13 @@ function start() {
                     updatePhase();
                     secondsRemaining = setTimeRemaining();
                     document.getElementById('phaseDisplay').innerHTML = phase;
+
+                    let background = document.getElementById('background');
+                    if(theme == 'Potato' && phase == 'short break' || 'long break') {
+                        background.style.backgroundImage = 'url(img/background-break.png)';
+                    } else if(theme == 'Potato') {
+                        background.style.backgroundImage = 'url(img/background.png)';
+                    }
                 }
            }
         }, 1000); //update the timer every second
@@ -173,21 +185,15 @@ function stop() {
     document.getElementById('start').onclick = start;
 }
 /**
- *  !!!!!!!!!!!!!!!!!!!!!!!!!!!!
- *          INCOMPLETE: confirmationPrompt
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * 
- * Resets the timer and empties the task queue.
+ * Resets the pomodoro cycle to the beginning.
  */
 function reset() {
-    // confirmationPrompt('reset');
-    // displayArray();
-
+    console.log('reset timer');
     phase = 'idle';
     document.getElementById('timerDisplay').innerHTML='00:00';
-    deleteAllTasks();
     taskCount = 0;
     uniqueID = 1;
+    hide('prompt');
 }
 
 /** 
@@ -404,23 +410,23 @@ function deleteTask(uniqueID) {
 }
 
 /**
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!
- *    INCOMPLETE: confirmationPrompt
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * 
  * Called by the deleteAll button.
  */
 function deleteAllTasks() {
-    // TODO confirm message
     const taskList = document.getElementById('taskListContainer');
     while(taskList.firstChild) {
         taskList.removeChild(taskList.lastChild);
     }
+
     const mainTasks = document.getElementById('mainTasks');
     while(mainTasks.firstChild) {
         mainTasks.removeChild(mainTasks.lastChild);
     }
+
     taskCount = 0;
     uniqueID = 1;
+    hide('prompt');
     console.log('Deleted all tasks.');
     console.log('Task Count: ' + taskCount);
 }
@@ -482,28 +488,26 @@ function setPageTitle(MMSS) {
 }
 
 
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//   TODO: create logic for the prompt process
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 /**
- * Upon click, open 
- * @param {*} action 
+ * Confirms a user's action to prevent major accidents. 
+ * @param {string} action The action to confirm. Either 'Reset' or 'Delete' all.
  */
-//  function confirmationPrompt(action) {
-//     let prompt = document.getElementById('prompt');
-//     prompt.style.display = 'block';
-//     let message = document.getElementById('confirmMessage');
-//     if(action == 'reset') {
-//         message.innerHTML = 'Are you sure you want to reset the timer\'s cycle?';
-//     } else if (action == 'delete') {
-//         message.innerHTML = 'Are you sure you want to delete all tasks?';
-//     }
+ function confirmationPrompt(action) {
+     console.log('prompt');
+    show('prompt');
+    let message = document.getElementById('confirmMessage');
+    let confirmBtn = document.getElementById('confirm');
 
-//  }
+    if(action == 'Reset') {
+        message.innerHTML = 'Are you sure you want to reset the timer\'s cycle?';
+        confirmBtn.onclick = reset;
+    } else if (action == 'Delete') {
+        message.innerHTML = 'Are you sure you want to delete all tasks?';
+        confirmBtn.onclick = deleteAllTasks;
+    }        
 
-// function doConfirm(flag) {
-//     return flag;
-// }
+
+ }
 
 /**
  * Shows an element by changing its display to block.
@@ -536,7 +540,7 @@ function loadData() {
     switch(theme) {
         case 'Potato':
             changeTheme('Potato');
-            // console.git log(theme);
+            // console.log(theme);
             break;
         case 'Dark':
             changeTheme('Dark');
@@ -569,6 +573,8 @@ function changeTheme(newTheme) {
     circle.className = 'circle' + newTheme;
 
     if(newTheme == 'Dark') {
+        let settingsIcon = document.getElementById('settingsIcon');
+        settingsIcon.src = 'img/settings-dark.png';
         let buttons = document.getElementsByTagName('button');
         for(let i = 0; i < buttons.length; i ++) {
             buttons[i].className = 'darkButton';
@@ -589,6 +595,9 @@ function changeTheme(newTheme) {
             userTasks[i].children[2].src = 'img/delete-task-dark.png';
         }
     } else if (newTheme == 'Potato' || newTheme == 'Light') {
+        let settingsIcon = document.getElementById('settingsIcon');
+        settingsIcon.src = 'img/settings.png';
+
         let buttons = document.getElementsByTagName('button');
         for(let i = 0; i < buttons.length; i ++) {
             if(buttons[i].classList.contains('darkButton')) {
