@@ -29,15 +29,15 @@
 // });
 
 
-let potatoesEaten = 0;      // Number of pomo 'work' phases completed.
 let phase = 'idle';         // idle, work, short break, long break, stopped
-let workLength;             // work time (seconds)   15 mins (900)
-let shortBreakLength;       // short break time      5 mins  (300)
-let longBreakLength;        // long break time       25 mins (1500)
+let workLength = 5;             // work time (seconds)   15 mins (900)
+let shortBreakLength = 6;       // short break time      5 mins  (300)
+let longBreakLength = 7;        // long break time       25 mins (1500)
 let timer;                  // Represents the interval change of 1s
 let secondsRemaining = 0;   // Displays on timer
 let MMSS;                   // {string} MM:SS format
 let tasksDone = 0;          // TODO: Change its application
+let pomosDone = 0;          // Number of pomo 'work' phases completed.
 let taskCount = 0;          // Used to keep track of all active tasks
 var uniqueID = 1;           // Used to assign uniqueID's when deleting specific tasks 
                             // (may be copied from task list to main)
@@ -94,12 +94,12 @@ function setInputTimes(phase) {
  * If the timer was stopped and resumed, the input times are not modified.
  */
 function start() {
-    if(phase != 'stopped') {
+    /*if(phase != 'stopped') {
         console.log('Setting input times');
         workLength = setInputTimes('work');
         shortBreakLength = setInputTimes('short');
         longBreakLength = setInputTimes('long');
-    }
+    }*/
 
     secondsRemaining = setTimeRemaining();
     document.getElementById('reset').disabled = true;
@@ -111,7 +111,7 @@ function start() {
     if (taskCount > 0) {    
         timer = setInterval(function () {
             // once all the tasks have ended, clear the timer
-            if (taskCount == 0) {   // FIXME
+            if (taskCount == tasksDone) {   // FIXME
                 clearInterval(timer);
                 phase = 'idle';
                 // Update the phase
@@ -131,9 +131,8 @@ function start() {
 
                         // tasks.shift();
                         // document.getElementById('mainTasks').innerHTML = tasks;
-                        potatoesEaten++;
+                        pomosDone++;
 
-                        var audio = new Audio('audio/Rooster Crow.wav');
                         audio.play();
                     }
 
@@ -418,6 +417,8 @@ function deleteTask(uniqueID) {
     const taskList = document.getElementById('taskListContainer');
     taskList.removeChild(document.getElementById(uniqueID));
     taskCount--;
+    const taskBtn = document.getElementById('taskBtn');
+    taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
     console.log('Task count: ' + taskCount);
 }
 
@@ -439,6 +440,8 @@ function deleteAllTasks() {
 
     taskCount = 0;
     uniqueID = 1;
+    const taskBtn = document.getElementById('taskBtn');
+    taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
     hide('prompt');
     console.log('Deleted all tasks.');
     console.log('Task Count: ' + taskCount);
@@ -449,9 +452,9 @@ function deleteAllTasks() {
  */
 function updatePhase() {
     if (phase == 'work') {
-        tasksDone++;
+        pomosDone++;
 
-        if (tasksDone % 4 != 0) {
+        if (pomosDone % 4 != 0) {
             // If the tasks completed is less than 4 (1-3)
             phase = 'short break';
         } else {

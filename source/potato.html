@@ -18,7 +18,7 @@
         <img src="img/settings.png" alt="Settings" id="settingsIcon">
 
         <div id="circleTimer">
-            <p class="timer" id="timerDisplay">25:00</p>
+            <p class="timer" id="timerDisplay">--:--</p>
         </div>
 
         <div class="buttonWrapper">
@@ -26,9 +26,9 @@
             <button id="start" onclick="start()">Start</button>
             <button id="taskBtn" onclick="show('taskMenu')">Tasks</button>
         </div>
-
+        <!-- <p>Please enter at least one task to start the timer.</p> -->
         <div class="taskContainer">
-            <input type="text" id="enterTask" placeholder="Enter Task" required>
+            <input type="text" id="enterTask" placeholder="Enter Task To Start" required>
             <button id="taskAdder" onclick="addTask()">Add</button>
         </div>
         <div id="mainTasks">
@@ -69,6 +69,8 @@
                 <input type="number" class="customTime" id="longSec" value="00" min="0" max="59" maxlength="2">
             </div>
             <div>
+                <audio id="workToBreakAudio"></audio>
+
                 <label for="volume" class="fieldLabel">Volume (%)</label>
                 <input type="number" class="customVolume" id="volume" value="50" min="0" max="100" maxlength="3">
                 <img src="img/volume.png" alt="Mute?" id="volumeIcon">
