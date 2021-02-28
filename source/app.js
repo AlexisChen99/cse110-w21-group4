@@ -1,4 +1,3 @@
-
 /**
  * Phases: idle, work, short break, long break (lowercase)
  * 
@@ -7,32 +6,11 @@
  * i-W-b-W-b-W-b-W-B (1 cycle)
  * i-0-1-0-1-0-1-0-2
  */
-// UNUSED
-// var pushEvent = function(arr, callback) {
-//     arr.push = function(e) {
-//         Array.prototype.push.call(arr,e);
-//         callback(arr);
-//     };
-// };
-//
-// var popEvent = function(arr, callback) {
-//     arr.shift = function(e) {
-//         Array.prototype.shift.call(arr,e);
-//         callback(arr);
-//     };
-// };
-// pushEvent(tasks, function(tasks) {
-//     displayArray();
-// });
-// popEvent(tasks, function(tasks) {
-//     displayArray();
-// });
-
 
 let phase = 'idle';         // idle, work, short break, long break, stopped
-let workLength = 5;             // work time (seconds)   15 mins (900)
-let shortBreakLength = 6;       // short break time      5 mins  (300)
-let longBreakLength = 7;        // long break time       25 mins (1500)
+let workLength = 3;             // work time (seconds)   15 mins (900)
+let shortBreakLength = 2;       // short break time      5 mins  (300)
+let longBreakLength = 5;        // long break time       25 mins (1500)
 let timer;                  // Represents the interval change of 1s
 let secondsRemaining = 0;   // Displays on timer
 let MMSS;                   // {string} MM:SS format
@@ -41,12 +19,15 @@ let pomosDone = 0;          // Number of pomo 'work' phases completed.
 let taskCount = 0;          // Used to keep track of all active tasks
 var uniqueID = 1;           // Used to assign uniqueID's when deleting specific tasks 
                             // (may be copied from task list to main)
-let volume;
+let volume = 10;
 let theme;                  // Potato, Dark, Light, undefined (Capitalized)
+let mute = false;
 
 window.onload = function() {
     const volumeIcon = document.getElementById('volumeIcon');
-    volumeIcon.addEventListener('click', mute);
+    volumeIcon.addEventListener('click', toggleMute);
+    const volumeInput = document.getElementById('volume');
+    volumeInput.addEventListener('change', changeAudio);
     const settings = document.getElementById('settingsIcon');
     settings.addEventListener('click', function () { show('settingsMenu'); });
     const closeSettings = document.getElementById('closeSettings');
@@ -60,6 +41,8 @@ window.onload = function() {
     deleteAll.addEventListener('click', function () { confirmationPrompt('Delete'); });      // deleteAllTasks
     const cancelBtn = document.getElementById('cancel');
     cancelBtn.onclick = function() { hide('prompt'); };
+
+
     
     // Load's users theme, TODO previous input settings, taskList, language
     loadData();
@@ -67,13 +50,55 @@ window.onload = function() {
 }
 
 /**
+ * Event Listener for muted audio
+ */
+
+
+
+/**
+ * Play the audio from break to work
+ * id:   'breakToWorkAudio',         'workToBreakAudio'
+ * Path: 'audio/Rooster Crow.wav', 'audio/Dove.wav'
+ * 
+ * @param {string} id The audio block involved with the rooster call
+ */
+function playAudio(id) {
+    // Check if the volume is muted
+    if(volume == 0) {
+        return;
+    }
+
+    const audioObj = document.getElementById(id);
+    audioObj.volume = volume / 100;
+
+    if (mute == false) {
+        audioObj.play();
+    }
+}
+
+function changeAudio() {
+    const volumeInput = document.getElementById('volume');
+    volume = volumeInput.value;
+}
+
+{/* <audio id="breakToWorkAudio" src='audio/Rooster Crow.wav'></audio> */}
+
+/**
  * Mute currently does nothing
  */
-function mute() {
+function toggleMute() {
+    // Audio icon and volume
     const volumeIcon = document.getElementById('volumeIcon');
-    volumeIcon.src = 'img/volume-mute.png';
-    const volume = document.getElementById('volume');
-    volume.value = 0;
+    if (mute == false) {
+        //change img
+        volumeIcon.src = 'img/volume-mute.png';
+        mute = true;
+    } else {
+        //change img
+        volumeIcon.src = 'img/volume.png';
+        mute = false;
+    }
+
 }
 
 /**
@@ -127,15 +152,11 @@ function start() {
 
                 if (secondsRemaining < 0) {
                     if (phase == 'work') {
-                        // Update the tasks array (shift)
-
-                        // tasks.shift();
-                        // document.getElementById('mainTasks').innerHTML = tasks;
-                        pomosDone++;
-
-                        audio.play();
+                        playAudio('breakToWorkAudio');
                     }
-
+                    if (phase != 'work') {
+                        playAudio('workToBreakAudio');
+                    }
                     updatePhase();
                     secondsRemaining = setTimeRemaining();
                     document.getElementById('phaseDisplay').innerHTML = phase;
@@ -168,8 +189,64 @@ function convertSeconds(secondsRemaining) {
     timerString += minutes + ':';
     if (seconds < 10) { timerString += '0'; }
     timerString += seconds;
-
+    console.log(timerString);
     return timerString;
+}
+
+/**
+ * Update the phase and number of tasks complete.
+ */
+function updatePhase() {
+    if (phase == 'work') {
+        pomosDone++;
+
+        if (pomosDone % 4 != 0) {
+            // If the tasks completed is less than 4 (1-3)
+            phase = 'short break';
+        } else {
+            // If the tasks completed is divisible by 4
+            phase = 'long break';
+        }
+    } else {
+        phase = 'work';
+    }
+}
+
+/**
+ * Checks what the current timer state is from 
+ * 'work', 'short break', 'long break', 'stopped'
+ * to know what the timer should start counting down with.
+ * 
+ * @return {number} The time remaining for the current timer state.
+ */
+function setTimeRemaining() {
+    return (phase == 'work') ? workLength :     
+        (phase == 'short break') ? shortBreakLength : 
+        (phase == 'stopped') ? secondsRemaining :
+        longBreakLength;                        
+}
+
+/**
+ * Sets the <title> element for users to see remaining time off-page.
+ * 
+ * @param {string} MMSS 'MM:SS' form
+ */
+function setPageTitle(MMSS) {
+    let phaseSymbol;
+    switch(phase) {
+        case 'work':
+            phaseSymbol = ' Work - ';
+            break;
+        case 'short break':
+        case 'long break':
+            phaseSymbol = ' Break -';
+            break;
+        case 'stopped':
+            phaseSymbol = ' Stopped - '
+            break;
+    }
+
+    document.title = MMSS + phaseSymbol + 'Potato Timer';
 }
 
 /**
@@ -447,61 +524,7 @@ function deleteAllTasks() {
     console.log('Task Count: ' + taskCount);
 }
 
-/**
- * Update the phase and number of tasks complete.
- */
-function updatePhase() {
-    if (phase == 'work') {
-        pomosDone++;
 
-        if (pomosDone % 4 != 0) {
-            // If the tasks completed is less than 4 (1-3)
-            phase = 'short break';
-        } else {
-            // If the tasks completed is 4
-            phase = 'long break';
-        }
-    } else {
-        phase = 'work';
-    }
-}
-
-/**
- * Checks what the current timer state is from 
- * 'work', 'short break', 'long break', 'stopped'
- * to know what the timer should start counting down with.
- * 
- * @return {number} The time remaining for the current timer state.
- */
-function setTimeRemaining() {
-    return (phase == 'work') ? workLength :     
-        (phase == 'short break') ? shortBreakLength : 
-        (phase == 'stopped') ? secondsRemaining :
-        longBreakLength;                        
-}
-
-/**
- * Sets the <title> element for users to see remaining time off-page.
- * 
- * @param {string} MMSS 'MM:SS' form
- */
-function setPageTitle(MMSS) {
-    let phaseSymbol;
-    switch(phase) {
-        case 'work':
-            phaseSymbol = ' Work - ';
-            break;
-        case 'short break':
-        case 'long break':
-            phaseSymbol = ' Break -';
-            break;
-        case 'stopped':
-            phaseSymbol = ' Stopped - '
-            break;
-    }
-
-    document.title = MMSS + phaseSymbol + 'Potato Timer';
-}
 
 
 /**
@@ -596,6 +619,15 @@ function changeTheme(newTheme) {
     if(newTheme == 'Dark') {
         let settingsIcon = document.getElementById('settingsIcon');
         settingsIcon.src = 'img/settings-dark.png';
+        
+        let volumeIcon = document.getElementById('volumeIcon');
+        if(volume != 0) {
+            volumeIcon.src = 'img/volume-dark.png';
+        } else {
+            volumeIcon.src = 'img/volume-mute-dark.png';
+        }
+        
+        
         let buttons = document.getElementsByTagName('button');
         for(let i = 0; i < buttons.length; i ++) {
             buttons[i].className = 'darkButton';
@@ -609,6 +641,12 @@ function changeTheme(newTheme) {
             }
         }
 
+        let prompt = document.getElementById('prompt');
+        prompt.classList.add('themeDark');
+        if(prompt.classList.contains('themeLight')) {
+            prompt.classList.remove('themeLight');
+        }
+        
         let userTasks = document.getElementsByClassName('userTask');
         for(let i = 0; i < userTasks.length; i++) {
             
@@ -619,6 +657,13 @@ function changeTheme(newTheme) {
         let settingsIcon = document.getElementById('settingsIcon');
         settingsIcon.src = 'img/settings.png';
 
+        let volumeIcon = document.getElementById('volumeIcon');
+        if(volume != 0) {
+            volumeIcon.src = 'img/volume.png';
+        } else {
+            volumeIcon.src = 'img/volume-mute.png';
+        }
+                
         let buttons = document.getElementsByTagName('button');
         for(let i = 0; i < buttons.length; i ++) {
             if(buttons[i].classList.contains('darkButton')) {
@@ -633,7 +678,13 @@ function changeTheme(newTheme) {
                 menus[i].classList.remove('themeDark');
             }
         }
-
+        
+        let prompt = document.getElementById('prompt');
+        prompt.classList.add('menuLight');
+        if(prompt.classList.contains('themeDark')) {
+            prompt.classList.remove('themeDark');
+        }
+        
         let userTasks = document.getElementsByClassName('userTask');
         for(let i = 0; i < userTasks.length; i++) {
             console.log('changing tasks');
