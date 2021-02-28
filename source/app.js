@@ -208,6 +208,8 @@ function addTask() {
         taskCount++;
         console.log('Created task with ID ' + uniqueID);
         console.log('Task count: ' + taskCount);
+        const taskBtn = document.getElementById('taskBtn');
+        taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
     }
 }
 
@@ -266,6 +268,11 @@ function createTask(text) {
             unpinTask(newTask.id);
         }
     });
+
+    if(taskCount < 3) {
+        createExistingTask(text, newTask.id);
+        pin.src = 'img/pinned.png';
+    }
 
     del.addEventListener('click', function() {
         deleteTask(newTask.id);
@@ -355,6 +362,8 @@ function markDone(uniqueID) {
         pinnedTask.children[0].classList.add('markFill');
     }
     tasksDone++;
+    const taskBtn = document.getElementById('taskBtn');
+    taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
 }
 
@@ -372,6 +381,8 @@ function unmark(uniqueID) {
         pinnedTask.children[0].classList.remove('markFill');
     }
     tasksDone--;
+    const taskBtn = document.getElementById('taskBtn');
+    taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
 }
 
@@ -411,8 +422,9 @@ function deleteTask(uniqueID) {
 }
 
 /**
- * 
- * Called by the deleteAll button.
+ * Deletes all of the tasks from both the tsak list and main display, if possible.
+ * Resets taskCount to 0 and uniqueID to 1.
+ * @event deleteAll text
  */
 function deleteAllTasks() {
     const taskList = document.getElementById('taskListContainer');
