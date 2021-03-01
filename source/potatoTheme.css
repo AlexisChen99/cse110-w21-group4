@@ -146,28 +146,21 @@ input[type="text"] {
   .dropdown-content {
     display: none;
     position: relative;
-    background-color: #12cdee;
-    margin-left: -350px;
-    min-width: 100px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 18px;
+    background-color: #414b4d;
     z-index: 1;
   }
   
   .dropdown-content a {
-    color: black;
+    color: rgb(255, 255, 255);
     padding: 10px 10px;
+    border-radius: 18px;
     font-size: 15px;
     text-decoration: none;
     display: block;
   }
-  
-  .dropdown-content a:hover {background-color: #ddd;}
-  
+  .dropdown-content a:hover {background-color: rgb(41, 41, 41);}
   .dropdown:hover .dropdown-content {display: block;}
-  
-  .dropdown:hover .languageBtn {background-color: #17c71d;}
-
-
 
 /*---------------------------------
          Settings Menu Display
