@@ -137,17 +137,6 @@ input[type="text"] {
 /*---------------------------------
          Language DropDown
 ---------------------------------*/
-
-.languageBtn {
-    background-color: #63b8fd;
-    color: rgb(2, 2, 2);
-    padding: 15px;
-    font-size: 15px;
-    margin-left: -600px;
-    position: relative;
-    border: none;
-  }
-  
   .dropdown {
     position: relative;
     margin-left: -600px;
