@@ -147,6 +147,7 @@ input[type="text"] {
     display: none;
     position: relative;
     border-radius: 18px;
+    margin-top: 5px;
     background-color: #414b4d;
     z-index: 1;
   }
