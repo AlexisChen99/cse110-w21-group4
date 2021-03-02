@@ -700,13 +700,23 @@ function changeTheme(newTheme) {
 function loadLang() {
     let savedLang = window.localStorage.getItem('lang');
     if(savedLang == null) { 
-        lang = navigator.language;
+        console.log("No saved language detected. Your browser's language is: " + navigator.language);
+        if(navigator.language.includes('es')) {
+            lang = 'es';
+        } else if(navigator.language.includes('zh')) {
+            lang = 'zh';
+        } else if(navigator.language == 'ko') {
+            lang = 'ko';
+        } else {
+            lang = 'en';
+        }
+        window.localStorage.setItem('lang', lang);
     } else {
         lang = savedLang;
+        console.log('language was saved');
     }
-
-    const html = document.documentElement;
-    html.lang = lang;
+    
+    document.documentElement.lang = lang; // <HTML> tag
     document.getElementById('title').innerText = dict['title'][lang];
     document.getElementById('phaseDisplay').innerText = dict['phase']['work'][lang];
     document.getElementById('start').innerText = dict['start'][lang];
@@ -715,8 +725,24 @@ function loadLang() {
     document.getElementById('enterTask').innerText = dict['enterTask'][lang];
     document.getElementById('taskAdder').innerText = dict['add'][lang];
 
+    // "Drag me"???
+    document.getElementById('settingsTitle').innerText = dict['settings'][lang];
+    document.getElementById('closeSettings').innerText = dict['close'][lang];
+    document.getElementById('selectTheme').innerText = dict['selectTheme'][lang];
+    document.getElementById('lightTheme').innerText = dict['lightTheme'][lang];
+    document.getElementById('darkTheme').innerText = dict['darkTheme'][lang];
+    document.getElementById('potatoTheme').innerText = dict['potatoTheme'][lang];
+    document.getElementById('workTime').innerText = dict['workTime'][lang];
+    document.getElementById('shortTime').innerText = dict['shortBreak'][lang];
+    document.getElementById('longTime').innerText = dict['longBreak'][lang];
+    document.getElementById('cycleLength').innerText = dict['cycleLength'][lang];
+    document.getElementById('volume').innerText = dict['volume'][lang];
 
+    document.getElementById('taskMenuTasks').innerText = dict['tasks'][lang];
+    document.getElementById('closeTasks').innerText = dict['close'][lang];
+    document.getElementById('deleteAll').innerText = dict['deleteAll'][lang];
     
+    document.getElementById('languageBtn').innerText = dict['languageBtn'][lang];
     document.getElementById('confirm').innerText = dict['confirm'][lang];
     document.getElementById('cancel').innerText = dict['cancel'][lang];
 }

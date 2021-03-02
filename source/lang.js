@@ -40,19 +40,19 @@ var dict = {
     'reset': {
         en: 'Reset',
         cn: '重置',
-        es: '',
+        es: 'Reiniciar',
         kr: '재설정',
     },
     'start': {
         en: 'Start',
         cn: '开始',
-        es: '',
+        es: 'Iniciar',
         kr: '시작',
     },
     'stop': {
         en: 'Stop',
         cn: '暂停',
-        es: '',
+        es: 'Parar',
         kr: '멈춤',
     },
     'tasks': {
@@ -119,7 +119,7 @@ var dict = {
         en: 'Work Time',
         cn: '专注时间',
         es: '',
-        kr: '일하는 시간', // 일하기 시간?
+        kr: '일하는 시간',
     },
     'shortBreak': {
         en: 'Short Break',
@@ -133,6 +133,12 @@ var dict = {
         es: '',
         kr: '긴 휴식',
     },
+    'cycleLength': {
+        en: 'Length of a Cycle',
+        zh: '',
+        es: '',
+        ko: '',
+    },
     'volume': {
         en: 'Volume',
         cn: '音量',
@@ -143,13 +149,13 @@ var dict = {
         en: 'Are you sure you want to reset the timer\'s cycle?',
         cn: '确定您要重置时间吗？',
         es: '',
-        kr: '확인 - 재설정을 원하십니까?',
+        kr: '재설정을 원하십니까?',
     },
     'confirmDeleteAll': {
         en: 'Are you sure you want to delete all tasks?',
         cn: '确定您要删除所有的任务吗？',
         es: '',
-        kr: '확인 - 삭제를 원하십니까?',
+        kr: '삭제를 원하십니까?',
     },
     'confirm': {
         en: 'Confirm',
@@ -162,6 +168,12 @@ var dict = {
         cn: '取消',
         es: '',
         kr: '취소하기',
+    },
+    'languageBtn': {
+        en: 'Language',
+        zh: '语言',
+        es: 'Lenguaje',
+        ko: '언어',
     },
     '': {
         en: '',
