@@ -498,6 +498,11 @@ function deleteTask(uniqueID) {
     taskCount--;
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
+    
+    if (taskCount == 0){
+        taskBtn.innerHTML = 'Tasks';
+        taskBtn.style.fontSize = "25px";
+    }
     console.log('Task count: ' + taskCount);
 }
 
@@ -521,6 +526,12 @@ function deleteAllTasks() {
     uniqueID = 1;
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
+
+    if (taskCount == 0){
+        taskBtn.innerHTML = 'Tasks';
+        taskBtn.style.fontSize = "25px";
+    }
+
     hide('prompt');
     console.log('Deleted all tasks.');
     console.log('Task Count: ' + taskCount);
