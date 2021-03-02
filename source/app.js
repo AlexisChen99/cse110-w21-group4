@@ -440,6 +440,7 @@ function markDone(uniqueID) {
         pinnedTask.children[0].classList.add('markFill');
     }
     tasksDone++;
+    originalTask.setAttribute("marked","true");
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
@@ -459,6 +460,7 @@ function unmark(uniqueID) {
         pinnedTask.children[0].classList.remove('markFill');
     }
     tasksDone--;
+    originalTask.setAttribute("marked","false");
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
@@ -487,6 +489,11 @@ function unpinTask(uniqueID) {
  */
 function deleteTask(uniqueID) {    
     const pinnedTask = document.getElementById(uniqueID+'pin');
+
+    if (document.getElementById(uniqueID).getAttribute('marked') == 'true'){
+        tasksDone--;
+    }
+
     if(pinnedTask) {
         const mainTasks = document.getElementById('mainTasks');
         mainTasks.removeChild(pinnedTask);
@@ -496,9 +503,11 @@ function deleteTask(uniqueID) {
     const taskList = document.getElementById('taskListContainer');
     taskList.removeChild(document.getElementById(uniqueID));
     taskCount--;
+
+
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
-    
+
     if (taskCount == 0){
         taskBtn.innerHTML = 'Tasks';
         taskBtn.style.fontSize = "25px";
