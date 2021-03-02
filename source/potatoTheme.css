@@ -142,6 +142,7 @@ p {
 
 #taskAdder {
     margin-top: 20px;
+    margin-bottom: 20px;
     font-size: 20px;
 }
 
@@ -218,10 +219,10 @@ input[type="text"] {
 }
 
 .taskHelp {
-    font-size: 20px;
+    font-size: 17px;
     margin: 5px 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-left: 18px;
+    padding-right: 15px;
 }
 .menuLight {
     background-color: white;
@@ -255,7 +256,7 @@ input[type="text"] {
     right: 0%;
     bottom: auto;
     padding-right: 20px;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
 }
@@ -282,10 +283,12 @@ button:hover {
 }
 
 .userInputContainer {
-    margin: 20px auto;
-    padding-right: 20px;
+    margin: 20px 20px 20px 20px;
+    padding-left: 25px;
+    padding-right: 15px;
+    padding-bottom: 20px;
     max-width: 350px;
-    text-align: right;
+    text-align: left;
 }
 
 .fieldLabel {
@@ -360,7 +363,7 @@ input {
     bottom: auto;
     padding-left: 20px;
     color: red;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
 }
@@ -369,20 +372,25 @@ input {
     max-height: 400px;
     overflow-y: scroll;
     cursor: auto;
-
+    margin: 15px;
 }
 
 .userTask {
-    margin: 10px 20px;
+    /* margin: 10px 20px; */
     border-style: solid;
     border-width: 2px;
     text-align: left;
+    display: flexbox;
+    padding-top: 3px;
+    margin: auto;
 }
 
 .markCircle {
+    margin-top:8px;
+    margin-left: 10px;
     display: inline-block;
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     cursor: pointer;
     /* background-color: black; */
@@ -400,16 +408,20 @@ input {
     background-color: yellow;
 }
 
+
 .userTask img {
     display: inline-block;
-    height: 50px;
+    height: 30px;
     cursor: pointer;
+    margin: 4px;
 }
 
 .userTask p {
     display: inline;
-    font-size: 3vw;
+    font-size: 30px;
     word-wrap: break-word;
+    margin: 12px;
+    margin-top: -20px;
 }
 
 @media screen and (max-width: 768px) {
@@ -442,4 +454,14 @@ input {
     border-radius: 50px 50px 50px 50px;
     box-shadow: inset 0 -1px 10px 3px #6d6d6d;
     font-size: 38px;
+}
+
+/* additional spacing and alignment */
+#chooseTheme{
+    line-height: 0.5;
+}
+
+#chooseTheme button{
+    font-size: 18px;
+    margin: 0 0;
 }

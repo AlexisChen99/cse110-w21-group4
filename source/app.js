@@ -287,6 +287,7 @@ function addTask() {
         console.log('Task count: ' + taskCount);
         const taskBtn = document.getElementById('taskBtn');
         taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
+        taskBtn.style.fontSize = "20px";
     }
 }
 
