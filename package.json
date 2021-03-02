@@ -1,0 +1,26 @@
+{
+  "name": "cse110-w21-group4",
+  "version": "1.0.0",
+  "description": "<a href=\"https://www.youtube.com/watch?v=Gd6j-zVnezI&feature=youtu.be\" target=\"_blank\">Intro Video</a>",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "eslint -c .eslintrc.json --ignore-path .lintgitignore ./source --fix",
+    "test": "jest",
+    "gendocs": "jsdoc -d ./docs ./source"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexisChen99/cse110-w21-group4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexisChen99/cse110-w21-group4/issues"
+  },
+  "homepage": "https://github.com/AlexisChen99/cse110-w21-group4#readme",
+  "devDependencies": {
+    "eslint": "^7.19.0",
+    "jest": "^26.6.3",
+    "jsdoc": "^3.6.6"
+  }
+}
