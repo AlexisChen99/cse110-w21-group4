@@ -53,19 +53,19 @@ var dict = {
         en: 'Stop',
         cn: '暂停',
         es: '',
-        kr: '중지',
+        kr: '멈춤',
     },
     'tasks': {
         en: 'Tasks',
         cn: '任务',
         es: '',
-        kr: '',
+        kr: '과제들',
     },
     'add': {
         en: 'Add',
         cn: '+',
         es: '+',
-        kr: '+',
+        kr: '추가',
     },
     'enterTask': {
         en: 'Enter a Task To Start',
@@ -95,19 +95,19 @@ var dict = {
         en: 'Select a Theme',
         cn: '选择主题',
         es: '',
-        kr: '테마 선택하십시오',
+        kr: '테마 고르기',
     },
     'lightTheme': {
         en: 'Light',
         cn: '亮色',
         es: '',
-        kr: '흰색',
+        kr: '밝은',
     },
     'darkTheme': {
         en: 'Dark',
         cn: '暗色',
         es: '',
-        kr: '검은색',
+        kr: '어두운',
     },
     'potatoTheme': {
         en: 'Potato',
@@ -119,19 +119,19 @@ var dict = {
         en: 'Work Time',
         cn: '专注时间',
         es: '',
-        kr: '일하기', // 일하기 시간?
+        kr: '일하는 시간', // 일하기 시간?
     },
     'shortBreak': {
         en: 'Short Break',
         cn: '短休息',
         es: '',
-        kr: '짧은 휴식기',
+        kr: '짧은 휴식',
     },
     'longBreak': {
         en: 'Long Break',
         cn: '长休息',
         es: '',
-        kr: '긴 휴식기',
+        kr: '긴 휴식',
     },
     'volume': {
         en: 'Volume',
@@ -143,13 +143,13 @@ var dict = {
         en: 'Are you sure you want to reset the timer\'s cycle?',
         cn: '确定您要重置时间吗？',
         es: '',
-        kr: '',
+        kr: '확인 - 재설정을 원하십니까?',
     },
     'confirmDeleteAll': {
         en: 'Are you sure you want to delete all tasks?',
         cn: '确定您要删除所有的任务吗？',
         es: '',
-        kr: '',
+        kr: '확인 - 삭제를 원하십니까?',
     },
     'confirm': {
         en: 'Confirm',
