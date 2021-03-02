@@ -26,13 +26,13 @@ var dict = {
         },
         'stopped': {
             en: 'stopped',
-            cn: '',
+            cn: '已停止',
             es: '',
             kr: '중지하기',
         },
         'idle': {
             en: 'idle',
-            cn: '',
+            cn: '空闲',
             es: '',
             kr: '놀고 있기',
         },
@@ -81,7 +81,7 @@ var dict = {
     },
     'close': {
         en: 'Close',
-        cn: '关',
+        cn: '关闭',
         es: '',
         kr: '닫기',
     },
@@ -159,7 +159,7 @@ var dict = {
     },
     'cancel': {
         en: 'Cancel',
-        cn: '',
+        cn: '取消',
         es: '',
         kr: '취소하기',
     },
@@ -197,4 +197,4 @@ function setLang(selectedLang) {
 // Short Break             短休息
 // Long Break              长休息
 // Volume                  音量
-// Close                   关
+// Close                   关闭
