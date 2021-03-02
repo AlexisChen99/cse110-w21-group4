@@ -171,6 +171,36 @@ input[type="text"] {
     height:30px;
     width: 300px;
 }
+/*---------------------------------
+         Language DropDown
+---------------------------------*/
+.dropdown {
+    position: relative;
+    margin-left: -600px;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: relative;
+    border-radius: 18px;
+    background-color: #414b4d;
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: rgb(255, 255, 255);
+    padding: 10px 10px;
+    border-radius: 18px;
+    font-size: 15px;
+    text-decoration: none;
+    display: block;
+  }
+  .dropdown-content a:hover {background-color: rgb(41, 41, 41);}
+  .dropdown:hover .dropdown-content {display: block;}
+  .dropdown .dropdown-content button {
+      display: block;
+  }
 
 /*---------------------------------
          Settings Menu Display
