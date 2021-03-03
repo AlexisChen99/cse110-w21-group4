@@ -241,6 +241,12 @@ input[type="text"] {
     cursor: move;
 }
 
+#taskMenuHeader {
+    padding: 10px;
+    height: 30px;
+    cursor: move;
+}
+
 .headerDark {
     background-color: rgb(85, 85, 85);
     background-image : url("img/drag-lines (1).png");
@@ -394,19 +400,15 @@ input {
 }
 
 .userTask {
-    /* margin: 10px 20px; */
-    border-style: solid;
-    border-width: 2px;
     text-align: left;
-    display: flexbox;
-    padding-top: 3px;
+    display: flex;
     margin: auto;
 }
 
 .markCircle {
-    margin-top:8px;
+    min-width: 30px;
     margin-left: 10px;
-    display: inline-block;
+    display: block;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -436,10 +438,10 @@ input {
 
 .userTask p {
     display: inline;
-    font-size: 30px;
-    word-wrap: break-word;
-    margin: 12px;
-    margin-top: -20px;
+    font-size: 25px;
+    margin-left: 12px;
+    margin-bottom: 15px;
+    margin-top: 7px;
 }
 
 @media screen and (max-width: 768px) {
