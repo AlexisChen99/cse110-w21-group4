@@ -83,8 +83,8 @@ p {
 
 #settingsIcon {
     position: absolute;
-    top: 10%;
-    right: 35%;
+    top: 3%;
+    right: 5%;
     float : right;
 }
 
@@ -101,6 +101,7 @@ p {
 #circleTimer {
     width: 200px;
     height: 200px;
+    margin-top: 15px;
     margin-right: auto;
     margin-left: auto;
     border-radius: 50%;
@@ -138,6 +139,10 @@ p {
     width: 150px;
     height: 75px;
     margin: auto;
+}
+
+#enterTask {
+    border-radius: 18px;
 }
 
 #taskAdder {
@@ -232,12 +237,16 @@ input[type="text"] {
 
  #settingsMenuHeader {
     padding: 10px;
-    height: 50px;
+    height: 30px;
     cursor: move;
 }
 
 .headerDark {
     background-color: rgb(85, 85, 85);
+    background-image : url("img/drag-lines (1).png");
+    /* background-size: cover; */
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .headerLight {
@@ -252,7 +261,7 @@ input[type="text"] {
 .close {
     position: absolute;
     left: auto;
-    top: 0%;
+    top: 60px;
     right: 0%;
     bottom: auto;
     padding-right: 20px;
@@ -288,7 +297,7 @@ button:hover {
     padding-right: 15px;
     padding-bottom: 20px;
     max-width: 350px;
-    text-align: left;
+    text-align: right;
 }
 
 .fieldLabel {
@@ -312,6 +321,7 @@ input {
     display: inline-block;
     width: 40px;
     margin-right: 20px;
+    vertical-align: middle;
     cursor: pointer;
 }
 
@@ -358,7 +368,7 @@ input {
 #deleteAll {
     position: absolute;
     left: 0%;
-    top: 0%;
+    top: 60px;
     right: auto;
     bottom: auto;
     padding-left: 20px;
@@ -373,6 +383,14 @@ input {
     overflow-y: scroll;
     cursor: auto;
     margin: 15px;
+}
+
+#closeTasks{
+    top: 60px;
+}
+
+#taskTitle {
+    font-size: 30px;
 }
 
 .userTask {

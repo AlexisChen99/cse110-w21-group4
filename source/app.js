@@ -286,8 +286,8 @@ function addTask() {
         console.log('Created task with ID ' + uniqueID);
         console.log('Task count: ' + taskCount);
         const taskBtn = document.getElementById('taskBtn');
+        taskBtn.style.width = "fit-content";
         taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
-        taskBtn.style.fontSize = "20px";
     }
 }
 
@@ -511,6 +511,7 @@ function deleteTask(uniqueID) {
     if (taskCount == 0){
         taskBtn.innerHTML = 'Tasks';
         taskBtn.style.fontSize = "25px";
+        taskBtn.style.width = "150px";
     }
     console.log('Task count: ' + taskCount);
 }
@@ -539,6 +540,7 @@ function deleteAllTasks() {
     if (taskCount == 0){
         taskBtn.innerHTML = 'Tasks';
         taskBtn.style.fontSize = "25px";
+        taskBtn.style.width = "150px";
     }
 
     hide('prompt');
