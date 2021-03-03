@@ -41,7 +41,10 @@ window.onload = function() {
     deleteAll.addEventListener('click', function () { confirmationPrompt('Delete'); });      // deleteAllTasks
     const cancelBtn = document.getElementById('cancel');
     cancelBtn.onclick = function() { hide('prompt'); };
-
+    const backBtn = document.getElementById('back');
+    backBtn.onclick = function() { back(); };
+    const nextBtn = document.getElementById('next');
+    nextBtn.onclick = function() { next(); };
     
     
     // Load's users theme, TODO previous input settings, taskList, language
@@ -571,6 +574,34 @@ function hide(id) {
     elem.classList.replace('showing', 'hidden');
 }
 
+var page = 1;
+function back() {
+    if(page <= 1) {
+        return;
+    }
+    page--;
+    let topic = document.getElementById('instrTopic');
+    topic.innerText = dict[page][topic.id][lang];
+    let content = document.getElementById('instrContent');
+    content.innerText = dict[page][content.id][lang];
+    let currPage = document.getElementById('page');
+    currPage.innerText = dict[page][currPage.id][lang];
+}
+
+function next() {
+    if(page >= 5) {
+        hide('instrMenu');
+        page = 1;
+        return;
+    }
+    page++;
+    let topic = document.getElementById('instrTopic');
+    topic.innerText = dict[page][topic.id][lang];
+    let content = document.getElementById('instrContent');
+    content.innerText = dict[page][content.id][lang];
+    let currPage = document.getElementById('page');
+    currPage.innerText = dict[page][currPage.id][lang];
+}
 /** 
  * Save user's last theme selected locally 
  * TODO: Previous input settings, taskList, language
@@ -725,7 +756,6 @@ function loadLang() {
     document.getElementById('enterTask').innerText = dict['enterTask'][lang];
     document.getElementById('taskAdder').innerText = dict['add'][lang];
 
-    // "Drag me"???
     document.getElementById('settingsTitle').innerText = dict['settings'][lang];
     document.getElementById('closeSettings').innerText = dict['close'][lang];
     document.getElementById('selectTheme').innerText = dict['selectTheme'][lang];

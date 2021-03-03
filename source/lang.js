@@ -175,6 +175,106 @@ var dict = {
         es: 'Idioma',
         ko: '언어',
     },
+    '1': {
+        'instrTopic': {
+            en: 'How to Use',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        'instrContent': {
+            en: 'a',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        'page': {
+            en: '1 of 5',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+    },
+    '2': {
+        'instrTopic': {
+            en: 'Settings',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        'instrContent': {
+            en: 'b',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        'page': {
+            en: '2 of 5',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+     },
+    '3': {
+        'instrTopic': {
+            en: 'Tasks',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        'instrContent': {
+            en: 'c',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        'page': {
+            en: '3 of 5',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+     },
+    '4': {
+        'instrTopic': {
+            en: 'Google Calendar',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        'instrContent': {
+            en: 'd',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        'page': {
+            en: '4 of 5',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+     },
+    '5': {
+        'instrTopic': {
+            en: 'About',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        'instrContent': {
+            en: 'e',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        'page': {
+            en: '5 of 5',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+     },
     '': {
         en: '',
         zh: '',

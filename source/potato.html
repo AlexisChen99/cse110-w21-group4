@@ -18,16 +18,16 @@
     <div class="contentWrapper">
         <img src="img/settings.png" alt="Settings" id="settingsIcon">
         <p id="title">Potato Timer</p>
-        
+
         <p id="phaseDisplay">Work</p>
-        
+
         <audio id="breakToWorkAudio" src='audio/Rooster Crow.wav'></audio>
         <audio id="workToBreakAudio" src='audio/Dove.wav'></audio>
-        
+
         <div id="circleTimer">
             <p class="timer" id="timerDisplay">- - : - -</p>
         </div>
-        
+
         <div class="buttonWrapper">
             <button id="reset" onclick="confirmationPrompt('Reset')">Reset</button>
             <button id="start" onclick="start()">Start</button>
@@ -51,7 +51,7 @@
         <div id="chooseTheme">
             <p style="margin: 0 0; font-size: 18px;" id="selectTheme">Select a Theme</p>
             <button id="lightTheme" onclick="changeTheme('Light')">Light</button>
-            <button id="darkTheme"  onclick="changeTheme('Dark')">Dark</button>
+            <button id="darkTheme" onclick="changeTheme('Dark')">Dark</button>
             <button id="potatoTheme" onclick="changeTheme('Potato')">Potato</button>
         </div>
 
@@ -110,10 +110,23 @@
     <div class="dropdown">
         <button class="languageBtn" id="languageBtn">Language</button>
         <div class="dropdown-content">
-          <button id="English" onclick="setLang('en')">English</button>
-          <button id="Chinese" onclick="setLang('zh')">中文</button>
-          <button id="Spanish" onclick="setLang('es')">Español</button>
-          <button id="Korean" onclick="setLang('ko')">한국어</button>
+            <button id="English" onclick="setLang('en')">English</button>
+            <button id="Chinese" onclick="setLang('zh')">中文</button>
+            <button id="Spanish" onclick="setLang('es')">Español</button>
+            <button id="Korean" onclick="setLang('ko')">한국어</button>
         </div>
-      </div>
+    </div>
+
+    <!-- Remove hidden and fix css -->
+    <div class="menu hidden" id="instrMenu">
+        <p>Instructions</p>
+        <p id="instrTopic"> [filler]</p>
+        <p id="instrContent"> [filler content Potato Timer is a Pomodoro timer meant to improve your productivity by breaking up your focus for a set "work" time and a following "break" time. 
+            After every four "work" phases, a longer break period happens. To switch to another language (English, Chinese, Spanish, Korean), click on the globe icon.]</p>
+        <button id="back">Back</button>
+        <span id="page">1 of 5</span>
+        <button id="next">Next</button>
+    </div>
+
+    <img style="position: absolute; top: 70%; z-index: 9999;" src="img/test.gif">
 </body>
