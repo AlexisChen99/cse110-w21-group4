@@ -40,16 +40,16 @@
         </div>
         <div id="mainTasks">
 
-        </div>
+        </div><br>
         <!-- End of content wrapper -->
     </div>
 
     <div class="menu hidden" id="settingsMenu">
-        <div class="headerDark" id="settingsMenuHeader">Drag Me!</div>
+        <div class="headerDark" id="settingsMenuHeader"></div>
         <p id="settingsTitle">Settings</p>
         <p class="close" id="closeSettings">Close</p>
         <div id="chooseTheme">
-            <p style="margin: 0 0; font-size: 18px;" id="selectTheme">Select a Theme</p>
+            <p style="margin: 0 0; font-size: 18px;" id="selectTheme">Select a Theme</p><br>
             <button id="lightTheme" onclick="changeTheme('Light')">Light</button>
             <button id="darkTheme" onclick="changeTheme('Dark')">Dark</button>
             <button id="potatoTheme" onclick="changeTheme('Potato')">Potato</button>
@@ -92,13 +92,15 @@
     </div>
 
     <div class="menu hidden" id="taskMenu">
-        <p id="taskMenuTasks">Tasks</p>
+        <div class="headerDark" id="taskMenuHeader"></div>
+        <p id="tasksTitle">Tasks</p>
+        <!-- <p id="taskMenuTasks" style = "font-size: 35px;">Tasks</p> -->
         <p class="close" id="closeTasks">Close</p>
         <p id="deleteAll">Delete All</p>
         <p class="taskHelp">Mark a task as complete. Pin a task to the main display. </p>
         <div id="taskListContainer">
 
-        </div>
+        </div><br>
     </div>
 
     <div class="hidden themeDark" id="prompt">
@@ -106,6 +108,11 @@
         <button id="confirm">Confirm</button>
         <button id="cancel">Cancel</button>
     </div>
+
+    <img src="img/potato-dance.gif" id="cycle1">
+    <img src="img/potato-dance.gif" id="cycle2">
+    <img src="img/potato-dance.gif" id="cycle3">
+    <img src="img/potato-dance.gif" id="cycle4">
 
     <div class="footer">
         <span id="langContainer">
@@ -116,7 +123,6 @@
         </span>
         <a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-32px.png"></a>
     </div>
-
 
     <!-- Remove hidden and fix css -->
     <div class="menu hidden" id="instrMenu">

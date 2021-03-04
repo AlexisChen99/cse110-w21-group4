@@ -290,6 +290,7 @@ function addTask() {
         console.log('Task count: ' + taskCount);
         const taskBtn = document.getElementById('taskBtn');
         taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
+        taskBtn.style.width = "fit-content";
     }
 }
 
@@ -442,6 +443,7 @@ function markDone(uniqueID) {
         pinnedTask.children[0].classList.add('markFill');
     }
     tasksDone++;
+    originalTask.setAttribute("marked","true");
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict[tasks][lang] + ' (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
@@ -461,6 +463,7 @@ function unmark(uniqueID) {
         pinnedTask.children[0].classList.remove('markFill');
     }
     tasksDone--;
+    originalTask.setAttribute("marked","false");
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict[tasks][lang] + ' (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
@@ -489,6 +492,11 @@ function unpinTask(uniqueID) {
  */
 function deleteTask(uniqueID) {    
     const pinnedTask = document.getElementById(uniqueID+'pin');
+
+    if (document.getElementById(uniqueID).getAttribute('marked') == 'true'){
+        tasksDone--;
+    }
+
     if(pinnedTask) {
         const mainTasks = document.getElementById('mainTasks');
         mainTasks.removeChild(pinnedTask);
@@ -498,8 +506,17 @@ function deleteTask(uniqueID) {
     const taskList = document.getElementById('taskListContainer');
     taskList.removeChild(document.getElementById(uniqueID));
     taskCount--;
+
+
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict[tasks][lang] + ' (' + tasksDone + '/' + taskCount + ')';
+
+    if (taskCount == 0){
+        taskBtn.innerHTML = dict[tasks][lang];
+        taskBtn.style.fontSize = "25px";
+        taskBtn.style.width = "150px";
+    }
+  
     console.log('Task count: ' + taskCount);
 }
 
@@ -522,7 +539,13 @@ function deleteAllTasks() {
     taskCount = 0;
     uniqueID = 1;
     const taskBtn = document.getElementById('taskBtn');
-    taskBtn.innerHTML = dict[tasks][lang];
+
+    if (taskCount == 0){
+        taskBtn.innerHTML = dict[tasks][lang];
+        taskBtn.style.fontSize = "25px";
+        taskBtn.style.width = "150px";
+    }
+
     hide('prompt');
     console.log('Deleted all tasks.');
     console.log('Task Count: ' + taskCount);

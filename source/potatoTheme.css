@@ -64,27 +64,31 @@ p {
     border-color: red; */
 }
 
-
 #title {
     display: block;
-    margin-top: 40px;
-    margin-bottom: 3px;
-    text-shadow: 1px 1px 1px #000;
-    font-family: sans-serif;
-    font-size: 30px;
-    float: center;
+    margin-top: 30px;
+    margin-bottom: 18px;
+    margin-left: 30px;
+    /* text-shadow: 1px 1px 1px #000; */
+    font-family: Georgia,serif;
+    font-size: 20px;
+    font-variant: small-caps; 
+    text-transform: none; 
+    font-weight: 100;
+    float: left;
 }
 
 #phaseDisplay {
     display: inline-block;
-    margin: 20px 0;
+    margin: 70px 0px 30px -140px;
     text-shadow: 1px 1px 1px #000;
+    font-size: 32px;
 }
 
 #settingsIcon {
     position: absolute;
-    top: 10%;
-    right: 35%;
+    top: 3%;
+    right: 5%;
     float : right;
 }
 
@@ -99,32 +103,34 @@ p {
 }
 
 #circleTimer {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
+    margin-top: 10px;
     margin-right: auto;
     margin-left: auto;
+    margin-bottom: 10px;
     border-radius: 50%;
 }
 
 .circleLight {
-    border: 10px solid black;
+    border: 8px solid black;
     background-color: white;
 }
 
 .circleDark {
-    border: 10px solid white;
+    border: 8px solid white;
     background-color: #333;
 }
 
 .circlePotato {
-    border: 5px solid #ff0;
+    border: 8px solid #ff0;
     background-color: #ff0;
-    box-shadow: 0 0 20px 20px #ff0;
+    box-shadow: 0 0 15px 15px #ff0;
 }
 #timerDisplay {
-    margin: 40px auto;
-    padding: 25px 0px;
-    font-size: 50px;
+    margin:25px auto;
+    padding: 26px 0px;
+    font-size: 40px;
     text-shadow: 1px 1px 1px #000;
     font-weight: bold;
 }
@@ -140,8 +146,13 @@ p {
     margin: auto;
 }
 
+#enterTask {
+    border-radius: 18px;
+}
+
 #taskAdder {
     margin-top: 20px;
+    margin-bottom: 20px;
     font-size: 20px;
 }
 
@@ -175,14 +186,25 @@ input[type="text"] {
          Language DropDown
 ---------------------------------*/
 .dropdown {
-    position: relative;
-    margin-left: -600px;
+    position: absolute;
     display: inline-block;
+  }
+
+  #languageBtn {
+    position: absolute;
+    right: 5%;
+    background: none;
+    border: none;
+  }
+
+  #languageBtn img {
+    width: 64px;
+    height: 64px;
   }
   
   .dropdown-content {
     display: none;
-    position: relative;
+    
     border-radius: 18px;
     background-color: #414b4d;
     z-index: 1;
@@ -196,12 +218,43 @@ input[type="text"] {
     text-decoration: none;
     display: block;
   }
+
   .dropdown-content a:hover {background-color: rgb(41, 41, 41);}
-  .dropdown:hover .dropdown-content {display: block;}
+  .dropdown:pressed .dropdown-content {display: block;}
   .dropdown .dropdown-content button {
       display: block;
   }
 
+  .footer {
+      position: absolute;
+      bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+  }
+
+  .footer #langContainer {
+      margin-right: auto;
+      margin-left: auto;
+  }
+  .footer button {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 0.3em;
+      color: black;
+  }
+
+  .footer button:hover {
+      background: none;
+  }
+
+  .footer a {
+      position: relative;
+      /* margin-left: auto; */
+      margin-right: 50px;
+  }
 /*---------------------------------
          Settings Menu Display
 ---------------------------------*/
@@ -215,13 +268,14 @@ input[type="text"] {
     box-shadow: inset 0 -1px 10px 3px #6d6d6d;
     font-size: 38px;
     cursor: move;
+    z-index: 9999;
 }
 
 .taskHelp {
-    font-size: 20px;
+    font-size: 17px;
     margin: 5px 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-left: 18px;
+    padding-right: 15px;
 }
 .menuLight {
     background-color: white;
@@ -231,12 +285,22 @@ input[type="text"] {
 
  #settingsMenuHeader {
     padding: 10px;
-    height: 50px;
+    height: 15px;
+    cursor: move;
+}
+
+#taskMenuHeader {
+    padding: 10px;
+    height: 15px;
     cursor: move;
 }
 
 .headerDark {
     background-color: rgb(85, 85, 85);
+    background-image : url("img/drag-lines.png");
+    /* background-size: cover; */
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .headerLight {
@@ -244,18 +308,18 @@ input[type="text"] {
 }
 
 .menu p {
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 20px;
 }
 
 .close {
     position: absolute;
     left: auto;
-    top: 0%;
+    top: 60px;
     right: 0%;
     bottom: auto;
     padding-right: 20px;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
 }
@@ -282,8 +346,10 @@ button:hover {
 }
 
 .userInputContainer {
-    margin: 20px auto;
-    padding-right: 20px;
+    margin: 20px 20px 20px 20px;
+    padding-left: 25px;
+    padding-right: 15px;
+    padding-bottom: 20px;
     max-width: 350px;
     text-align: right;
 }
@@ -309,6 +375,7 @@ input {
     display: inline-block;
     width: 40px;
     margin-right: 20px;
+    vertical-align: middle;
     cursor: pointer;
 }
 
@@ -355,12 +422,12 @@ input {
 #deleteAll {
     position: absolute;
     left: 0%;
-    top: 0%;
+    top: 60px;
     right: auto;
     bottom: auto;
     padding-left: 20px;
     color: red;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
 }
@@ -369,20 +436,30 @@ input {
     max-height: 400px;
     overflow-y: scroll;
     cursor: auto;
+    margin: 15px;
+}
 
+#closeTasks{
+    top: 60px;
+}
+
+#taskTitle {
+    font-size: 30px;
 }
 
 .userTask {
-    margin: 10px 20px;
-    border-style: solid;
-    border-width: 2px;
     text-align: left;
+    display: flex;
+    margin: auto;
+    max-height: 60px;
 }
 
 .markCircle {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
+    min-width: 30px;
+    margin-left: 10px;
+    display: block;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     cursor: pointer;
     /* background-color: black; */
@@ -400,16 +477,20 @@ input {
     background-color: yellow;
 }
 
+
 .userTask img {
     display: inline-block;
-    height: 50px;
+    height: 30px;
     cursor: pointer;
+    margin: 4px;
 }
 
 .userTask p {
     display: inline;
-    font-size: 3vw;
-    word-wrap: break-word;
+    font-size: 25px;
+    margin-left: 12px;
+    margin-bottom: 15px;
+    margin-top: 7px;
 }
 
 @media screen and (max-width: 768px) {
@@ -434,12 +515,47 @@ input {
     top: 50%;
     left: 0%;
     right: 0%;
+    margin-top: -150px;
+    padding-top: 15px;
+    padding-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
-    min-height: 250px;
+    min-height: 150px;
     max-width: 768px;
     border: 5px solid #000;
     border-radius: 50px 50px 50px 50px;
     box-shadow: inset 0 -1px 10px 3px #6d6d6d;
-    font-size: 38px;
+    font-size: 28px;
+}
+
+/* additional spacing and alignment */
+#chooseTheme{
+    line-height: 0.5;
+}
+
+#chooseTheme button{
+    font-size: 18px;
+    margin: 0 0;
+}
+
+#cycle1 {
+    position: absolute;
+    top: 55%;
+    right: 15%;
+}
+#cycle2 {
+    position: absolute;
+    top: 65%;
+    left: 15%;
+}
+
+#cycle3 {
+    position: absolute;
+    top: 70%;
+    right: 22%;
+}
+#cycle4 {
+    position: absolute;
+    top: 50%;
+    left: 20%;
 }
