@@ -6,7 +6,7 @@
  * i-W-b-W-b-W-b-W-B (1 cycle)
  * i-0-1-0-1-0-1-0-2
  */
-
+let lang;
 let phase = 'idle';         // idle, work, short break, long break, stopped
 let workLength = 3;             // work time (seconds)   15 mins (900)
 let shortBreakLength = 2;       // short break time      5 mins  (300)
@@ -42,10 +42,11 @@ window.onload = function() {
     const cancelBtn = document.getElementById('cancel');
     cancelBtn.onclick = function() { hide('prompt'); };
 
-
+    
     
     // Load's users theme, TODO previous input settings, taskList, language
     loadData();
+    loadLang();
 
 }
 
@@ -128,10 +129,10 @@ function start() {
 
     secondsRemaining = setTimeRemaining();
     document.getElementById('reset').disabled = true;
-    document.getElementById('start').innerHTML = 'Stop';
+    document.getElementById('start').innerHTML = dict['stop'][lang];
     document.getElementById('start').onclick = stop;
     phase = 'work';
-    document.getElementById('phaseDisplay').innerHTML = phase;
+    document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
     // Still synchronous
     if (taskCount > 0) {    
         timer = setInterval(function () {
@@ -140,7 +141,7 @@ function start() {
                 clearInterval(timer);
                 phase = 'idle';
                 // Update the phase
-                document.getElementById('phaseDisplay').innerHTML = phase;
+                document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
                 // Disable the reset button
                 document.getElementById('reset').disabled = true;
             } else {
@@ -159,7 +160,7 @@ function start() {
                     }
                     updatePhase();
                     secondsRemaining = setTimeRemaining();
-                    document.getElementById('phaseDisplay').innerHTML = phase;
+                    document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
 
                     // To change to dark background, need to create a new class
                     const background = document.getElementById('background');
@@ -256,9 +257,9 @@ function stop() {
     clearInterval(timer);
     phase = 'stopped';
     setPageTitle(MMSS);
-    document.getElementById('phaseDisplay').innerHTML = phase;
+    document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
     document.getElementById('reset').disabled = false;
-    document.getElementById('start').innerHTML = 'Start';
+    document.getElementById('start').innerHTML = dict['start'][lang];
     document.getElementById('start').onclick = start;
 }
 /**
@@ -285,6 +286,7 @@ function addTask() {
         console.log('Created task with ID ' + uniqueID);
         console.log('Task count: ' + taskCount);
         const taskBtn = document.getElementById('taskBtn');
+        taskBtn.style.width = "fit-content";
         taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
     }
 }
@@ -438,6 +440,7 @@ function markDone(uniqueID) {
         pinnedTask.children[0].classList.add('markFill');
     }
     tasksDone++;
+    originalTask.setAttribute("marked","true");
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
@@ -457,6 +460,7 @@ function unmark(uniqueID) {
         pinnedTask.children[0].classList.remove('markFill');
     }
     tasksDone--;
+    originalTask.setAttribute("marked","false");
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
@@ -485,6 +489,11 @@ function unpinTask(uniqueID) {
  */
 function deleteTask(uniqueID) {    
     const pinnedTask = document.getElementById(uniqueID+'pin');
+
+    if (document.getElementById(uniqueID).getAttribute('marked') == 'true'){
+        tasksDone--;
+    }
+
     if(pinnedTask) {
         const mainTasks = document.getElementById('mainTasks');
         mainTasks.removeChild(pinnedTask);
@@ -494,8 +503,16 @@ function deleteTask(uniqueID) {
     const taskList = document.getElementById('taskListContainer');
     taskList.removeChild(document.getElementById(uniqueID));
     taskCount--;
+
+
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
+
+    if (taskCount == 0){
+        taskBtn.innerHTML = 'Tasks';
+        taskBtn.style.fontSize = "25px";
+        taskBtn.style.width = "150px";
+    }
     console.log('Task count: ' + taskCount);
 }
 
@@ -519,6 +536,13 @@ function deleteAllTasks() {
     uniqueID = 1;
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
+
+    if (taskCount == 0){
+        taskBtn.innerHTML = 'Tasks';
+        taskBtn.style.fontSize = "25px";
+        taskBtn.style.width = "150px";
+    }
+
     hide('prompt');
     console.log('Deleted all tasks.');
     console.log('Task Count: ' + taskCount);
@@ -538,10 +562,10 @@ function deleteAllTasks() {
     let confirmBtn = document.getElementById('confirm');
 
     if(action == 'Reset') {
-        message.innerHTML = 'Are you sure you want to reset the timer\'s cycle?';
+        message.innerHTML = dict['confirmReset'][lang];
         confirmBtn.onclick = reset;
     } else if (action == 'Delete') {
-        message.innerHTML = 'Are you sure you want to delete all tasks?';
+        message.innerHTML = dict['confirmDeleteAll'][lang];
         confirmBtn.onclick = deleteAllTasks;
     }        
 
@@ -694,4 +718,54 @@ function changeTheme(newTheme) {
     }
 
     hide('settingsMenu');
+}
+
+function loadLang() {
+    let savedLang = window.localStorage.getItem('lang');
+    if(savedLang == null) { 
+        console.log("No saved language detected. Your browser's language is: " + navigator.language);
+        if(navigator.language.includes('es')) {
+            lang = 'es';
+        } else if(navigator.language.includes('zh')) {
+            lang = 'zh';
+        } else if(navigator.language == 'ko') {
+            lang = 'ko';
+        } else {
+            lang = 'en';
+        }
+        window.localStorage.setItem('lang', lang);
+    } else {
+        lang = savedLang;
+        console.log('language was saved');
+    }
+    
+    document.documentElement.lang = lang; // <HTML> tag
+    document.getElementById('title').innerText = dict['title'][lang];
+    document.getElementById('phaseDisplay').innerText = dict['phase']['work'][lang];
+    document.getElementById('start').innerText = dict['start'][lang];
+    document.getElementById('taskBtn').innerText = dict['tasks'][lang];
+    document.getElementById('reset').innerText = dict['reset'][lang];
+    document.getElementById('enterTask').innerText = dict['enterTask'][lang];
+    document.getElementById('taskAdder').innerText = dict['add'][lang];
+
+    // "Drag me"???
+    document.getElementById('settingsTitle').innerText = dict['settings'][lang];
+    document.getElementById('closeSettings').innerText = dict['close'][lang];
+    document.getElementById('selectTheme').innerText = dict['selectTheme'][lang];
+    document.getElementById('lightTheme').innerText = dict['lightTheme'][lang];
+    document.getElementById('darkTheme').innerText = dict['darkTheme'][lang];
+    document.getElementById('potatoTheme').innerText = dict['potatoTheme'][lang];
+    document.getElementById('workTime').innerText = dict['workTime'][lang];
+    document.getElementById('shortTime').innerText = dict['shortBreak'][lang];
+    document.getElementById('longTime').innerText = dict['longBreak'][lang];
+    document.getElementById('cycleLength').innerText = dict['cycleLength'][lang];
+    document.getElementById('volume').innerText = dict['volume'][lang];
+
+    document.getElementById('taskMenuTasks').innerText = dict['tasks'][lang];
+    document.getElementById('closeTasks').innerText = dict['close'][lang];
+    document.getElementById('deleteAll').innerText = dict['deleteAll'][lang];
+    
+    document.getElementById('languageBtn').innerText = dict['languageBtn'][lang];
+    document.getElementById('confirm').innerText = dict['confirm'][lang];
+    document.getElementById('cancel').innerText = dict['cancel'][lang];
 }

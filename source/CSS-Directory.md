@@ -38,6 +38,8 @@
 - .menu form input
 - form p
 - @media max 479px
+- #chooseTheme
+- #chooseTheme button
 
 ### Task Display
 - #deleteAll
