@@ -71,7 +71,7 @@ var dict = {
         en: 'Enter a Task To Start',
         zh: '',
         es: 'Ingresa una tarea para empezar',
-        ko: '',
+        ko: '시작하기 전에 과제가 추가하십시오',
     },
     'deleteAll': {
         en: 'Delete All',
@@ -137,7 +137,7 @@ var dict = {
         en: 'Length of a Cycle',
         zh: '',
         es: '',
-        ko: '',
+        ko: '한 사이클의 길이',
     },
     'volume': {
         en: 'Volume',
@@ -168,12 +168,6 @@ var dict = {
         zh: '取消',
         es: 'Cancelar',
         ko: '취소하기',
-    },
-    'languageBtn': {
-        en: 'Language',
-        zh: '语言',
-        es: 'Idioma',
-        ko: '언어',
     },
     '1': {
         'instrTopic': {

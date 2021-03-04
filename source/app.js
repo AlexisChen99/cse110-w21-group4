@@ -271,7 +271,7 @@ function stop() {
 function reset() {
     console.log('reset timer');
     phase = 'idle';
-    document.getElementById('timerDisplay').innerHTML='00:00';
+    document.getElementById('timerDisplay').innerHTML='- - : - -';
     taskCount = 0;
     uniqueID = 1;
     hide('prompt');
@@ -289,7 +289,7 @@ function addTask() {
         console.log('Created task with ID ' + uniqueID);
         console.log('Task count: ' + taskCount);
         const taskBtn = document.getElementById('taskBtn');
-        taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
+        taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
     }
 }
 
@@ -443,7 +443,7 @@ function markDone(uniqueID) {
     }
     tasksDone++;
     const taskBtn = document.getElementById('taskBtn');
-    taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
+    taskBtn.innerHTML = dict[tasks][lang] + ' (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
 }
 
@@ -462,7 +462,7 @@ function unmark(uniqueID) {
     }
     tasksDone--;
     const taskBtn = document.getElementById('taskBtn');
-    taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
+    taskBtn.innerHTML = dict[tasks][lang] + ' (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
 }
 
@@ -499,7 +499,7 @@ function deleteTask(uniqueID) {
     taskList.removeChild(document.getElementById(uniqueID));
     taskCount--;
     const taskBtn = document.getElementById('taskBtn');
-    taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
+    taskBtn.innerHTML = dict[tasks][lang] + ' (' + tasksDone + '/' + taskCount + ')';
     console.log('Task count: ' + taskCount);
 }
 
@@ -522,7 +522,7 @@ function deleteAllTasks() {
     taskCount = 0;
     uniqueID = 1;
     const taskBtn = document.getElementById('taskBtn');
-    taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
+    taskBtn.innerHTML = dict[tasks][lang];
     hide('prompt');
     console.log('Deleted all tasks.');
     console.log('Task Count: ' + taskCount);
@@ -753,7 +753,7 @@ function loadLang() {
     document.getElementById('start').innerText = dict['start'][lang];
     document.getElementById('taskBtn').innerText = dict['tasks'][lang];
     document.getElementById('reset').innerText = dict['reset'][lang];
-    document.getElementById('enterTask').innerText = dict['enterTask'][lang];
+    document.getElementById('enterTask').placeholder = dict['enterTask'][lang];
     document.getElementById('taskAdder').innerText = dict['add'][lang];
 
     document.getElementById('settingsTitle').innerText = dict['settings'][lang];
@@ -772,7 +772,6 @@ function loadLang() {
     document.getElementById('closeTasks').innerText = dict['close'][lang];
     document.getElementById('deleteAll').innerText = dict['deleteAll'][lang];
     
-    document.getElementById('languageBtn').innerText = dict['languageBtn'][lang];
     document.getElementById('confirm').innerText = dict['confirm'][lang];
     document.getElementById('cancel').innerText = dict['cancel'][lang];
 }
