@@ -181,14 +181,25 @@ input[type="text"] {
          Language DropDown
 ---------------------------------*/
 .dropdown {
-    position: relative;
-    margin-left: -600px;
+    position: absolute;
     display: inline-block;
+  }
+
+  #languageBtn {
+    position: absolute;
+    right: 5%;
+    background: none;
+    border: none;
+  }
+
+  #languageBtn img {
+    width: 64px;
+    height: 64px;
   }
   
   .dropdown-content {
     display: none;
-    position: relative;
+    
     border-radius: 18px;
     background-color: #414b4d;
     z-index: 1;
@@ -202,12 +213,43 @@ input[type="text"] {
     text-decoration: none;
     display: block;
   }
+
   .dropdown-content a:hover {background-color: rgb(41, 41, 41);}
-  .dropdown:hover .dropdown-content {display: block;}
+  .dropdown:pressed .dropdown-content {display: block;}
   .dropdown .dropdown-content button {
       display: block;
   }
 
+  .footer {
+      position: absolute;
+      bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+  }
+
+  .footer #langContainer {
+      margin-right: auto;
+      margin-left: auto;
+  }
+  .footer button {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 0.3em;
+      color: black;
+  }
+
+  .footer button:hover {
+      background: none;
+  }
+
+  .footer a {
+      position: relative;
+      /* margin-left: auto; */
+      margin-right: 50px;
+  }
 /*---------------------------------
          Settings Menu Display
 ---------------------------------*/
@@ -221,6 +263,7 @@ input[type="text"] {
     box-shadow: inset 0 -1px 10px 3px #6d6d6d;
     font-size: 38px;
     cursor: move;
+    z-index: 9999;
 }
 
 .taskHelp {
@@ -237,19 +280,19 @@ input[type="text"] {
 
  #settingsMenuHeader {
     padding: 10px;
-    height: 30px;
+    height: 15px;
     cursor: move;
 }
 
 #taskMenuHeader {
     padding: 10px;
-    height: 30px;
+    height: 15px;
     cursor: move;
 }
 
 .headerDark {
     background-color: rgb(85, 85, 85);
-    background-image : url("img/drag-lines (1).png");
+    background-image : url("img/drag-lines.png");
     /* background-size: cover; */
     background-position: center;
     background-repeat: no-repeat;
@@ -260,7 +303,7 @@ input[type="text"] {
 }
 
 .menu p {
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 20px;
 }
 
@@ -487,4 +530,26 @@ input {
 #chooseTheme button{
     font-size: 18px;
     margin: 0 0;
+}
+
+#cycle1 {
+    position: absolute;
+    top: 55%;
+    right: 15%;
+}
+#cycle2 {
+    position: absolute;
+    top: 65%;
+    left: 15%;
+}
+
+#cycle3 {
+    position: absolute;
+    top: 70%;
+    right: 22%;
+}
+#cycle4 {
+    position: absolute;
+    top: 50%;
+    left: 20%;
 }
