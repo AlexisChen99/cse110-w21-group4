@@ -223,32 +223,14 @@ function hidePotatos() {
     document.getElementById('cycle1').style.display = 'none';
     document.getElementById('cycle2').style.display = 'none';
     document.getElementById('cycle3').style.display = 'none';
-    document.getElementById('cycle4').style.display = 'none';
+    document.getElementById('cycle0').style.display = 'none';
 }
 
 /**shows a a number of dancing potatoe gives based on the pomosDone */
 function showPotatos() {
-    if(pomosDone % 4 == 1) {
-        document.getElementById('cycle1').style.display = 'inline';
-        document.getElementById('cycle2').style.display = 'none';
-        document.getElementById('cycle3').style.display = 'none';
-        document.getElementById('cycle4').style.display = 'none';
-    } else if(pomosDone % 4 == 2) {
-        document.getElementById('cycle1').style.display = 'inline';
-        document.getElementById('cycle2').style.display = 'inline';
-        document.getElementById('cycle3').style.display = 'none';
-        document.getElementById('cycle4').style.display = 'none';
-    } else if(pomosDone % 4 == 3) {
-        document.getElementById('cycle1').style.display = 'inline';
-        document.getElementById('cycle2').style.display = 'inline';
-        document.getElementById('cycle3').style.display = 'inline';
-        document.getElementById('cycle4').style.display = 'none';
-    } else {
-        document.getElementById('cycle1').style.display = 'inline';
-        document.getElementById('cycle2').style.display = 'inline';
-        document.getElementById('cycle3').style.display = 'inline';
-        document.getElementById('cycle4').style.display = 'inline';
-    }
+
+    document.getElementById('cycle'+pomosDone%4).style.display = 'inline';
+
 }
 
 /**
