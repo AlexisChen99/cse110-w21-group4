@@ -8,9 +8,9 @@
  */
 let lang;
 let phase = 'idle';         // idle, work, short break, long break, stopped
-let workLength = 3;             // work time (seconds)   15 mins (900)
-let shortBreakLength = 2;       // short break time      5 mins  (300)
-let longBreakLength = 5;        // long break time       25 mins (1500)
+let workLength = 5;             // work time (seconds)   15 mins (900)
+let shortBreakLength = 5;       // short break time      5 mins  (300)
+let longBreakLength = 10;        // long break time       25 mins (1500)
 let timer;                  // Represents the interval change of 1s
 let secondsRemaining = 0;   // Displays on timer
 let MMSS;                   // {string} MM:SS format
@@ -120,18 +120,19 @@ function setInputTimes(phase) {
  * If the timer was stopped and resumed, the input times are not modified.
  */
 function start() {
-    /*if(phase != 'stopped') {
+    if(phase != 'stopped') {
         console.log('Setting input times');
+        phase = 'work';
         workLength = setInputTimes('work');
         shortBreakLength = setInputTimes('short');
         longBreakLength = setInputTimes('long');
-    }*/
+    }
+
 
     secondsRemaining = setTimeRemaining();
     document.getElementById('reset').disabled = true;
     document.getElementById('start').innerHTML = dict['stop'][lang];
     document.getElementById('start').onclick = stop;
-    phase = 'work';
     document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
     // Still synchronous
     if (taskCount > 0) {    
@@ -156,7 +157,7 @@ function start() {
                         playAudio('breakToWorkAudio');
                     }
                     if (phase != 'work') {
-                        playAudio('workToBreakAudio');
+                        playAudio('breakToWorkAudio');
                     }
                     updatePhase();
                     secondsRemaining = setTimeRemaining();
@@ -200,16 +201,53 @@ function convertSeconds(secondsRemaining) {
 function updatePhase() {
     if (phase == 'work') {
         pomosDone++;
-
+        showPotatos();
         if (pomosDone % 4 != 0) {
-            // If the tasks completed is less than 4 (1-3)
+            // If the pomos completed is less than 4 (1-3)
             phase = 'short break';
         } else {
-            // If the tasks completed is divisible by 4
+            // If the pomos completed is divisible by 4
             phase = 'long break';
         }
     } else {
+        if(phase == 'long break') {
+            hidePotatos();
+        }
         phase = 'work';
+        
+    }
+}
+
+/** hides all of the dancing potato gifs */
+function hidePotatos() {
+    document.getElementById('cycle1').style.display = 'none';
+    document.getElementById('cycle2').style.display = 'none';
+    document.getElementById('cycle3').style.display = 'none';
+    document.getElementById('cycle4').style.display = 'none';
+}
+
+/**shows a a number of dancing potatoe gives based on the pomosDone */
+function showPotatos() {
+    if(pomosDone % 4 == 1) {
+        document.getElementById('cycle1').style.display = 'inline';
+        document.getElementById('cycle2').style.display = 'none';
+        document.getElementById('cycle3').style.display = 'none';
+        document.getElementById('cycle4').style.display = 'none';
+    } else if(pomosDone % 4 == 2) {
+        document.getElementById('cycle1').style.display = 'inline';
+        document.getElementById('cycle2').style.display = 'inline';
+        document.getElementById('cycle3').style.display = 'none';
+        document.getElementById('cycle4').style.display = 'none';
+    } else if(pomosDone % 4 == 3) {
+        document.getElementById('cycle1').style.display = 'inline';
+        document.getElementById('cycle2').style.display = 'inline';
+        document.getElementById('cycle3').style.display = 'inline';
+        document.getElementById('cycle4').style.display = 'none';
+    } else {
+        document.getElementById('cycle1').style.display = 'inline';
+        document.getElementById('cycle2').style.display = 'inline';
+        document.getElementById('cycle3').style.display = 'inline';
+        document.getElementById('cycle4').style.display = 'inline';
     }
 }
 
@@ -269,7 +307,8 @@ function reset() {
     console.log('reset timer');
     phase = 'idle';
     document.getElementById('timerDisplay').innerHTML='00:00';
-    taskCount = 0;
+    tasksDone = 0;
+    pomosDone = 0;
     uniqueID = 1;
     hide('prompt');
 }
@@ -280,6 +319,7 @@ function reset() {
  */
 function addTask() {
     const task = document.getElementById('enterTask').value;
+    document.getElementById('enterTask').value = '';
     if(task != '') {
         createTask(task);
         taskCount++;
