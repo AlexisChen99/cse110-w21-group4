@@ -25,21 +25,12 @@ let theme;                  // Potato, Dark, Light, undefined (Capitalized)
 let mute = false;
 
 window.onload = function() {
-    const volumeIcon = document.getElementById('volumeIcon');
-    volumeIcon.addEventListener('click', toggleMute);
     const volumeInput = document.getElementById('volume');
     volumeInput.addEventListener('change', changeAudio);
-    const settings = document.getElementById('settingsIcon');
-    settings.addEventListener('click', function () { show('settingsMenu'); });
-    const closeSettings = document.getElementById('closeSettings');
-    closeSettings.addEventListener('click', function () { hide('settingsMenu'); });
-    const closeTasks = document.getElementById('closeTasks');
-    closeTasks.addEventListener('click', function () { hide('taskMenu'); });
 
     const resetBtn = document.getElementById('reset');
     resetBtn.onclick = function() { confirmationPrompt('Reset'); };
-    const deleteAll = document.getElementById('deleteAll');
-    deleteAll.addEventListener('click', function () { confirmationPrompt('Delete'); });      // deleteAllTasks
+
     const cancelBtn = document.getElementById('cancel');
     cancelBtn.onclick = function() { hide('prompt'); };
     const backBtn = document.getElementById('back');
@@ -700,7 +691,7 @@ function changeTheme(newTheme) {
         
         let buttons = document.getElementsByTagName('button');
         for(let i = 0; i < buttons.length; i ++) {
-            buttons[i].className = 'darkButton';
+            buttons[i].classList.add('darkButton');
         }
     
         let menus = document.getElementsByClassName('menu');
