@@ -19,35 +19,30 @@ let pomosDone = 0;          // Number of pomo 'work' phases completed.
 let taskCount = 0;          // Used to keep track of all active tasks
 var uniqueID = 1;           // Used to assign uniqueID's when deleting specific tasks 
                             // (may be copied from task list to main)
+let savedTasks = [];
 let volume = 10;
 let theme;                  // Potato, Dark, Light, undefined (Capitalized)
 let mute = false;
 
 window.onload = function() {
-    const volumeIcon = document.getElementById('volumeIcon');
-    volumeIcon.addEventListener('click', toggleMute);
     const volumeInput = document.getElementById('volume');
     volumeInput.addEventListener('change', changeAudio);
-    const settings = document.getElementById('settingsIcon');
-    settings.addEventListener('click', function () { show('settingsMenu'); });
-    const closeSettings = document.getElementById('closeSettings');
-    closeSettings.addEventListener('click', function () { hide('settingsMenu'); });
-    const closeTasks = document.getElementById('closeTasks');
-    closeTasks.addEventListener('click', function () { hide('taskMenu'); });
 
     const resetBtn = document.getElementById('reset');
     resetBtn.onclick = function() { confirmationPrompt('Reset'); };
-    const deleteAll = document.getElementById('deleteAll');
-    deleteAll.addEventListener('click', function () { confirmationPrompt('Delete'); });      // deleteAllTasks
+
     const cancelBtn = document.getElementById('cancel');
     cancelBtn.onclick = function() { hide('prompt'); };
-
+    const backBtn = document.getElementById('back');
+    backBtn.onclick = function() { back(); };
+    const nextBtn = document.getElementById('next');
+    nextBtn.onclick = function() { next(); };
     
     
     // Load's users theme, TODO previous input settings, taskList, language
     loadData();
     loadLang();
-
+    loadTasks();
 }
 
 /**
@@ -288,9 +283,11 @@ function stop() {
 function reset() {
     console.log('reset timer');
     phase = 'idle';
-    document.getElementById('timerDisplay').innerHTML='00:00';
+  
+    document.getElementById('timerDisplay').innerHTML='- - : - -';
     tasksDone = 0;
     pomosDone = 0;
+
     uniqueID = 1;
     hide('prompt');
 }
@@ -304,12 +301,9 @@ function addTask() {
     document.getElementById('enterTask').value = '';
     if(task != '') {
         createTask(task);
-        taskCount++;
-        console.log('Created task with ID ' + uniqueID);
+       console.log('Created task with ID ' + uniqueID);
         console.log('Task count: ' + taskCount);
-        const taskBtn = document.getElementById('taskBtn');
-        taskBtn.style.width = "fit-content";
-        taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
+ 
     }
 }
 
@@ -377,6 +371,16 @@ function createTask(text) {
     del.addEventListener('click', function() {
         deleteTask(newTask.id);
     });
+
+    taskCount++;
+    const taskBtn = document.getElementById('taskBtn');
+    taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
+    taskBtn.style.width = "fit-content";
+
+    savedTasks.push(text);
+    console.log(JSON.stringify(savedTasks));
+    localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
+    console.log(localStorage.getItem("savedTasks"));
 
     newTask.appendChild(mark);
     newTask.appendChild(pin);
@@ -464,7 +468,7 @@ function markDone(uniqueID) {
     tasksDone++;
     originalTask.setAttribute("marked","true");
     const taskBtn = document.getElementById('taskBtn');
-    taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
+    taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
 }
 
@@ -484,7 +488,7 @@ function unmark(uniqueID) {
     tasksDone--;
     originalTask.setAttribute("marked","false");
     const taskBtn = document.getElementById('taskBtn');
-    taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
+    taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
 }
 
@@ -509,7 +513,10 @@ function unpinTask(uniqueID) {
  * 
  * @example Delete pinned task '1pin' calls function with '1'.
  */
-function deleteTask(uniqueID) {    
+function deleteTask(uniqueID) {   
+    let taskText = document.getElementById(uniqueID).lastChild.innerText;
+    
+    
     const pinnedTask = document.getElementById(uniqueID+'pin');
 
     if (document.getElementById(uniqueID).getAttribute('marked') == 'true'){
@@ -522,19 +529,24 @@ function deleteTask(uniqueID) {
         console.log('Deleted a pinned task.');
 
     }
-    const taskList = document.getElementById('taskListContainer');
-    taskList.removeChild(document.getElementById(uniqueID));
+    const taskListContainer = document.getElementById('taskListContainer');
+    taskListContainer.removeChild(document.getElementById(uniqueID));
     taskCount--;
 
 
     const taskBtn = document.getElementById('taskBtn');
-    taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
+    taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
 
     if (taskCount == 0){
-        taskBtn.innerHTML = 'Tasks';
+        taskBtn.innerHTML = dict['tasks'][lang];
         taskBtn.style.fontSize = "25px";
         taskBtn.style.width = "150px";
     }
+
+    savedTasks.splice(savedTasks.indexOf(taskText), 1);
+    localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
+
+
     console.log('Task count: ' + taskCount);
 }
 
@@ -544,9 +556,9 @@ function deleteTask(uniqueID) {
  * @event deleteAll text
  */
 function deleteAllTasks() {
-    const taskList = document.getElementById('taskListContainer');
-    while(taskList.firstChild) {
-        taskList.removeChild(taskList.lastChild);
+    const taskListContainer = document.getElementById('taskListContainer');
+    while(taskListContainer.firstChild) {
+        taskListContainer.removeChild(taskListContainer.lastChild);
     }
 
     const mainTasks = document.getElementById('mainTasks');
@@ -557,14 +569,13 @@ function deleteAllTasks() {
     taskCount = 0;
     uniqueID = 1;
     const taskBtn = document.getElementById('taskBtn');
-    taskBtn.innerHTML = 'Tasks (' + tasksDone + '/' + taskCount + ')';
 
     if (taskCount == 0){
-        taskBtn.innerHTML = 'Tasks';
+        taskBtn.innerHTML = dict['tasks'][lang];
         taskBtn.style.fontSize = "25px";
         taskBtn.style.width = "150px";
     }
-
+    localStorage.setItem('savedTasks', null);
     hide('prompt');
     console.log('Deleted all tasks.');
     console.log('Task Count: ' + taskCount);
@@ -616,6 +627,34 @@ function hide(id) {
     elem.classList.replace('showing', 'hidden');
 }
 
+var page = 1;
+function back() {
+    if(page <= 1) {
+        return;
+    }
+    page--;
+    let topic = document.getElementById('instrTopic');
+    topic.innerText = dict[page][topic.id][lang];
+    let content = document.getElementById('instrContent');
+    content.innerText = dict[page][content.id][lang];
+    let currPage = document.getElementById('page');
+    currPage.innerText = dict[page][currPage.id][lang];
+}
+
+function next() {
+    if(page >= 5) {
+        hide('instrMenu');
+        page = 1;
+        return;
+    }
+    page++;
+    let topic = document.getElementById('instrTopic');
+    topic.innerText = dict[page][topic.id][lang];
+    let content = document.getElementById('instrContent');
+    content.innerText = dict[page][content.id][lang];
+    let currPage = document.getElementById('page');
+    currPage.innerText = dict[page][currPage.id][lang];
+}
 /** 
  * Save user's last theme selected locally 
  * TODO: Previous input settings, taskList, language
@@ -676,7 +715,7 @@ function changeTheme(newTheme) {
         
         let buttons = document.getElementsByTagName('button');
         for(let i = 0; i < buttons.length; i ++) {
-            buttons[i].className = 'darkButton';
+            buttons[i].classList.add('darkButton');
         }
     
         let menus = document.getElementsByClassName('menu');
@@ -767,10 +806,9 @@ function loadLang() {
     document.getElementById('start').innerText = dict['start'][lang];
     document.getElementById('taskBtn').innerText = dict['tasks'][lang];
     document.getElementById('reset').innerText = dict['reset'][lang];
-    document.getElementById('enterTask').innerText = dict['enterTask'][lang];
+    document.getElementById('enterTask').placeholder = dict['enterTask'][lang];
     document.getElementById('taskAdder').innerText = dict['add'][lang];
 
-    // "Drag me"???
     document.getElementById('settingsTitle').innerText = dict['settings'][lang];
     document.getElementById('closeSettings').innerText = dict['close'][lang];
     document.getElementById('selectTheme').innerText = dict['selectTheme'][lang];
@@ -783,11 +821,21 @@ function loadLang() {
     document.getElementById('cycleLength').innerText = dict['cycleLength'][lang];
     document.getElementById('volume').innerText = dict['volume'][lang];
 
-    document.getElementById('taskMenuTasks').innerText = dict['tasks'][lang];
+    document.getElementById('tasksTitle').innerText = dict['tasks'][lang];
     document.getElementById('closeTasks').innerText = dict['close'][lang];
     document.getElementById('deleteAll').innerText = dict['deleteAll'][lang];
     
-    document.getElementById('languageBtn').innerText = dict['languageBtn'][lang];
     document.getElementById('confirm').innerText = dict['confirm'][lang];
     document.getElementById('cancel').innerText = dict['cancel'][lang];
+}
+
+function loadTasks() {
+    let savedTasks = JSON.parse(localStorage.getItem('savedTasks'));
+    if(!savedTasks) {
+        return;
+    }
+
+    for(let i = 0; i < savedTasks.length; i++) {
+        createTask(savedTasks[i]);
+    }
 }
