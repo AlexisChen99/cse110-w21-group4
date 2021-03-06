@@ -542,19 +542,22 @@ input {
     position: absolute;
     top: 55%;
     right: 15%;
+    display: none;
 }
 #cycle2 {
     position: absolute;
     top: 65%;
     left: 15%;
+    display: none;
 }
 
 #cycle3 {
     position: absolute;
     top: 70%;
     right: 22%;
+    display: none;
 }
-#cycle4 {
+#cycle0 {
     position: absolute;
     top: 50%;
     left: 20%;
