@@ -78,9 +78,14 @@ p {
     float: left;
 }
 
+#phaseWrapper {
+    margin: 70px 0px 30px 0px;
+}
+
 #phaseDisplay {
     display: inline-block;
-    margin: 70px 0px 30px -140px;
+    margin: auto;
+    /* margin: 70px 0px 30px -140px; */
     text-shadow: 1px 1px 1px #000;
     font-size: 32px;
 }
@@ -125,13 +130,13 @@ p {
 .circlePotato {
     border: 8px solid #ff0;
     background-color: #ff0;
-    box-shadow: 0 0 15px 15px #ff0;
+    box-shadow: 0 0 50px gold,0 0 150px gold;
 }
 
 .circlePotatoBreak {
-    border: 8px solid rgb(255, 195, 84);
-    background-color: rgb(255, 195, 84);
-    box-shadow: 0 0 50px gold,0 0 150px gold;;
+    border: 8px solid rgb(134, 130, 120);
+    background-color: rgb(134, 130, 120);
+    box-shadow: 0 0 50px rgb(206, 190, 146),0 0 150px rgb(206, 190, 146);
 }
 
 #timerDisplay {
@@ -151,6 +156,7 @@ p {
     width: 150px;
     height: 75px;
     margin: auto;
+    white-space: normal;
 }
 
 #enterTask {
@@ -211,7 +217,6 @@ input[type="text"] {
   
   .dropdown-content {
     display: none;
-    
     border-radius: 18px;
     background-color: #414b4d;
     z-index: 1;
@@ -236,21 +241,8 @@ input[type="text"] {
       position: absolute;
       bottom: 15px;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
       width: 100%;
-  }
-
-  .footer #langContainer {
-      margin-right: auto;
-      margin-left: auto;
-  }
-  .footer button {
-      /* background: none;
-      border: none; */
-      padding: 0;
-      font-size: 0.3em;
-      color: black;
   }
 
   .footer button:hover {
@@ -284,6 +276,7 @@ input[type="text"] {
     padding-left: 18px;
     padding-right: 15px;
 }
+
 .menuLight {
     background-color: white;
     background-image: -webkit-gradient(linear, left bottom, left top, from(#eee), to(#fff));
@@ -403,6 +396,16 @@ input {
     margin: 0 -10px;
 }
 
+
+#langContainer button {
+    /* background: none;
+    border: none; */
+    padding: 0;
+    font-size: 0.4em;
+    color: black;
+
+}
+
 /* @media screen and (max-width: 768px) {
     menu {
         width: 100vw;
@@ -503,8 +506,14 @@ input {
 }
 
 @media screen and (max-width: 768px) {
-    #taskMenu p {
-        font-size: 25px;
+    .tasksTitle {
+        font-size: 20px;
+    }
+    .taskHelp {
+        font-size: 17px;
+        margin: 5px 0px;
+        padding-left: 18px;
+        padding-right: 15px;
     }
 }
 

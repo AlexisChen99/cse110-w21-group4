@@ -21,7 +21,9 @@
         </button>
         <p id="title">Potato Timer</p>
 
-        <p id="phaseDisplay">Work</p>
+        <div id="phaseWrapper">
+            <p id="phaseDisplay">Work</p>
+        </div>
 
         <audio id="breakToWorkAudio" src='audio/Rooster Crow.wav'></audio>
         <audio id="workToBreakAudio" src='audio/Dove.wav'></audio>
@@ -91,6 +93,13 @@
                     <img src="img/volume.png" alt="Mute?" id="volumeIcon">
                 </button>
             </div>
+
+            <div id="langContainer">
+                <button class="transparent" id="English" onclick="setLang('en')">English</button>
+                <button class="transparent" id="Spanish" onclick="setLang('es')">Español</button>
+                <button class="transparent" id="Chinese" onclick="setLang('zh')">中文</button>
+                <button class="transparent" id="Korean" onclick="setLang('ko')">한국어</button>
+            </div>
         </div>
         <!-- End of settings menu -->
     </div>
@@ -119,12 +128,6 @@
     <img src="img/potato-dance.gif" id="cycle0" class="hidden">
 
     <div class="footer">
-        <span id="langContainer">
-            <button class="transparent" id="English" onclick="setLang('en')">English</button>
-            <button class="transparent" id="Spanish" onclick="setLang('es')">Español</button>
-            <button class="transparent" id="Chinese" onclick="setLang('zh')">中文</button>
-            <button class="transparent" id="Korean" onclick="setLang('ko')">한국어</button>
-        </span>
         <a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-32px.png" alt="GitHub"></a>
     </div>
 
