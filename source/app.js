@@ -116,7 +116,7 @@ function setInputTimes(phase) {
  */
 function start() {
     if(phase != 'stopped') {
-        console.log('Setting input times');
+        //console.log('Setting input times');
         phase = 'work';
         workLength = setInputTimes('work');
         shortBreakLength = setInputTimes('short');
@@ -144,7 +144,7 @@ function start() {
                 // Display the time MM:SS
                 MMSS = convertSeconds(secondsRemaining);
                 document.getElementById('timerDisplay').innerHTML = MMSS;
-                setPageTitle(MMSS);
+                document.title = setPageTitle(MMSS);
                 secondsRemaining--;
 
                 if (secondsRemaining < 0) {
@@ -186,7 +186,7 @@ function convertSeconds(secondsRemaining) {
     timerString += minutes + ':';
     if (seconds < 10) { timerString += '0'; }
     timerString += seconds;
-    console.log(timerString);
+    //console.log(timerString);
     return timerString;
 }
 
@@ -246,6 +246,7 @@ function setTimeRemaining() {
  * Sets the <title> element for users to see remaining time off-page.
  * 
  * @param {string} MMSS 'MM:SS' form
+ * @return {string} New page title
  */
 function setPageTitle(MMSS) {
     let phaseSymbol;
@@ -255,14 +256,16 @@ function setPageTitle(MMSS) {
             break;
         case 'short break':
         case 'long break':
-            phaseSymbol = ' Break -';
+            phaseSymbol = ' Break - ';
             break;
         case 'stopped':
             phaseSymbol = ' Stopped - '
             break;
+        default:
+            phaseSymbol = ' - ';
     }
 
-    document.title = MMSS + phaseSymbol + 'Potato Timer';
+    return MMSS + phaseSymbol + 'Potato Timer';
 }
 
 /**
@@ -271,7 +274,7 @@ function setPageTitle(MMSS) {
 function stop() {
     clearInterval(timer);
     phase = 'stopped';
-    setPageTitle(MMSS);
+    document.title = setPageTitle(MMSS);
     document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
     document.getElementById('reset').disabled = false;
     document.getElementById('start').innerHTML = dict['start'][lang];
@@ -281,7 +284,7 @@ function stop() {
  * Resets the pomodoro cycle to the beginning.
  */
 function reset() {
-    console.log('reset timer');
+    //console.log('reset timer');
     phase = 'idle';
   
     document.getElementById('timerDisplay').innerHTML='- - : - -';
@@ -301,8 +304,8 @@ function addTask() {
     document.getElementById('enterTask').value = '';
     if(task != '') {
         createTask(task);
-       console.log('Created task with ID ' + uniqueID);
-        console.log('Task count: ' + taskCount);
+        //console.log('Created task with ID ' + uniqueID);
+        //console.log('Task count: ' + taskCount);
  
     }
 }
@@ -378,9 +381,9 @@ function createTask(text) {
     taskBtn.style.width = "fit-content";
 
     savedTasks.push(text);
-    console.log(JSON.stringify(savedTasks));
+    //console.log(JSON.stringify(savedTasks));
     localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
-    console.log(localStorage.getItem("savedTasks"));
+    //console.log(localStorage.getItem("savedTasks"));
 
     newTask.appendChild(mark);
     newTask.appendChild(pin);
@@ -469,7 +472,7 @@ function markDone(uniqueID) {
     originalTask.setAttribute("marked","true");
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
-    console.log('Tasks done: ' + tasksDone);
+    //console.log('Tasks done: ' + tasksDone);
 }
 
 /**
@@ -489,7 +492,7 @@ function unmark(uniqueID) {
     originalTask.setAttribute("marked","false");
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
-    console.log('Tasks done: ' + tasksDone);
+    //console.log('Tasks done: ' + tasksDone);
 }
 
 /**
@@ -526,7 +529,7 @@ function deleteTask(uniqueID) {
     if(pinnedTask) {
         const mainTasks = document.getElementById('mainTasks');
         mainTasks.removeChild(pinnedTask);
-        console.log('Deleted a pinned task.');
+        //console.log('Deleted a pinned task.');
 
     }
     const taskListContainer = document.getElementById('taskListContainer');
@@ -547,7 +550,7 @@ function deleteTask(uniqueID) {
     localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
 
 
-    console.log('Task count: ' + taskCount);
+    //console.log('Task count: ' + taskCount);
 }
 
 /**
@@ -577,8 +580,8 @@ function deleteAllTasks() {
     }
     localStorage.setItem('savedTasks', null);
     hide('prompt');
-    console.log('Deleted all tasks.');
-    console.log('Task Count: ' + taskCount);
+    //console.log('Deleted all tasks.');
+    //console.log('Task Count: ' + taskCount);
 }
 
 
@@ -589,7 +592,7 @@ function deleteAllTasks() {
  * @param {string} action The action to confirm. Either 'Reset' or 'Delete' all.
  */
  function confirmationPrompt(action) {
-     console.log('prompt');
+    //console.log('prompt');
     show('prompt');
     let message = document.getElementById('confirmMessage');
     let confirmBtn = document.getElementById('confirm');
@@ -675,7 +678,7 @@ function loadData() {
             // console.log(theme);
             break;
         default: 
-            console.log('no previous theme');
+            //console.log('no previous theme');
             changeTheme('Potato');
     }
 }
@@ -688,7 +691,7 @@ function loadData() {
  * @param {string} newTheme The theme to change to.
  */
 function changeTheme(newTheme) {
-    console.log("Changing theme to: " + newTheme);
+    //console.log("Changing theme to: " + newTheme);
     window.localStorage.setItem('theme', newTheme);
     theme = newTheme;
     const body = document.getElementById('background');
@@ -772,7 +775,7 @@ function changeTheme(newTheme) {
         
         let userTasks = document.getElementsByClassName('userTask');
         for(let i = 0; i < userTasks.length; i++) {
-            console.log('changing tasks');
+            //console.log('changing tasks');
             userTasks[i].children[0].classList.replace('markDark', 'markLight');
             userTasks[i].children[2].src = 'img/delete-task.png';
         }
@@ -784,7 +787,7 @@ function changeTheme(newTheme) {
 function loadLang() {
     let savedLang = window.localStorage.getItem('lang');
     if(savedLang == null) { 
-        console.log("No saved language detected. Your browser's language is: " + navigator.language);
+        //console.log("No saved language detected. Your browser's language is: " + navigator.language);
         if(navigator.language.includes('es')) {
             lang = 'es';
         } else if(navigator.language.includes('zh')) {
@@ -797,7 +800,7 @@ function loadLang() {
         window.localStorage.setItem('lang', lang);
     } else {
         lang = savedLang;
-        console.log('language was saved');
+        //console.log('language was saved');
     }
     
     document.documentElement.lang = lang; // <HTML> tag
@@ -839,3 +842,20 @@ function loadTasks() {
         createTask(savedTasks[i]);
     }
 }
+
+/**
+ * Manually sets the phase--for testing.
+ * 
+ * @param {string} newPhase The phase to change to.
+ */
+function setPhase(newPhase) {
+    phase = newPhase;
+}
+
+module.exports = {
+    setPhase,
+    convertSeconds,
+    setTimeRemaining,
+    setPageTitle,
+    
+ }
