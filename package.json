@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/AlexisChen99/cse110-w21-group4#readme",
   "devDependencies": {
+    "@cypress/code-coverage": "^3.9.2",
     "cypress": "^6.6.0",
     "eslint": "^7.19.0",
     "jest": "^26.6.3",
