@@ -11,10 +11,17 @@
     <script src="app.js"></script>
     <script src="drag.js"></script>
     <script src="lang.js"></script>
-
 </head>
 
 <body id="background">
+    <noscript>
+        <img src="img/potential-potato-images/d5e1fcfc372db1f0-line-creators-stickers-dancing-potato-example-with-gif-animation.gif" alt="Potato is Sad"> <br>
+        We're sorry, but this website application uses JavaScript to operate the timer.<br> 
+        Please enable JavaScript for the best user experience!<br>
+        <!-- <img src="img/potential-potato-images/download (1).jpeg"> -->
+    </noscript>
+
+    <a name="top" class="accessibility"></a>
     <div class="contentWrapper">
         <button class="transparent" onclick="show('settingsMenu')" id="settingsIcon">
             <img src="img/settings.png" alt="Settings">
@@ -37,7 +44,7 @@
         </div>
 
         <div class="taskContainer">
-            <input type="text" id="enterTask" placeholder="Enter a Task To Start" required>
+            <input type="text" id="enterTask" placeholder="Enter a Task To Start" autocomplete="off" required>
             <button id="taskAdder" onclick="addTask()">Add</button>
         </div>
         <div id="mainTasks">
@@ -49,7 +56,7 @@
     <div class="menu hidden" id="settingsMenu">
         <div class="headerDark" id="settingsMenuHeader"></div>
         <p id="settingsTitle">Settings</p>
-        <button class="close transparent" id="closeSettings" onclick="hide('settingsMenu')">Close</button>
+        <button class="close transparent lightThemeText" id="closeSettings" onclick="hide('settingsMenu')">Close</button>
         <div id="chooseTheme">
             <p style="margin: 0 0; font-size: 18px;" id="selectTheme">Select a Theme</p><br>
             <button id="lightTheme" onclick="changeTheme('Light')">Light</button>
@@ -86,12 +93,20 @@
             </div>
             <div>
                 <label for="volume" class="fieldLabel" id="volume">Volume (%)</label>
-                <input type="number" class="customVolume" id="volume" value="10" min="0" max="100">
+                <input type="number" class="customVolume" id="volume" value="25" min="0" max="100">
                 <button class="transparent" onclick="toggleMute()">
                     <img src="img/volume.png" alt="Mute?" id="volumeIcon">
                 </button>
             </div>
+            <button class="showing">Disable Potato Animation</button>
         </div>
+
+        <span id="langContainer">
+                <button class="transparent lightThemeText" id="English" onclick="setLang('en')">English</button>
+                <button class="transparent lightThemeText" id="Spanish" onclick="setLang('es')">Español</button>
+                <button class="transparent lightThemeText" id="Chinese" onclick="setLang('zh')">中文</button>
+                <button class="transparent lightThemeText" id="Korean" onclick="setLang('ko')">한국어</button>
+        </span>
         <!-- End of settings menu -->
     </div>
 
@@ -99,7 +114,7 @@
         <div class="headerDark" id="taskMenuHeader"></div>
         <p id="tasksTitle">Tasks</p>
         <!-- <p id="taskMenuTasks" style = "font-size: 35px;">Tasks</p> -->
-        <button class="close transparent" id="closeTasks" onclick="hide('taskMenu')">Close</button>
+        <button class="close transparen lightThemeTextt" id="closeTasks" onclick="hide('taskMenu')">Close</button>
         <button class="close transparent" id="deleteAll" onclick="confirmationPrompt('Delete')">Delete All</button>
         <p class="taskHelp">Mark a task as complete. Pin a task to the main display. </p>
         <div id="taskListContainer">
@@ -119,12 +134,7 @@
     <img src="img/potato-dance.gif" id="cycle0" class="hidden">
 
     <div class="footer">
-        <span id="langContainer">
-            <button class="transparent" id="English" onclick="setLang('en')">English</button>
-            <button class="transparent" id="Spanish" onclick="setLang('es')">Español</button>
-            <button class="transparent" id="Chinese" onclick="setLang('zh')">中文</button>
-            <button class="transparent" id="Korean" onclick="setLang('ko')">한국어</button>
-        </span>
+        
         <a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-32px.png" alt="GitHub"></a>
     </div>
 
@@ -138,4 +148,6 @@
         <span id="page">1 of 5</span>
         <button id="next">Next</button>
     </div>
+
+    <a href="#top" class="accessibility">Back to Top</a>
 </body>

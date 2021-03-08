@@ -1,6 +1,18 @@
 /*---------------------------------
          Background Display
 ---------------------------------*/
+noscript {
+    display: block;
+    position: absolute;
+    padding-top: 25px;
+    height: 100vh;
+    background-color: white;
+    background: white;
+    text-align: center;
+    font-size: 2rem;
+    color: red;
+    z-index: 9999;
+}
 
 body {
     margin: 0;
@@ -49,6 +61,14 @@ p {
 
 .showing {
     display: block;
+}
+
+.lightThemeText {
+    color: #333;
+}
+
+.darkThemeText {
+    color: white;
 }
 /*---------------------------------
          Main Page Display
@@ -234,10 +254,6 @@ input[type="text"] {
       width: 100%;
   }
 
-  .footer #langContainer {
-      margin-right: auto;
-      margin-left: auto;
-  }
   .footer button {
       /* background: none;
       border: none; */
@@ -264,7 +280,7 @@ input[type="text"] {
     min-height: 200px;
     max-width: 768px;
     border: 5px solid #000;
-    border-radius: 50px 50px 50px 50px;
+    border-radius: 25px 25px 25px 25px;
     box-shadow: inset 0 -1px 10px 3px #6d6d6d;
     font-size: 38px;
     cursor: move;
@@ -346,10 +362,9 @@ button:hover {
 }
 
 .userInputContainer {
-    margin: 20px 20px 20px 20px;
+    margin: 10px 20px 10px 20px;
     padding-left: 25px;
     padding-right: 15px;
-    padding-bottom: 20px;
     max-width: 350px;
     text-align: right;
 }
@@ -392,6 +407,17 @@ input {
 .userInputContainer p {
     display: inline;
     margin: 0 -10px;
+}
+
+#langContainer {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+}
+
+#langContainer button {
+    margin-bottom: 20px;
+    font-size: 16px;
 }
 
 /* @media screen and (max-width: 768px) {
@@ -571,4 +597,15 @@ input {
 
 .transparent:hover {
     background: none;
+}
+
+.accessibility {
+    position: absolute;
+    top: -100px;
+}
+
+.accessibility:focus {
+    display: block;
+    top: auto;
+    bottom: 50px;
 }
