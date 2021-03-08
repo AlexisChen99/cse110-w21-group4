@@ -16,21 +16,23 @@
 
 <body id="background">
     <div class="contentWrapper">
-        <img src="img/settings.png" alt="Settings" id="settingsIcon">
+        <button class="transparent" onclick="show('settingsMenu')" id="settingsIcon">
+            <img src="img/settings.png" alt="Settings">
+        </button>
         <p id="title">Potato Timer</p>
-        
+
         <p id="phaseDisplay">Work</p>
-        
+
         <audio id="breakToWorkAudio" src='audio/Rooster Crow.wav'></audio>
         <audio id="workToBreakAudio" src='audio/Dove.wav'></audio>
-        
+
         <div id="circleTimer">
             <p class="timer" id="timerDisplay">- - : - -</p>
         </div>
-        
+
         <div class="buttonWrapper">
             <button id="reset" onclick="confirmationPrompt('Reset')">Reset</button>
-            <button id="start" onclick="start()">Start</button>
+            <button id="start" alt="start" onclick="start()">Start</button>
             <button id="taskBtn" onclick="show('taskMenu')">Tasks</button>
         </div>
 
@@ -47,11 +49,11 @@
     <div class="menu hidden" id="settingsMenu">
         <div class="headerDark" id="settingsMenuHeader"></div>
         <p id="settingsTitle">Settings</p>
-        <p class="close" id="closeSettings">Close</p>
+        <button class="close transparent" id="closeSettings" onclick="hide('settingsMenu')">Close</button>
         <div id="chooseTheme">
             <p style="margin: 0 0; font-size: 18px;" id="selectTheme">Select a Theme</p><br>
             <button id="lightTheme" onclick="changeTheme('Light')">Light</button>
-            <button id="darkTheme"  onclick="changeTheme('Dark')">Dark</button>
+            <button id="darkTheme" onclick="changeTheme('Dark')">Dark</button>
             <button id="potatoTheme" onclick="changeTheme('Potato')">Potato</button>
         </div>
 
@@ -85,7 +87,9 @@
             <div>
                 <label for="volume" class="fieldLabel" id="volume">Volume (%)</label>
                 <input type="number" class="customVolume" id="volume" value="10" min="0" max="100">
-                <img src="img/volume.png" alt="Mute?" id="volumeIcon">
+                <button class="transparent" onclick="toggleMute()">
+                    <img src="img/volume.png" alt="Mute?" id="volumeIcon">
+                </button>
             </div>
         </div>
         <!-- End of settings menu -->
@@ -95,8 +99,8 @@
         <div class="headerDark" id="taskMenuHeader"></div>
         <p id="tasksTitle">Tasks</p>
         <!-- <p id="taskMenuTasks" style = "font-size: 35px;">Tasks</p> -->
-        <p class="close" id="closeTasks">Close</p>
-        <p id="deleteAll">Delete All</p>
+        <button class="close transparent" id="closeTasks" onclick="hide('taskMenu')">Close</button>
+        <button class="close transparent" id="deleteAll" onclick="confirmationPrompt('Delete')">Delete All</button>
         <p class="taskHelp">Mark a task as complete. Pin a task to the main display. </p>
         <div id="taskListContainer">
 
@@ -109,28 +113,29 @@
         <button id="cancel">Cancel</button>
     </div>
 
-    <!-- <div class="dropdown">
-        <button class="languageBtn" id="languageBtn"><img src="img/globe.png"></button>
-        <div class="dropdown-content">
-          <button id="English" onclick="setLang('en')">English</button>
-          <button id="Chinese" onclick="setLang('zh')">中文</button>
-          <button id="Spanish" onclick="setLang('es')">Español</button>
-          <button id="Korean" onclick="setLang('ko')">한국어</button>
-        </div>
-    </div> -->
-
-    <img src="img/potato-dance.gif" id="cycle1">
-    <img src="img/potato-dance.gif" id="cycle2">
-    <img src="img/potato-dance.gif" id="cycle3">
-    <img src="img/potato-dance.gif" id="cycle4">
+    <img src="img/potato-dance.gif" id="cycle1" class="hidden">
+    <img src="img/potato-dance.gif" id="cycle2" class="hidden">
+    <img src="img/potato-dance.gif" id="cycle3" class="hidden">
+    <img src="img/potato-dance.gif" id="cycle0" class="hidden">
 
     <div class="footer">
         <span id="langContainer">
-            <button id="English" onclick="setLang('en')">English</button>
-            <button id="Spanish" onclick="setLang('es')">Español</button>
-            <button id="Chinese" onclick="setLang('zh')">中文</button>
-            <button id="Korean" onclick="setLang('ko')">한국어</button>
+            <button class="transparent" id="English" onclick="setLang('en')">English</button>
+            <button class="transparent" id="Spanish" onclick="setLang('es')">Español</button>
+            <button class="transparent" id="Chinese" onclick="setLang('zh')">中文</button>
+            <button class="transparent" id="Korean" onclick="setLang('ko')">한국어</button>
         </span>
-        <a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-32px.png"></a>
+        <a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-32px.png" alt="GitHub"></a>
+    </div>
+
+    <!-- Remove hidden and fix css -->
+    <div class="menu hidden" id="instrMenu">
+        <p>Instructions</p>
+        <p id="instrTopic"> [filler]</p>
+        <p id="instrContent"> [filler content Potato Timer is a Pomodoro timer meant to improve your productivity by breaking up your focus for a set "work" time and a following "break" time. 
+            After every four "work" phases, a longer break period happens. To switch to another language (English, Chinese, Spanish, Korean), click on the globe icon.]</p>
+        <button id="back">Back</button>
+        <span id="page">1 of 5</span>
+        <button id="next">Next</button>
     </div>
 </body>
