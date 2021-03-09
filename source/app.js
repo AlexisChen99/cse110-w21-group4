@@ -329,23 +329,24 @@ function createTask(text) {
     
     let markBtn = document.createElement('button');
     markBtn.className = 'transparent';
-    
+    markBtn.setAttribute('aria-label', 'Mark as Done');
+
     let pinBtn = document.createElement('button');
     pinBtn.className = 'transparent';
     pinBtn.innerHTML = '<img src="img/unpinned.png" id="pin-' + uniqueID + '">';
-    
+    pinBtn.setAttribute('aria-label', 'Pin to the Main Display');
+
     let delBtn = document.createElement('button');
     delBtn.className = 'transparent';
+    delBtn.setAttribute('aria-label', 'Delete this Task');
+
     if(theme == 'Dark') {
        markBtn.innerHTML = '<div class="markCircle markDark" id="mark-' + uniqueID + '"></div>'
-       delBtn.innerHTML = '<img src="img/delete-task-dark.png" id="del-'+uniqueID+'">';
+       delBtn.innerHTML = '<img src="img/delete-task-dark.png" class="delete" id="del-'+uniqueID+'">';
     } else {
        markBtn.innerHTML = '<div class="markCircle markLight" id="mark-' + uniqueID + '"></div>'
-       delBtn.innerHTML = '<img src="img/delete-task.png" id="del-'+uniqueID+'">';
+       delBtn.innerHTML = '<img src="img/delete-task.png" class="delete" id="del-'+uniqueID+'">';
     }
-
-    let content = document.createElement('p');
-    content.innerHTML = text;
 
     markBtn.onclick = function() {
         markedTask = document.getElementById('mark-' + newTask.id); 
@@ -358,7 +359,7 @@ function createTask(text) {
 
     pinBtn.onclick = function() {
         origTask = document.getElementById('pin-' + newTask.id);
-        pinnedTask = document.getElementById('copy-' + newTask.id);
+        pinnedTask = document.getElementById(newTask.id + '-copy');
         if(!pinnedTask) {
             createExistingTask(text, newTask.id);
             origTask.src = 'img/pinned.png';
@@ -372,6 +373,15 @@ function createTask(text) {
         deleteTask(newTask.id);
     }
 
+    let content = document.createElement('p');
+    content.innerHTML = text;
+
+    let ariaSkip = document.createElement('a');
+    ariaSkip.href = '#' + (uniqueID + 1);
+    ariaSkip.className = 'ariaSkipTask';
+    ariaSkip.innerText = 'Skip';
+    newTask.appendChild(ariaSkip);
+
     taskCount++;
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
@@ -384,16 +394,15 @@ function createTask(text) {
 
     newTask.appendChild(markBtn);
     newTask.appendChild(pinBtn);
-    newTask.appendChild(delBtn);
     newTask.appendChild(content);
+    newTask.appendChild(delBtn);
     taskList.appendChild(newTask);
 
     if(pinCount < 3) {
-        createExistingTask(text, newTask.id);
+        createExistingTask(text, uniqueID);
         document.getElementById('pin-'+uniqueID).src = 'img/pinned.png';
     }
     
-
     return uniqueID++;
 }
 
@@ -414,27 +423,28 @@ function createExistingTask(text, uniqueID) {
     let mainTasks = document.getElementById('mainTasks');
     let pinTask = document.createElement('div');
     pinTask.className = 'userTask';
-    pinTask.id = 'copy-' + uniqueID;
+    pinTask.id = uniqueID + '-copy';
 
     let markBtn = document.createElement('button');
     markBtn.className = 'transparent';
+    markBtn.setAttribute('aria-label', 'Mark as Done');
     
     let pinBtn = document.createElement('button');
     pinBtn.className = 'transparent';
     pinBtn.innerHTML = '<img src="img/pinned.png">';
-    
+    pinBtn.setAttribute('aria-label', 'Pin to the Main Display');
+
     let delBtn = document.createElement('button');
     delBtn.className = 'transparent';
+    delBtn.setAttribute('aria-label', 'Delete this Task');
+
     if(theme == 'Dark') {
        markBtn.innerHTML = '<div class="markCircle markDark" id="mark-' + uniqueID + '-copy"></div>'
-       delBtn.innerHTML = '<img src="img/delete-task-dark.png" id="del-'+uniqueID+'-copy">';
+       delBtn.innerHTML = '<img src="img/delete-task-dark.png" class="delete" id="del-'+uniqueID+'-copy">';
     } else {
        markBtn.innerHTML = '<div class="markCircle markLight" id="mark-' + uniqueID + '-copy"></div>'
-       delBtn.innerHTML = '<img src="img/delete-task.png" id="del-'+uniqueID+'-copy">';
+       delBtn.innerHTML = '<img src="img/delete-task.png" class="delete" id="del-'+uniqueID+'-copy">';
     }
-
-    let content = document.createElement('p');
-    content.innerHTML = text;
 
     markBtn.onclick = function() {
         markedTask = document.getElementById('mark-' + uniqueID); 
@@ -453,16 +463,28 @@ function createExistingTask(text, uniqueID) {
         deleteTask(uniqueID);
     }
 
+    let content = document.createElement('p');
+    content.innerHTML = text;
+
+    let ariaSkip = document.createElement('a');
+    ariaSkip.href = '#' + (uniqueID + 1) + '-copy';
+    ariaSkip.className = 'ariaSkipTask';
+    ariaSkip.innerText = 'Skip';
+    pinTask.appendChild(ariaSkip);
+
     pinTask.appendChild(markBtn);
     pinTask.appendChild(pinBtn);
-    pinTask.appendChild(delBtn);
     pinTask.appendChild(content);
+    pinTask.appendChild(delBtn);
+
     mainTasks.appendChild(pinTask);
 
     pinCount++;
     if(document.getElementById('mark-'+uniqueID).classList.contains('markFill')) {
         document.getElementById('mark-'+uniqueID+'-copy').classList.add('markFill');
     }
+
+    return uniqueID;
 }
 
 /**
@@ -474,7 +496,7 @@ function createExistingTask(text, uniqueID) {
 function markDone(uniqueID) {
     let originalTask = document.getElementById(uniqueID);
     document.getElementById('mark-' + uniqueID).classList.add('markFill');
-    let pinnedTask = document.getElementById('copy-' + uniqueID);
+    let pinnedTask = document.getElementById(uniqueID + '-copy');
 
     if(pinnedTask) {
         document.getElementById('mark-' + uniqueID + '-copy').classList.add('markFill');
@@ -495,7 +517,7 @@ function markDone(uniqueID) {
 function unmark(uniqueID) {
     let originalTask = document.getElementById(uniqueID);
     document.getElementById('mark-' + uniqueID).classList.remove('markFill');
-    let pinnedTask = document.getElementById('copy-' + uniqueID);
+    let pinnedTask = document.getElementById(uniqueID + '-copy');
 
     if(pinnedTask) {
         document.getElementById('mark-'+uniqueID+'-copy').classList.remove('markFill');
@@ -514,7 +536,7 @@ function unmark(uniqueID) {
  * @example Unpin pinned task '1pin' calls function with '1pin'
  */
 function unpinTask(uniqueID) {
-    let pinnedTask = document.getElementById('copy-' + uniqueID);
+    let pinnedTask = document.getElementById(uniqueID + '-copy');
     const mainTasks = document.getElementById('mainTasks');
     mainTasks.removeChild(pinnedTask);
     document.getElementById('pin-'+uniqueID).src = 'img/unpinned.png';
@@ -531,7 +553,7 @@ function unpinTask(uniqueID) {
 function deleteTask(uniqueID) {   
     let taskText = document.getElementById(uniqueID).lastChild.innerText;
     
-    const pinnedTask = document.getElementById('copy-' + uniqueID);
+    const pinnedTask = document.getElementById(uniqueID + '-copy');
 
     if (document.getElementById(uniqueID).getAttribute('marked') == 'true'){
         tasksDone--;
@@ -657,9 +679,8 @@ function back() {
 
 function next() {
     if(page >= 5) {
-        hide('instrMenu');
-        page = 1;
-        return;
+        hide('instructionsMenu');
+        page = 0;
     }
     page++;
     let topic = document.getElementById('instrTopic');
@@ -727,11 +748,16 @@ function changeTheme(newTheme) {
         }
         
         
-        let buttons = document.getElementsByTagName('button');
+        let buttons = document.getElementsByClassName('mainButton');
         for(let i = 0; i < buttons.length; i ++) {
             buttons[i].classList.add('darkButton');
         }
     
+        let transparentBtns = document.getElementsByClassName('transparent');
+        for(let i = 0; i < transparentBtns.length; i++) {
+            transparentBtns[i].classList.remove('textDark');
+        }
+
         let menus = document.getElementsByClassName('menu');
         for(let i = 0; i < menus.length; i++) {
             menus[i].classList.add('themeDark');
@@ -748,9 +774,8 @@ function changeTheme(newTheme) {
         
         let userTasks = document.getElementsByClassName('userTask');
         for(let i = 0; i < userTasks.length; i++) {
-            
-            userTasks[i].children[0].classList.replace('markLight', 'markDark');
-            userTasks[i].children[2].src = 'img/delete-task-dark.png';
+            userTasks[i].children[1].firstChild.classList.replace('markLight', 'markDark');
+            userTasks[i].children[4].firstChild.src = 'img/delete-task-dark.png';
         }
     } else if (newTheme == 'Potato' || newTheme == 'Light') {
         let settingsIcon = document.getElementById('settingsIcon');
@@ -763,13 +788,18 @@ function changeTheme(newTheme) {
             volumeIcon.src = 'img/volume-mute.png';
         }
                 
-        let buttons = document.getElementsByTagName('button');
+        let buttons = document.getElementsByClassName('mainButton');
         for(let i = 0; i < buttons.length; i ++) {
             if(buttons[i].classList.contains('darkButton')) {
                 buttons[i].classList.remove('darkButton');
             }
         }
     
+        let transparentBtns = document.getElementsByClassName('transparent');
+        for(let i = 0; i < transparentBtns.length; i++) {
+            transparentBtns[i].classList.add('textDark');
+        }
+
         let menus = document.getElementsByClassName('menu');
         for(let i = 0; i < menus.length; i++) {
             menus[i].classList.add('menuLight');
@@ -787,8 +817,8 @@ function changeTheme(newTheme) {
         let userTasks = document.getElementsByClassName('userTask');
         for(let i = 0; i < userTasks.length; i++) {
             console.log('changing tasks');
-            userTasks[i].children[0].classList.replace('markDark', 'markLight');
-            userTasks[i].children[2].src = 'img/delete-task.png';
+            userTasks[i].children[1].firstChild.classList.replace('markDark', 'markLight');
+            userTasks[i].children[4].firstChild.src = 'img/delete-task.png';
         }
     }
 
