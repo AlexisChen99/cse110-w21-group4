@@ -155,20 +155,31 @@ p {
 
 .buttonWrapper button {
     display: inline-block;
-    width: 150px;
+    min-width: 150px;
+    width: fit-content;
     height: 75px;
     margin: auto;
     white-space: normal;
 }
 
+#reset {
+    display: none;
+}
 #enterTask {
     border-radius: 18px;
+}
+
+.taskContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #taskAdder {
     margin-top: 20px;
     margin-bottom: 20px;
     font-size: 20px;
+    width: 300px;
 }
 
 @media screen and (max-width: 479px) {
@@ -179,6 +190,9 @@ p {
         width: 100px;
         height: 50px;
     }
+    #taskBtn {
+        width: fit-content;
+    }
     .taskContainer {
         width: 100vw;
         text-align: left;
@@ -187,7 +201,7 @@ p {
         width: 60%;
     }
     #taskAdder {
-        width: 100px;
+        width:  60%;
         height: 50px;
     }
 }

@@ -394,7 +394,6 @@
      taskCount++;
      const taskBtn = document.getElementById('taskBtn');
      taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
-     taskBtn.style.width = "fit-content";
  
      savedTasks.push(text);
      console.log(JSON.stringify(savedTasks));
@@ -559,7 +558,6 @@
      if (taskCount == 0){
          taskBtn.innerHTML = dict['tasks'][lang];
          taskBtn.style.fontSize = "25px";
-         taskBtn.style.width = "150px";
      }
  
      savedTasks.splice(savedTasks.indexOf(taskText), 1);
@@ -592,7 +590,6 @@
      if (taskCount == 0){
          taskBtn.innerHTML = dict['tasks'][lang];
          taskBtn.style.fontSize = "25px";
-         taskBtn.style.width = "150px";
      }
      localStorage.setItem('savedTasks', null);
      hide('prompt');
