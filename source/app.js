@@ -19,6 +19,7 @@ let pomosDone = 0;          // Number of pomo 'work' phases completed.
 let taskCount = 0;          // Used to keep track of all active tasks
 var uniqueID = 1;           // Used to assign uniqueID's when deleting specific tasks 
                             // (may be copied from task list to main)
+var pinCount = 0;
 let savedTasks = [];
 let volume = 10;
 let theme;                  // Potato, Dark, Light, undefined (Capitalized)
@@ -324,53 +325,52 @@ function createTask(text) {
     let taskList = document.getElementById('taskListContainer');
     let newTask = document.createElement('div');
     newTask.className = 'userTask';
-    newTask.id = uniqueID++;
-
-    let mark = document.createElement('div');
-    mark.id = 'markDone';
-    mark.classList.add('markCircle');
-    let pin = document.createElement('img');
-    pin.id = 'pin';
-    pin.src = 'img/unpinned.png';
-    let del = document.createElement('img');
-    del.id = 'singleDel';
+    newTask.id = uniqueID;
+    
+    let markBtn = document.createElement('button');
+    markBtn.className = 'transparent';
+    
+    let pinBtn = document.createElement('button');
+    pinBtn.className = 'transparent';
+    pinBtn.innerHTML = '<img src="img/unpinned.png" id="pin-' + uniqueID + '">';
+    
+    let delBtn = document.createElement('button');
+    delBtn.className = 'transparent';
     if(theme == 'Dark') {
-        mark.classList.add('markDark');
-        del.src = 'img/delete-task-dark.png';
+       markBtn.innerHTML = '<div class="markCircle markDark" id="mark-' + uniqueID + '"></div>'
+       delBtn.innerHTML = '<img src="img/delete-task-dark.png" id="del-'+uniqueID+'">';
     } else {
-        mark.classList.add('markLight');
-        del.src = 'img/delete-task.png';
+       markBtn.innerHTML = '<div class="markCircle markLight" id="mark-' + uniqueID + '"></div>'
+       delBtn.innerHTML = '<img src="img/delete-task.png" id="del-'+uniqueID+'">';
     }
+
     let content = document.createElement('p');
     content.innerHTML = text;
 
-    mark.addEventListener('click', function() {
-        if(newTask.children[0].classList.contains('markFill')) {
+    markBtn.onclick = function() {
+        markedTask = document.getElementById('mark-' + newTask.id); 
+        if(markedTask.classList.contains('markFill')) {
             unmark(newTask.id);
-        } else {
+        } else { 
             markDone(newTask.id);
         }
-    });
+    };
 
-    pin.addEventListener('click', function() {
-        pinnedTask = document.getElementById(newTask.id+'pin');
+    pinBtn.onclick = function() {
+        origTask = document.getElementById('pin-' + newTask.id);
+        pinnedTask = document.getElementById('copy-' + newTask.id);
         if(!pinnedTask) {
             createExistingTask(text, newTask.id);
-            pin.src = 'img/pinned.png';
+            origTask.src = 'img/pinned.png';
         } else {
-            pin.src = 'img/unpinned.png';
+            origTask.src = 'img/unpinned.png';
             unpinTask(newTask.id);
         }
-    });
+    };
 
-    if(taskCount < 3) {
-        createExistingTask(text, newTask.id);
-        pin.src = 'img/pinned.png';
-    }
-
-    del.addEventListener('click', function() {
+    delBtn.onclick = function() {
         deleteTask(newTask.id);
-    });
+    }
 
     taskCount++;
     const taskBtn = document.getElementById('taskBtn');
@@ -382,11 +382,19 @@ function createTask(text) {
     localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
     console.log(localStorage.getItem("savedTasks"));
 
-    newTask.appendChild(mark);
-    newTask.appendChild(pin);
-    newTask.appendChild(del);
+    newTask.appendChild(markBtn);
+    newTask.appendChild(pinBtn);
+    newTask.appendChild(delBtn);
     newTask.appendChild(content);
     taskList.appendChild(newTask);
+
+    if(pinCount < 3) {
+        createExistingTask(text, newTask.id);
+        document.getElementById('pin-'+uniqueID).src = 'img/pinned.png';
+    }
+    
+
+    return uniqueID++;
 }
 
 /** 
@@ -406,49 +414,55 @@ function createExistingTask(text, uniqueID) {
     let mainTasks = document.getElementById('mainTasks');
     let pinTask = document.createElement('div');
     pinTask.className = 'userTask';
-    pinTask.id = uniqueID + 'pin';
+    pinTask.id = 'copy-' + uniqueID;
 
-    let mark = document.createElement('div');
-    mark.id = 'markDone';
-    mark.classList.add('markCircle');
-    let pin = document.createElement('img');
-    pin.id = 'pin';
-    pin.src = 'img/pinned.png';
-    let del = document.createElement('img');
-    del.id = 'singleDel';
-
+    let markBtn = document.createElement('button');
+    markBtn.className = 'transparent';
+    
+    let pinBtn = document.createElement('button');
+    pinBtn.className = 'transparent';
+    pinBtn.innerHTML = '<img src="img/pinned.png">';
+    
+    let delBtn = document.createElement('button');
+    delBtn.className = 'transparent';
     if(theme == 'Dark') {
-        mark.classList.add('markDark');
-        del.src = 'img/delete-task-dark.png';
+       markBtn.innerHTML = '<div class="markCircle markDark" id="mark-' + uniqueID + '-copy"></div>'
+       delBtn.innerHTML = '<img src="img/delete-task-dark.png" id="del-'+uniqueID+'-copy">';
     } else {
-        mark.classList.add('markLight');
-        del.src = 'img/delete-task.png';
+       markBtn.innerHTML = '<div class="markCircle markLight" id="mark-' + uniqueID + '-copy"></div>'
+       delBtn.innerHTML = '<img src="img/delete-task.png" id="del-'+uniqueID+'-copy">';
     }
 
     let content = document.createElement('p');
     content.innerHTML = text;
 
-    mark.addEventListener('click', function() {
-        if(pinTask.children[0].classList.contains('markFill')) {
+    markBtn.onclick = function() {
+        markedTask = document.getElementById('mark-' + uniqueID); 
+        if(markedTask.classList.contains('markFill')) {
             unmark(uniqueID);
-        } else {
+        } else { 
             markDone(uniqueID);
         }
-    })
+    };
 
-    pin.addEventListener('click', function() {
+    pinBtn.onclick = function() {
         unpinTask(uniqueID);
-    });
+    };
 
-    del.addEventListener('click', function() {
+    delBtn.onclick = function() {
         deleteTask(uniqueID);
-    });
+    }
 
-    pinTask.appendChild(mark);
-    pinTask.appendChild(pin);
-    pinTask.appendChild(del);
+    pinTask.appendChild(markBtn);
+    pinTask.appendChild(pinBtn);
+    pinTask.appendChild(delBtn);
     pinTask.appendChild(content);
     mainTasks.appendChild(pinTask);
+
+    pinCount++;
+    if(document.getElementById('mark-'+uniqueID).classList.contains('markFill')) {
+        document.getElementById('mark-'+uniqueID+'-copy').classList.add('markFill');
+    }
 }
 
 /**
@@ -459,14 +473,14 @@ function createExistingTask(text, uniqueID) {
  */
 function markDone(uniqueID) {
     let originalTask = document.getElementById(uniqueID);
-    originalTask.children[0].classList.add('markFill');
-    pinnedTask = document.getElementById(uniqueID+'pin');
+    document.getElementById('mark-' + uniqueID).classList.add('markFill');
+    let pinnedTask = document.getElementById('copy-' + uniqueID);
 
     if(pinnedTask) {
-        pinnedTask.children[0].classList.add('markFill');
+        document.getElementById('mark-' + uniqueID + '-copy').classList.add('markFill');
     }
     tasksDone++;
-    originalTask.setAttribute("marked","true");
+    originalTask.setAttribute('marked','true');
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
@@ -480,13 +494,14 @@ function markDone(uniqueID) {
  */
 function unmark(uniqueID) {
     let originalTask = document.getElementById(uniqueID);
-    originalTask.children[0].classList.remove('markFill');
-    pinnedTask = document.getElementById(uniqueID+'pin');
+    document.getElementById('mark-' + uniqueID).classList.remove('markFill');
+    let pinnedTask = document.getElementById('copy-' + uniqueID);
+
     if(pinnedTask) {
-        pinnedTask.children[0].classList.remove('markFill');
+        document.getElementById('mark-'+uniqueID+'-copy').classList.remove('markFill');
     }
     tasksDone--;
-    originalTask.setAttribute("marked","false");
+    originalTask.setAttribute('marked', 'false');
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
@@ -499,11 +514,11 @@ function unmark(uniqueID) {
  * @example Unpin pinned task '1pin' calls function with '1pin'
  */
 function unpinTask(uniqueID) {
-    let pinnedTask = document.getElementById(uniqueID+'pin');
+    let pinnedTask = document.getElementById('copy-' + uniqueID);
     const mainTasks = document.getElementById('mainTasks');
     mainTasks.removeChild(pinnedTask);
-    let originalTask = document.getElementById(uniqueID).children;
-    originalTask[1].src = 'img/unpinned.png';
+    document.getElementById('pin-'+uniqueID).src = 'img/unpinned.png';
+    pinCount--;
 }
 
 /**
@@ -516,8 +531,7 @@ function unpinTask(uniqueID) {
 function deleteTask(uniqueID) {   
     let taskText = document.getElementById(uniqueID).lastChild.innerText;
     
-    
-    const pinnedTask = document.getElementById(uniqueID+'pin');
+    const pinnedTask = document.getElementById('copy-' + uniqueID);
 
     if (document.getElementById(uniqueID).getAttribute('marked') == 'true'){
         tasksDone--;
