@@ -25,6 +25,7 @@ body {
 
 .potatoBreak {
     background-image: url("img/background-break.png");
+    background-color: #0B9428;
 }
 
 .themeDark {
@@ -180,6 +181,7 @@ p {
     margin-bottom: 20px;
     font-size: 20px;
     width: 300px;
+    
 }
 
 @media screen and (max-width: 479px) {
@@ -283,7 +285,7 @@ input[type="text"] {
     box-shadow: inset 0 -1px 10px 3px #6d6d6d;
     font-size: 38px;
     cursor: move;
-    z-index: 9999;
+    z-index: 999;
 }
 
 .taskHelp {
@@ -560,6 +562,7 @@ input {
     border-radius: 50px 50px 50px 50px;
     box-shadow: inset 0 -1px 10px 3px #6d6d6d;
     font-size: 28px;
+    z-index: 999;
 }
 
 /* additional spacing and alignment */
