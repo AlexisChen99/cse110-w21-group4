@@ -1,3 +1,4 @@
+//End to End tests, divided by action/task
 describe('Testing task creation', () => {
     beforeEach(() => {
         cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
