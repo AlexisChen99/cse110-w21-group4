@@ -68,4 +68,3 @@ describe('Test setPageTitle', () => {
 		app.setPhase("stopped");
 		expect(app.setPageTitle(MMSS)).toBe("10:10 Stopped - Potato Timer");
 	});
-});

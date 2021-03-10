@@ -25,6 +25,7 @@ body {
 
 .potatoBreak {
     background-image: url("img/background-break.png");
+    background-color: #0B9428;
 }
 
 .themeDark {
@@ -37,6 +38,10 @@ body {
     color: #333;
     background-color: white;
     background-image: none;
+}
+
+.textWhite {
+    color: white;
 }
 
 p {
@@ -78,17 +83,33 @@ p {
     float: left;
 }
 
+#phaseWrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 #phaseDisplay {
     display: inline-block;
-    margin: 70px 0px 30px -140px;
+    margin: auto;
+    /* margin: 70px 0px 30px 0px; */
     text-shadow: 1px 1px 1px #000;
     font-size: 32px;
 }
 
+#options {
+    display: flex;
+    margin-top: 10px;
+    margin-right: 20px;
+    float: right;
+}
+#help {
+    font-size: 3rem;
+}
 #settingsIcon {
-    position: absolute;
+    /* position: absolute;
     top: 3%;
-    right: 5%;
+    right: 5%; */
     float : right;
 }
 
@@ -125,8 +146,15 @@ p {
 .circlePotato {
     border: 8px solid #ff0;
     background-color: #ff0;
-    box-shadow: 0 0 15px 15px #ff0;
+    box-shadow: 0 0 50px gold,0 0 150px gold;
 }
+
+.circlePotatoBreak {
+    border: 8px solid rgb(134, 130, 120);
+    background-color: rgb(134, 130, 120);
+    box-shadow: 0 0 50px rgb(206, 190, 146),0 0 150px rgb(206, 190, 146);
+}
+
 #timerDisplay {
     margin:25px auto;
     padding: 26px 0px;
@@ -141,19 +169,32 @@ p {
 
 .buttonWrapper button {
     display: inline-block;
-    width: 150px;
+    min-width: 150px;
+    width: fit-content;
     height: 75px;
     margin: auto;
+    white-space: normal;
 }
 
+#reset {
+    display: none;
+}
 #enterTask {
     border-radius: 18px;
+}
+
+.taskContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #taskAdder {
     margin-top: 20px;
     margin-bottom: 20px;
     font-size: 20px;
+    width: 300px;
+    
 }
 
 @media screen and (max-width: 479px) {
@@ -161,8 +202,11 @@ p {
         margin: 0 0;
     }
     .buttonWrapper button {
-        width: 100px;
+        min-width: 100px;
         height: 50px;
+    }
+    #taskBtn {
+        width: fit-content;
     }
     .taskContainer {
         width: 100vw;
@@ -172,14 +216,14 @@ p {
         width: 60%;
     }
     #taskAdder {
-        width: 100px;
+        width:  60%;
         height: 50px;
     }
 }
 
 input[type="text"] {
     margin-top: 30px;
-    height:30px;
+    height:40px;
     width: 300px;
 }
 /*---------------------------------
@@ -202,48 +246,12 @@ input[type="text"] {
     height: 64px;
   }
   
-  .dropdown-content {
-    display: none;
-    
-    border-radius: 18px;
-    background-color: #414b4d;
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: rgb(255, 255, 255);
-    padding: 10px 10px;
-    border-radius: 18px;
-    font-size: 15px;
-    text-decoration: none;
-    display: block;
-  }
-
-  .dropdown-content a:hover {background-color: rgb(41, 41, 41);}
-  .dropdown:pressed .dropdown-content {display: block;}
-  .dropdown .dropdown-content button {
-      display: block;
-  }
-
   .footer {
       position: absolute;
       bottom: 15px;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
       width: 100%;
-  }
-
-  .footer #langContainer {
-      margin-right: auto;
-      margin-left: auto;
-  }
-  .footer button {
-      /* background: none;
-      border: none; */
-      padding: 0;
-      font-size: 0.3em;
-      color: black;
   }
 
   .footer button:hover {
@@ -260,6 +268,8 @@ input[type="text"] {
 ---------------------------------*/
 .menu {
     position: absolute;
+    top: 0%;
+    left: 0%;
     overflow: hidden;
     min-height: 200px;
     max-width: 768px;
@@ -268,7 +278,7 @@ input[type="text"] {
     box-shadow: inset 0 -1px 10px 3px #6d6d6d;
     font-size: 38px;
     cursor: move;
-    z-index: 9999;
+    z-index: 999;
 }
 
 .taskHelp {
@@ -277,6 +287,7 @@ input[type="text"] {
     padding-left: 18px;
     padding-right: 15px;
 }
+
 .menuLight {
     background-color: white;
     background-image: -webkit-gradient(linear, left bottom, left top, from(#eee), to(#fff));
@@ -322,6 +333,8 @@ input[type="text"] {
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
+    /* color: black; */
+    margin-right: 20px;
 }
 
 button {
@@ -329,18 +342,23 @@ button {
     padding: 10px 15px;
     border: 2px solid #000;
     border-radius: 50px;
-    background-color: #333;
-    /* background-color: #999; For dark mode */
+    color: #fff;
     font-size: 24px;
     font-weight: bold;
-    color: #fff;
     cursor: pointer;
+}
+
+.mainButton {
+    background-color: #333;
 }
 
 .darkButton {
     background-color: #999;
 }
 
+.textDark {
+    color: #333;
+}
 button:hover {
     background-color: rgb(100, 100, 100);
 }
@@ -392,6 +410,16 @@ input {
 .userInputContainer p {
     display: inline;
     margin: 0 -10px;
+}
+
+
+#langContainer button {
+    /* background: none;
+    border: none; */
+    padding: 0;
+    font-size: 0.4em;
+    /* color: black; */
+
 }
 
 /* @media screen and (max-width: 768px) {
@@ -494,8 +522,14 @@ input {
 }
 
 @media screen and (max-width: 768px) {
-    #taskMenu p {
-        font-size: 25px;
+    .tasksTitle {
+        font-size: 20px;
+    }
+    .taskHelp {
+        font-size: 17px;
+        margin: 5px 0px;
+        padding-left: 18px;
+        padding-right: 15px;
     }
 }
 
@@ -526,6 +560,7 @@ input {
     border-radius: 50px 50px 50px 50px;
     box-shadow: inset 0 -1px 10px 3px #6d6d6d;
     font-size: 28px;
+    z-index: 999;
 }
 
 /* additional spacing and alignment */
@@ -563,6 +598,9 @@ input {
     left: 20%;
 }
 
+/* ------------------
+ *   ARIA 
+ * ---------------- */
 .transparent {
     background: none;
     border: none;
@@ -571,4 +609,49 @@ input {
 
 .transparent:hover {
     background: none;
+}
+
+.userTask a {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.userTask a:focus {
+    position: static;
+    width: auto;
+    height: auto;
+}
+
+#ariaCloseTasks {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+#ariaCloseTasks:focus {
+    position: static;
+    width: auto;
+    height: auto;
+}
+
+.top {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.top:focus {
+    position: static;
+    width: auto;
+    height: auto;
 }
