@@ -8,9 +8,9 @@
  */
 let lang;
 let phase = 'idle';         // idle, work, short break, long break, stopped
-let workLength = 5;             // work time (seconds)   15 mins (900)
-let shortBreakLength = 5;       // short break time      5 mins  (300)
-let longBreakLength = 10;        // long break time       25 mins (1500)
+let workLength = 900;             // work time (seconds)   15 mins (900)
+let shortBreakLength = 300;       // short break time      5 mins  (300)
+let longBreakLength = 1500;        // long break time       25 mins (1500)
 let timer;                  // Represents the interval change of 1s
 let secondsRemaining = 0;   // Displays on timer
 let MMSS;                   // {string} MM:SS format
