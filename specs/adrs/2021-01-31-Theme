@@ -1,0 +1,39 @@
+# Product design layout/ideology
+
+* Status: [accepted]
+* Deciders: [froend-end developer decision]
+* Date: [2021-1-31]
+
+## Context and Problem Statement
+
+We want to have a consistent design plan in place to structure our UI around. What sort of design ideology should we keep in mind while developing our front end?
+
+## Considered Options
+
+* Minimalism -- very simple layout, minimal features/images
+* Themed -- play with animations, images, colors, etc
+
+## Decision Outcome
+
+Chose option 1, minimalism, at first--later added several simple themes for users to pick from.
+
+## Pros and Cons of the Options
+
+### Minimalism
+
+* Good, because it is simple, functional, and ideally intuitive for the user
+* Good, because it prevents distractions for the user
+* Good, because it embodies our purpose of being productive and efficient
+* Bad, because it can be boring or unattractive
+* Bad, because it can emphasize flaws (nothing to hide behind)
+
+### Creative design
+
+* Good, because it is exciting, attractive, and engaging
+* Good, because an appealing design can encourage users to return or even share our product with others
+* Good, because it can be used to show our team's personality and ideology through creativity
+* Good, because themes and designs give us more to work on/with
+* Bad, because themes can divide the audience (appealing to some but not to others)
+* Bad, because design requires experience and significant time to see returns
+* Bad, because design can distract the team and the user from the actual purpose of the product
+* Bad, because poor design can complicate the user story or how we implement our features
