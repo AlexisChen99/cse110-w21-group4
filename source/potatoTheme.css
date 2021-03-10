@@ -333,7 +333,7 @@ input[type="text"] {
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
-    color: black;
+    /* color: black; */
     margin-right: 20px;
 }
 
@@ -418,7 +418,7 @@ input {
     border: none; */
     padding: 0;
     font-size: 0.4em;
-    color: black;
+    /* color: black; */
 
 }
 

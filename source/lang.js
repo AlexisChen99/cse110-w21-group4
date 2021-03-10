@@ -231,26 +231,6 @@ var dict = {
      },
     '4': {
         'instrTopic': {
-            en: 'Google Calendar',
-            zh: '',
-            es: '',
-            ko: '',
-        },
-        'instrContent': {
-            en: 'd',
-            zh: '',
-            es: '',
-            ko: '',
-        },
-        'page': {
-            en: '4 of 5',
-            zh: '',
-            es: '',
-            ko: '',
-        },
-     },
-    '5': {
-        'instrTopic': {
             en: 'About',
             zh: '关于',
             es: '',
@@ -263,18 +243,25 @@ var dict = {
             ko: '',
         },
         'page': {
-            en: '5 of 5',
+            en: '4 of 4',
             zh: '',
             es: '',
             ko: '',
         },
      },
-    '': {
+
+    'taskNotif': {
         en: '',
         zh: '',
         es: '',
         ko: '',
     },
+
+
+    // A task has been added
+    // A task has been deleted
+    // A task has been pinned/unpinned
+    // 
 } 
 
 function setLang(selectedLang) {

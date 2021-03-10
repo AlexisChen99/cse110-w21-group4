@@ -37,8 +37,8 @@
             </div>
             <!-- End of Instructions Menu -->
 
-            <button class="transparent" onclick="show('settingsMenu')" id="settingsIcon">
-                <img src="img/settings.png" alt="Settings">
+            <button class="transparent" onclick="show('settingsMenu')" >
+                <img src="img/settings.png" alt="Settings" id="settingsIcon">
             </button>
 
             <!-- Settings Menu -->
@@ -100,7 +100,7 @@
         </div>
 
         <div id="phaseWrapper">
-            <p id="phaseDisplay">Work</p>
+            <p id="phaseDisplay">Idle</p>
         </div>
 
         <audio id="breakToWorkAudio" src='audio/Rooster Crow.wav'></audio>
@@ -137,10 +137,10 @@
         <!-- End of content wrapper -->
     </div>
 
-    <div class="hidden themeDark" id="prompt">
+    <div class="hidden" id="prompt">
         <div id="confirmMessage">Unexpected Error</div>
-        <button id="confirm">Confirm</button>
-        <button id="cancel">Cancel</button>
+        <button class="mainButton" id="confirm">Confirm</button>
+        <button class="mainButton" id="cancel">Cancel</button>
     </div>
 
     <img src="img/potato-dance.gif" id="cycle1" class="hidden">

@@ -402,6 +402,7 @@ function createTask(text) {
     taskCount++;
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
+    taskBtn.style.width = "fit-content";
 
     savedTasks.push(text);
     console.log(JSON.stringify(savedTasks));
@@ -414,7 +415,7 @@ function createTask(text) {
     newTask.appendChild(delBtn);
     taskList.appendChild(newTask);
 
-    if(pinCount < 3) {
+    if(pinCount < 1) {
         createExistingTask(text, uniqueID);
         document.getElementById('pin-'+uniqueID).src = 'img/pinned.png';
     }
@@ -592,6 +593,7 @@ function deleteTask(uniqueID) {
     if (taskCount == 0){
         taskBtn.innerHTML = dict['tasks'][lang];
         taskBtn.style.fontSize = "25px";
+        taskBtn.style.width = "150px";
     }
 
     savedTasks.splice(savedTasks.indexOf(taskText), 1);
@@ -624,6 +626,7 @@ function deleteAllTasks() {
     if (taskCount == 0){
         taskBtn.innerHTML = dict['tasks'][lang];
         taskBtn.style.fontSize = "25px";
+        taskBtn.style.width = "150px";
     }
     localStorage.setItem('savedTasks', null);
     hide('prompt');
@@ -860,7 +863,7 @@ function loadLang() {
     
     document.documentElement.lang = lang; // <HTML> tag
     document.getElementById('title').innerText = dict['title'][lang];
-    document.getElementById('phaseDisplay').innerText = dict['phase']['work'][lang];
+    document.getElementById('phaseDisplay').innerText = dict['phase']['idle'][lang];
     document.getElementById('start').innerText = dict['start'][lang];
     document.getElementById('taskBtn').innerText = dict['tasks'][lang];
     document.getElementById('reset').innerText = dict['reset'][lang];
