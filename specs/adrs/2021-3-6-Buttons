@@ -1,0 +1,32 @@
+# Button Layout/Function
+
+* Status: [accepted]
+* Deciders: [team decision]
+* Date: [2021-3-6]
+
+## Context and Problem Statement
+
+What kind of buttons and button functions should we have to embody the spirit of the pomo timer?
+
+## Considered Options
+
+* Start, Stop (with Pause functionality), and Reset
+* Start, Stop (with Reset functionality)
+
+## Decision Outcome
+
+Chose option 2, Start and Stop, because having a Stop button with Pause functionality seems to run counter to the spirit of a pomo timer.
+
+## Pros and Cons of the Options
+
+### Start, Stop, Reset
+
+* Good, because it adds an additional option for the user
+* Bad, because it provides the opportunity for the user to be distracted from their work/take an unscheduled break
+* Bad, because it is mandatory to use the Stop button to use the Reset button (in current implementation, i.e. not truly an option)
+
+### Start, Stop
+
+* Good, because it disincentivizes the user to restart their timer unnecessarily
+* Good, because it declutters the screen
+* Bad, because places restrictions on the user that they might find uncomfortable/undesireable
