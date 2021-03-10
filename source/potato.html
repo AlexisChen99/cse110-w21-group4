@@ -53,11 +53,6 @@
                     <button class="mainButton" id="potatoTheme" onclick="changeTheme('Potato')">Potato</button>
                 </div>
 
-                <img src="img/potato-dance.gif" id="cycle1" class="hidden">
-                <img src="img/potato-dance.gif" id="cycle2" class="hidden">
-                <img src="img/potato-dance.gif" id="cycle3" class="hidden">
-                <img src="img/potato-dance.gif" id="cycle0" class="hidden">
-
                 <div class="userInputContainer">
                     <div>
                         <label for="work" class="fieldLabel" id="workTime">Work Time</label>
@@ -104,7 +99,9 @@
             <!-- End of Settings Menu -->
         </div>
 
-        <p id="phaseDisplay">Work</p>
+        <div id="phaseWrapper">
+            <p id="phaseDisplay">Work</p>
+        </div>
 
         <audio id="breakToWorkAudio" src='audio/Rooster Crow.wav'></audio>
         <audio id="workToBreakAudio" src='audio/Dove.wav'></audio>
@@ -145,6 +142,11 @@
         <button id="confirm">Confirm</button>
         <button id="cancel">Cancel</button>
     </div>
+
+    <img src="img/potato-dance.gif" id="cycle1" class="hidden">
+    <img src="img/potato-dance.gif" id="cycle2" class="hidden">
+    <img src="img/potato-dance.gif" id="cycle3" class="hidden">
+    <img src="img/potato-dance.gif" id="cycle0" class="hidden">
 
     <a href="#contentWrapper" class="top">Back to Top</a>
     <noscript>

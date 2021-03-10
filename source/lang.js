@@ -135,7 +135,7 @@ var dict = {
     },
     'cycleLength': {
         en: 'Length of a Cycle',
-        zh: '',
+        zh: '周期长度',
         es: '',
         ko: '한 사이클의 길이',
     },
@@ -172,7 +172,7 @@ var dict = {
     '1': {
         'instrTopic': {
             en: 'How to Use',
-            zh: '',
+            zh: '怎样使用',
             es: '',
             ko: '',
         },
@@ -192,7 +192,7 @@ var dict = {
     '2': {
         'instrTopic': {
             en: 'Settings',
-            zh: '',
+            zh: '设置',
             es: '',
             ko: '',
         },
@@ -212,7 +212,7 @@ var dict = {
     '3': {
         'instrTopic': {
             en: 'Tasks',
-            zh: '',
+            zh: '任务',
             es: '',
             ko: '',
         },
@@ -252,7 +252,7 @@ var dict = {
     '5': {
         'instrTopic': {
             en: 'About',
-            zh: '',
+            zh: '关于',
             es: '',
             ko: '',
         },

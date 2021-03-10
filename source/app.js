@@ -195,22 +195,39 @@ function convertSeconds(secondsRemaining) {
  * Update the phase and number of tasks complete.
  */
 function updatePhase() {
+    const circle = document.getElementById('circleTimer');
+
     if (phase == 'work') {
         pomosDone++;
+        if (theme == 'Potato') {
+            circle.className = 'circlePotato';
+         }
         showPotatos();
+        
         if (pomosDone % 4 != 0) {
             // If the pomos completed is less than 4 (1-3)
             phase = 'short break';
+            if (theme == 'Potato') {
+                circle.className = 'circlePotatoBreak';
+             }
         } else {
             // If the pomos completed is divisible by 4
             phase = 'long break';
+            if (theme == 'Potato') {
+                circle.className = 'circlePotatoBreak';
+             }
         }
     } else {
         if(phase == 'long break') {
             hidePotatos();
-        }
-        phase = 'work';
-        
+            if (theme == 'Potato') {
+                circle.className = 'circlePotatoBreak';
+             }
+         }
+         phase = 'work';
+         if (theme == 'Potato') {
+            circle.className = 'circlePotato';
+         }
     }
 }
 
@@ -385,7 +402,6 @@ function createTask(text) {
     taskCount++;
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
-    taskBtn.style.width = "fit-content";
 
     savedTasks.push(text);
     console.log(JSON.stringify(savedTasks));
@@ -576,7 +592,6 @@ function deleteTask(uniqueID) {
     if (taskCount == 0){
         taskBtn.innerHTML = dict['tasks'][lang];
         taskBtn.style.fontSize = "25px";
-        taskBtn.style.width = "150px";
     }
 
     savedTasks.splice(savedTasks.indexOf(taskText), 1);
@@ -609,7 +624,6 @@ function deleteAllTasks() {
     if (taskCount == 0){
         taskBtn.innerHTML = dict['tasks'][lang];
         taskBtn.style.fontSize = "25px";
-        taskBtn.style.width = "150px";
     }
     localStorage.setItem('savedTasks', null);
     hide('prompt');
