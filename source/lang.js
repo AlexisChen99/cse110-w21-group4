@@ -135,7 +135,7 @@ var dict = {
     },
     'cycleLength': {
         en: 'Length of a Cycle',
-        zh: '周期长度',
+        zh: '单个周期长度',
         es: '',
         ko: '한 사이클의 길이',
     },

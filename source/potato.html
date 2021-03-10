@@ -85,16 +85,16 @@
                             <img src="img/volume.png" alt="Mute?" id="volumeIcon">
                         </button>
                     </div>
-                    <button class="mainButton showing">Disable Potato Animation</button>
+                    <button class="mainButton showing" id="disableBtn">Disable Potato Animation</button>
+                    <span id="langContainer">
+                        <button class="transparent lightThemeText" id="English" onclick="setLang('en')">English</button>
+                        <button class="transparent lightThemeText" id="Spanish" onclick="setLang('es')">Español</button>
+                        <button class="transparent lightThemeText" id="Chinese" onclick="setLang('zh')">中文</button>
+                        <button class="transparent lightThemeText" id="Korean" onclick="setLang('ko')"
+                            onblur="hide('settingsMenu')">한국어</button>
+                    </span>
                 </div>
 
-                <span id="langContainer">
-                    <button class="transparent lightThemeText" id="English" onclick="setLang('en')">English</button>
-                    <button class="transparent lightThemeText" id="Spanish" onclick="setLang('es')">Español</button>
-                    <button class="transparent lightThemeText" id="Chinese" onclick="setLang('zh')">中文</button>
-                    <button class="transparent lightThemeText" id="Korean" onclick="setLang('ko')"
-                        onblur="hide('settingsMenu')">한국어</button>
-                </span>
             </div>
             <!-- End of Settings Menu -->
         </div>
