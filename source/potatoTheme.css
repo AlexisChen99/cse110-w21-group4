@@ -150,9 +150,9 @@ p {
 }
 
 .circlePotatoBreak {
-    border: 8px solid rgb(134, 130, 120);
-    background-color: rgb(134, 130, 120);
-    box-shadow: 0 0 50px rgb(206, 190, 146),0 0 150px rgb(206, 190, 146);
+    border: 8px solid rgb(223, 223, 182);
+    background-color: rgb(223, 223, 182);
+    box-shadow: 0 0 50px rgb(214, 207, 138),0 0 150px rgb(236, 198, 91);
 }
 
 #timerDisplay {
