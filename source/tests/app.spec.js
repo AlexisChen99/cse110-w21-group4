@@ -19,11 +19,6 @@ describe('Test convertSeconds', () => {
     test('Test 1hr, expect 60:00', () => {
 		expect(app.convertSeconds(3600)).toBe('60:00');
 	});
-
-    //TODO
-    test('Test 2hr, expect 20:00', () => {
-		expect(convertSeconds(7200)).toBe('20:00');
-	});
 });
 
 describe('Test setTimeRemaining', () => {
@@ -45,12 +40,6 @@ describe('Test setTimeRemaining', () => {
     test('Test "stopped", return 0min (0)', () => {
 		app.setPhase("stopped");
 		expect(app.setTimeRemaining("stopped")).toBe(0);
-	});
-
-    //TODO
-    test('Test "idle", return 0min (0)', () => {
-		app.setPhase("idle");
-		expect(app.setTimeRemaining("idle")).toBe(0);
 	});
 });
 
@@ -78,36 +67,5 @@ describe('Test setPageTitle', () => {
     test('Test "stopped", return "10:10 Stopped - Potato Timer"', () => {
 		app.setPhase("stopped");
 		expect(app.setPageTitle(MMSS)).toBe("10:10 Stopped - Potato Timer");
-	});
-
-    //TODO
-    test('Test "idle", return "10:10 - Potato Timer"', () => {
-		app.setPhase("idle");
-		expect(app.setPageTitle(MMSS)).toBe("10:10 - Potato Timer");
-	});
-});
-
-describe('Test updatePhase', () => {
-	test('Test "work", with short break and long break', () => {
-		app.setPhase("work");
-		expect(app.updatePhase()).toBe("shot break");
-		app.updatePhase();
-		app.updatePhase();
-		expect(app.updatePhase()).toBe("long break");
-	});
-
-    test('Test "short break", return "work"', () => {
-		app.setPhase("short break");
-		expect(app.updatePhase()).toBe("work");
-	});
-
-    test('Test "long break", return "work"', () => {
-		app.setPhase("long break");
-		expect(app.updatePhase()).toBe("work");
-	});
-
-    test('Test "stopped", return "work"', () => {
-		app.setPhase("stopped");
-		expect(app.updatePhase()).toBe("work");
 	});
 });

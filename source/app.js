@@ -856,6 +856,5 @@ module.exports = {
     setPhase,
     convertSeconds,
     setTimeRemaining,
-    setPageTitle,
-    
+    setPageTitle
  }
