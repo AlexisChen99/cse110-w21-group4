@@ -40,6 +40,10 @@ body {
     background-image: none;
 }
 
+.textWhite {
+    color: white;
+}
+
 p {
     margin-bottom: 0px;
 }
@@ -88,15 +92,24 @@ p {
 #phaseDisplay {
     display: inline-block;
     margin: auto;
-    /* margin: 70px 0px 30px -140px; */
+    /* margin: 70px 0px 30px 0px; */
     text-shadow: 1px 1px 1px #000;
     font-size: 32px;
 }
 
+#options {
+    display: flex;
+    margin-top: 10px;
+    margin-right: 20px;
+    float: right;
+}
+#help {
+    font-size: 3rem;
+}
 #settingsIcon {
-    position: absolute;
+    /* position: absolute;
     top: 3%;
-    right: 5%;
+    right: 5%; */
     float : right;
 }
 
@@ -233,28 +246,6 @@ input[type="text"] {
     height: 64px;
   }
   
-  .dropdown-content {
-    display: none;
-    border-radius: 18px;
-    background-color: #414b4d;
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: rgb(255, 255, 255);
-    padding: 10px 10px;
-    border-radius: 18px;
-    font-size: 15px;
-    text-decoration: none;
-    display: block;
-  }
-
-  .dropdown-content a:hover {background-color: rgb(41, 41, 41);}
-  .dropdown:pressed .dropdown-content {display: block;}
-  .dropdown .dropdown-content button {
-      display: block;
-  }
-
   .footer {
       position: absolute;
       bottom: 15px;
@@ -277,6 +268,8 @@ input[type="text"] {
 ---------------------------------*/
 .menu {
     position: absolute;
+    top: 0%;
+    left: 0%;
     overflow: hidden;
     min-height: 200px;
     max-width: 768px;
@@ -349,18 +342,23 @@ button {
     padding: 10px 15px;
     border: 2px solid #000;
     border-radius: 50px;
-    background-color: #333;
-    /* background-color: #999; For dark mode */
+    color: #fff;
     font-size: 24px;
     font-weight: bold;
-    color: #fff;
     cursor: pointer;
+}
+
+.mainButton {
+    background-color: #333;
 }
 
 .darkButton {
     background-color: #999;
 }
 
+.textDark {
+    color: #333;
+}
 button:hover {
     background-color: rgb(100, 100, 100);
 }
@@ -600,6 +598,9 @@ input {
     left: 20%;
 }
 
+/* ------------------
+ *   ARIA 
+ * ---------------- */
 .transparent {
     background: none;
     border: none;
@@ -608,4 +609,49 @@ input {
 
 .transparent:hover {
     background: none;
+}
+
+.userTask a {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.userTask a:focus {
+    position: static;
+    width: auto;
+    height: auto;
+}
+
+#ariaCloseTasks {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+#ariaCloseTasks:focus {
+    position: static;
+    width: auto;
+    height: auto;
+}
+
+.top {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.top:focus {
+    position: static;
+    width: auto;
+    height: auto;
 }
