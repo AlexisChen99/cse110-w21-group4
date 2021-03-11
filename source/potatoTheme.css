@@ -526,6 +526,7 @@ input {
     display: flex;
     margin: auto;
     max-height: 60px;
+    border-bottom: solid 1px;
 }
 
 .markCircle {
