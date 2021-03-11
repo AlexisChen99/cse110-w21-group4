@@ -152,6 +152,8 @@ function start() {
     document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
     //hide task container
     document.getElementById('taskManager').style.opacity = 0; //hide task Container
+    document.getElementById('settingsIcon').style.opacity = 0; //hide settings Icon
+    document.getElementById('help').style.opacity = 0;   //hide help icon
     // Still synchronous
     if (taskCount > 0) {    
         timer = setInterval(function () {
@@ -165,6 +167,10 @@ function start() {
                 document.getElementById('reset').disabled = true;
                 //show task Container
                 document.getElementById('taskManager').style.opacity = 1;
+                //show settings icon
+                document.getElementById('settingsIcon').style.opacity = 1;
+                //show help icon
+                document.getElementById('help').style.opacity = 1;
             } else {
                 // Display the time MM:SS
                 MMSS = convertSeconds(secondsRemaining);
@@ -322,6 +328,9 @@ function stop() {
     document.getElementById('start').innerHTML = dict['start'][lang];
     document.getElementById('start').onclick = start;
     document.getElementById('taskManager').style.opacity = 1; //show task Container
+    document.getElementById('settingsIcon').style.opacity = 1; // show settings icon (top right)
+    document.getElementById('help').style.opacity = 1; //show help icon
+    
 }
 /**
  * Resets the pomodoro cycle to the beginning.
