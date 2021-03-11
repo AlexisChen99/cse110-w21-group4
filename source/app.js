@@ -724,6 +724,9 @@ function back() {
     topic.innerText = dict[page][topic.id][lang];
     let content = document.getElementById('instrContent');
     content.innerText = dict[page][content.id][lang];
+    if (page != 4 ){
+        content.classList.add('leftAlign');       
+    }
     document.getElementById('page').innerText = page + ' / 4';
 }
 
@@ -739,8 +742,10 @@ function next() {
     content.innerText = dict[page][content.id][lang];
     document.getElementById('page').innerText = page + ' / 4';
     if(page == 4) {
+        content.classList.remove('leftAlign');
         content.innerText = content.innerText + 
-        'Alexis Chen\nElizabeth Cho\nKevin Jang\nMarco Kuan\nAhmadMilad\nRohan Patel\nMiaoqiu Sun\nJessie Zou'
+        'Alexis Chen\nElizabeth Cho\nKevin Jang\nMarco Kuan\nAhmadMilad\nRohan Patel\nMiaoqiu Sun\nJessie Zou';
+        content.innerHTML = content.innerHTML + '<a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-32px.png"></a>'
     }
 }
 /** 
