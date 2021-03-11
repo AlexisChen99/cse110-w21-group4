@@ -101,6 +101,11 @@
         </div>
 
         <div id="phaseWrapper">
+            <p class="cycle" style="
+                display: block;
+                font-size:  16px;
+                font-weight: bold;
+                ">1 of 4</p>
             <p id="phaseDisplay">Idle</p>
         </div>
 
@@ -114,7 +119,6 @@
         <div class="buttonWrapper">
             <button class="mainButton" id="reset" onclick="confirmationPrompt('Reset')">Reset</button>
             <button class="mainButton" id="start" alt="start" onclick="start()">Start</button>
-            <button class="mainButton" id="taskBtn" onclick="show('taskMenu')">Tasks</button>
         </div>
 
         <!-- Task Menu -->
@@ -128,16 +132,20 @@
             <button id="ariaCloseTasks" onclick="hide('taskMenu')">Close</button>
         </div>
 
-        <!-- <div class="taskContainer"> -->
-            <input type="text" id="enterTask" placeholder="Enter a Task To Start" autocomplete="off" required>
-            <button class="mainButton" id="taskAdder" onclick="addTask()">Add</button>
-        <!-- </div> -->
-        <div  id="notificationBar">
-            A task has been added!
-        </div>
         <div id="mainTasks">
 
         </div><br>
+
+        <div class="taskContainer" id="taskManager">
+            <input type="text" id="enterTask" placeholder="Enter a Task To Start" autocomplete="off" required>
+            <button class="mainButton" id="taskAdder" onclick="addTask()">Add</button>
+            <button class="mainButton" id="taskBtn" onclick="show('taskMenu')">Tasks</button>
+            <div  id="notificationBar">
+                A task has been added!
+            </div>
+        </div> 
+        
+
         <!-- End of content wrapper -->
     </div>
 

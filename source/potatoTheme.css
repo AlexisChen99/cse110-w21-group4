@@ -84,9 +84,10 @@ p {
 }
 
 #phaseWrapper {
-    display: flex;
+    display: block;
     justify-content: center;
     width: 100%;
+    margin-top: 60px;
 }
 
 #phaseDisplay {
@@ -94,7 +95,7 @@ p {
     margin: auto;
     /* margin: 70px 0px 30px 0px; */
     text-shadow: 1px 1px 1px #000;
-    font-size: 32px;
+    font-size: 40px;
 }
 
 #options {
@@ -124,8 +125,8 @@ p {
 }
 
 #circleTimer {
-    width: 150px;
-    height: 150px;
+    width: 160px;
+    height: 160px;
     margin-top: 10px;
     margin-right: auto;
     margin-left: auto;
@@ -156,7 +157,7 @@ p {
 }
 
 #timerDisplay {
-    margin:25px auto;
+    margin:31px auto;
     padding: 26px 0px;
     font-size: 40px;
     text-shadow: 1px 1px 1px #000;
@@ -169,7 +170,7 @@ p {
 
 .buttonWrapper button {
     display: inline-block;
-    min-width: 150px;
+    min-width: 100px;
     width: fit-content;
     height: 75px;
     margin: auto;
@@ -188,6 +189,23 @@ p {
     /* align-items:inherit; */
 }
 
+.taskContainer:hover {
+    animation: opactiy .3s timing-function delay iteration-count direction fill-mode;
+    animation: text_reveal .5s ease forwards;
+}
+
+@keyframes text_reveal {
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes text_hide {
+    100% {
+        opacity: 0;
+    }
+}
+
 #enterTask {
     margin-top: 30px;
     height: 40px;
@@ -195,8 +213,7 @@ p {
 }
 
 #taskAdder {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px 0;
     width: fit-content;
     height: 52px;
     font-size: 20px;
@@ -564,7 +581,7 @@ input {
 }
 
 #mainTasks {
-    margin: 0 auto;
+    margin: 10px auto;
     max-width: 768px;
     max-height: 28vh;
     overflow-y: scroll;

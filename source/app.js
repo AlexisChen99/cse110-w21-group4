@@ -150,6 +150,8 @@ function start() {
     document.getElementById('start').innerHTML = dict['stop'][lang];
     document.getElementById('start').onclick = stop;
     document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
+    //hide task container
+    document.getElementById('taskManager').style.opacity = 0; //hide task Container
     // Still synchronous
     if (taskCount > 0) {    
         timer = setInterval(function () {
@@ -161,6 +163,8 @@ function start() {
                 document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
                 // Disable the reset button
                 document.getElementById('reset').disabled = true;
+                //show task Container
+                document.getElementById('taskManager').style.opacity = 1;
             } else {
                 // Display the time MM:SS
                 MMSS = convertSeconds(secondsRemaining);
@@ -317,6 +321,7 @@ function stop() {
     document.getElementById('reset').disabled = false;
     document.getElementById('start').innerHTML = dict['start'][lang];
     document.getElementById('start').onclick = start;
+    document.getElementById('taskManager').style.opacity = 1; //show task Container
 }
 /**
  * Resets the pomodoro cycle to the beginning.
