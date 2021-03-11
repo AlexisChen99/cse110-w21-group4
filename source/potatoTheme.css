@@ -480,6 +480,7 @@ input {
     display: flex;
     margin: auto;
     max-height: 60px;
+    border-bottom: solid;
 }
 
 .markCircle {
