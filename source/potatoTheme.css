@@ -164,7 +164,7 @@ p {
 }
 
 .buttonWrapper {
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .buttonWrapper button {
@@ -184,17 +184,27 @@ p {
 }
 
 .taskContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: inline-block;
+    /* align-items:inherit; */
+}
+
+#enterTask {
+    margin-top: 30px;
+    height: 40px;
+    width: 300px;
 }
 
 #taskAdder {
     margin-top: 20px;
     margin-bottom: 20px;
+    width: fit-content;
+    height: 52px;
     font-size: 20px;
-    width: 300px;
-    
+}
+
+#notificationBar {
+    margin-bottom: 20px;
+    font-size: 1.75rem;
 }
 
 @media screen and (max-width: 479px) {
@@ -209,8 +219,11 @@ p {
         width: fit-content;
     }
     .taskContainer {
+        display: flex;
         width: 100vw;
-        text-align: left;
+        flex-direction: column;
+        align-items: center;
+        
     }
     #enterTask {
         width: 60%;
@@ -221,11 +234,7 @@ p {
     }
 }
 
-input[type="text"] {
-    margin-top: 30px;
-    height:40px;
-    width: 300px;
-}
+
 /*---------------------------------
          Language DropDown
 ---------------------------------*/
@@ -263,6 +272,24 @@ input[type="text"] {
       /* margin-left: auto; */
       margin-right: 50px;
   }
+
+/*--------------------------------
+        Instructions Menu Display
+---------------------------------*/
+
+#instructionsMenu {
+    font-size: 1.5rem;
+    padding: 20px 40px;
+}
+
+#instrTopic {
+    font-size: 1.75rem;
+}
+
+#instrContent {
+    font-size: 1.6rem;
+    text-align: left;
+}
 /*---------------------------------
          Settings Menu Display
 ---------------------------------*/
@@ -277,7 +304,6 @@ input[type="text"] {
     border-radius: 50px 50px 50px 50px;
     box-shadow: inset 0 -1px 10px 3px #6d6d6d;
     font-size: 38px;
-    cursor: move;
     z-index: 999;
 }
 
@@ -293,6 +319,7 @@ input[type="text"] {
     background-image: -webkit-gradient(linear, left bottom, left top, from(#eee), to(#fff));
     background-image: linear-gradient(0deg, #eee, #fff);
 }
+
 
  #settingsMenuHeader {
     padding: 10px;
@@ -362,9 +389,6 @@ button {
     background-color: #999;
 }
 
-.textDark {
-    color: #333;
-}
 button:hover {
     background-color: rgb(100, 100, 100);
 }
@@ -373,7 +397,6 @@ button:hover {
     margin: 20px 20px 20px 20px;
     padding-left: 15px;
     padding-right: 15px;
-    padding-bottom: 20px;
     max-width: 350px;
     text-align: right;
 }
@@ -390,15 +413,19 @@ input {
     width: 60px;
 }
 
+.customVolume {
+    width: 60px;
+}
+
 #volume {
     display: inline-block;
-    width: 75px;
+    /* width: fit-content; */
 }
 
 #volumeIcon {
     display: inline-block;
     width: 40px;
-    margin-right: 20px;
+    margin-left: 12px;
     vertical-align: middle;
     cursor: pointer;
 }
@@ -419,14 +446,10 @@ input {
     font-size: 25px;
 }
 
-
 #langContainer button {
-    /* background: none;
-    border: none; */
     padding: 0;
+    margin-bottom: 20px;
     font-size: 0.4em;
-    /* color: black; */
-
 }
 
 /* @media screen and (max-width: 768px) {
@@ -605,6 +628,9 @@ input {
     left: 20%;
 }
 
+
+
+
 /* ------------------
  *   ARIA 
  * ---------------- */
@@ -612,6 +638,7 @@ input {
     background: none;
     border: none;
     padding: 0;
+    color: inherit;
 }
 
 .transparent:hover {
@@ -633,6 +660,11 @@ input {
     height: auto;
 }
 
+.ariaSkipTask {
+    text-decoration: none;
+    color: inherit;
+}
+
 #ariaCloseTasks {
     position: absolute;
     left: -10000px;
@@ -646,6 +678,8 @@ input {
     position: static;
     width: auto;
     height: auto;
+    color: inherit;
+    border: none;
 }
 
 .top {
@@ -661,4 +695,12 @@ input {
     position: static;
     width: auto;
     height: auto;
+}
+
+.contrastDark {
+    color: white;
+}
+
+.contrastLight {
+    color: #333;
 }

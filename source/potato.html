@@ -23,7 +23,7 @@
 
             <!-- Instructions Menu -->
             <div class="menu hidden" id="instructionsMenu">
-                <p>Instructions</p>
+                Instructions
                 <p id="instrTopic"> [filler]</p>
                 <p id="instrContent"> [filler content Potato Timer is a Pomodoro timer meant to improve your
                     productivity by
@@ -31,9 +31,11 @@
                     After every four "work" phases, a longer break period happens. To switch to another language
                     (English,
                     Chinese, Spanish, Korean), click on the globe icon.]</p>
-                <button class="mainButton" id="back">Back</button>
-                <span id="page">1 of 5</span>
-                <button class="mainButton" id="next">Next</button>
+                <div class="instrNav">
+                    <button class="mainButton" id="back" onclick="back()">Back</button>
+                    <span id="page">1 / 5</span>
+                    <button class="mainButton" id="next" onclick="next()">Next</button>
+                </div>
             </div>
             <!-- End of Instructions Menu -->
 
@@ -74,10 +76,10 @@
                         <p>:</p>
                         <input type="number" class="customTime" id="longSec" value="00" min="0" max="59" maxlength="2">
                     </div>
-                    <div>
+                    <!-- <div>
                         <label for="cycleLength" class="fieldLabel" id="cycleLength">Length of Cycle</label>
                         <input type="number" class="customTime" id="cycleLength" value="4">
-                    </div>
+                    </div> -->
                     <div>
                         <label for="volume" class="fieldLabel" id="volume">Volume (%)</label>
                         <input type="number" class="customVolume" id="volume" value="25" min="0" max="100">
@@ -85,16 +87,15 @@
                             <img src="img/volume.png" alt="Mute?" id="volumeIcon">
                         </button>
                     </div>
-                    <button class="mainButton showing" id="disableBtn">Disable Potato Animation</button>
-                    <span id="langContainer">
-                        <button class="transparent lightThemeText" id="English" onclick="setLang('en')">English</button>
-                        <button class="transparent lightThemeText" id="Spanish" onclick="setLang('es')">Español</button>
-                        <button class="transparent lightThemeText" id="Chinese" onclick="setLang('zh')">中文</button>
-                        <button class="transparent lightThemeText" id="Korean" onclick="setLang('ko')"
-                            onblur="hide('settingsMenu')">한국어</button>
-                    </span>
                 </div>
-
+                <button class="mainButton showing" id="animationBtn" onclick="toggleAnimation()">Disable Potato Animation</button>
+                <span id="langContainer">
+                    <button class="transparent lightThemeText" id="English" onclick="setLang('en')">English</button>
+                    <button class="transparent lightThemeText" id="Spanish" onclick="setLang('es')">Español</button>
+                    <button class="transparent lightThemeText" id="Chinese" onclick="setLang('zh')">中文</button>
+                    <button class="transparent lightThemeText" id="Korean" onclick="setLang('ko')"
+                        onblur="hide('settingsMenu')">한국어</button>
+                </span>
             </div>
             <!-- End of Settings Menu -->
         </div>
@@ -127,9 +128,12 @@
             <button id="ariaCloseTasks" onclick="hide('taskMenu')">Close</button>
         </div>
 
-        <div class="taskContainer">
+        <!-- <div class="taskContainer"> -->
             <input type="text" id="enterTask" placeholder="Enter a Task To Start" autocomplete="off" required>
             <button class="mainButton" id="taskAdder" onclick="addTask()">Add</button>
+        <!-- </div> -->
+        <div  id="notificationBar">
+            A task has been added!
         </div>
         <div id="mainTasks">
 

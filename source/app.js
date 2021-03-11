@@ -21,9 +21,10 @@ var uniqueID = 1;           // Used to assign uniqueID's when deleting specific 
                             // (may be copied from task list to main)
 var pinCount = 0;
 let savedTasks = [];
-let volume = 10;
+let volume = 25;
 let theme;                  // Potato, Dark, Light, undefined (Capitalized)
 let mute = false;
+let animation = true;
 
 window.onload = function() {
     const volumeInput = document.getElementById('volume');
@@ -34,10 +35,6 @@ window.onload = function() {
 
     const cancelBtn = document.getElementById('cancel');
     cancelBtn.onclick = function() { hide('prompt'); };
-    const backBtn = document.getElementById('back');
-    backBtn.onclick = function() { back(); };
-    const nextBtn = document.getElementById('next');
-    nextBtn.onclick = function() { next(); };
     
     
     // Load's users theme, TODO previous input settings, taskList, language
@@ -76,6 +73,7 @@ function playAudio(id) {
 function changeAudio() {
     const volumeInput = document.getElementById('volume');
     volume = volumeInput.value;
+    windwos.localStorage.setItem('volume', volume);
 }
 
 {/* <audio id="breakToWorkAudio" src='audio/Rooster Crow.wav'></audio> */}
@@ -88,16 +86,38 @@ function toggleMute() {
     const volumeIcon = document.getElementById('volumeIcon');
     if (mute == false) {
         //change img
-        volumeIcon.src = 'img/volume-mute.png';
+        if(theme == 'Dark') {
+            volumeIcon.src = 'img/volume-mute-dark.png';
+        } else {
+            volumeIcon.src = 'img/volume-mute.png';
+        }
         mute = true;
     } else {
         //change img
-        volumeIcon.src = 'img/volume.png';
+        if(theme == 'Dark') {
+            volumeIcon.src = 'img/volume-dark.png';
+        } else {
+            volumeIcon.src = 'img/volume.png';
+        }
         mute = false;
     }
-
+    windows.localStorage.setItem('mute', mute);
 }
 
+/**
+ * Disables or enables the dancing potato animation. 
+ * @returns Flag if animations are turned on or off
+ */
+function toggleAnimation() {
+    animation = !animation;
+    if(animation) { // Turn on animation and say disable
+        document.getElementById('animationBtn').innerText = dict['disableAnimation'][lang];
+    } else {
+        hidePotatos();
+        document.getElementById('animationBtn').innerText = dict['enableAnimation'][lang];
+    }
+    return animation;
+}
 /**
  * MIGHT CHANGE TO LISTEN TO AN 'INPUT' EVENT LISTENER
  * https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event
@@ -201,8 +221,11 @@ function updatePhase() {
         pomosDone++;
         if (theme == 'Potato') {
             circle.className = 'circlePotato';
+            if(animation) {
+                showPotatos();
+            }
          }
-        showPotatos();
+
         
         if (pomosDone % 4 != 0) {
             // If the pomos completed is less than 4 (1-3)
@@ -219,9 +242,9 @@ function updatePhase() {
         }
     } else {
         if(phase == 'long break') {
-            hidePotatos();
             if (theme == 'Potato') {
                 circle.className = 'circlePotatoBreak';
+                hidePotatos();
              }
          }
          phase = 'work';
@@ -378,7 +401,7 @@ function createTask(text) {
         origTask = document.getElementById('pin-' + newTask.id);
         pinnedTask = document.getElementById(newTask.id + '-copy');
         if(!pinnedTask) {
-            createExistingTask(text, newTask.id);
+            createPinnedTask(text, newTask.id);
             origTask.src = 'img/pinned.png';
         } else {
             origTask.src = 'img/unpinned.png';
@@ -416,7 +439,7 @@ function createTask(text) {
     taskList.appendChild(newTask);
 
     if(pinCount < 1) {
-        createExistingTask(text, uniqueID);
+        createPinnedTask(text, uniqueID);
         document.getElementById('pin-'+uniqueID).src = 'img/pinned.png';
     }
     
@@ -424,9 +447,6 @@ function createTask(text) {
 }
 
 /** 
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!1111
- * INCOMPLETE: POTATO THEME MARK TASK TO POTATO IMAGE
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * Creates 'pinned' userTask in the mainTasks container. 
  * This display an existing task on the main page.
  * A pinned task is identified as '#pin' where # is the uniqueID.
@@ -436,7 +456,7 @@ function createTask(text) {
  * @param {string} text     A copy of the user's task.
  * @param {string} uniqueID The existing task's id.
  */
-function createExistingTask(text, uniqueID) {
+function createPinnedTask(text, uniqueID) {
     let mainTasks = document.getElementById('mainTasks');
     let pinTask = document.createElement('div');
     pinTask.className = 'userTask';
@@ -680,32 +700,34 @@ function hide(id) {
     elem.classList.replace('showing', 'hidden');
 }
 
-var page = 1;
+var page = 0;
 function back() {
     if(page <= 1) {
         return;
     }
-    page--;
+    --page;
     let topic = document.getElementById('instrTopic');
     topic.innerText = dict[page][topic.id][lang];
     let content = document.getElementById('instrContent');
     content.innerText = dict[page][content.id][lang];
-    let currPage = document.getElementById('page');
-    currPage.innerText = dict[page][currPage.id][lang];
+    document.getElementById('page').innerText = page + ' / 4';
 }
 
 function next() {
-    if(page >= 5) {
+    if(page >= 4) {
         hide('instructionsMenu');
         page = 0;
     }
-    page++;
+    ++page;
     let topic = document.getElementById('instrTopic');
     topic.innerText = dict[page][topic.id][lang];
     let content = document.getElementById('instrContent');
     content.innerText = dict[page][content.id][lang];
-    let currPage = document.getElementById('page');
-    currPage.innerText = dict[page][currPage.id][lang];
+    document.getElementById('page').innerText = page + ' / 4';
+    if(page == 4) {
+        content.innerText = content.innerText + 
+        'Alexis Chen\nElizabeth Cho\nKevin Jang\nMarco Kuan\nAhmadMilad\nRohan Patel\nMiaoqiu Sun\nJessie Zou'
+    }
 }
 /** 
  * Save user's last theme selected locally 

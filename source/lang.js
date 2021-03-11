@@ -177,16 +177,15 @@ var dict = {
             ko: '',
         },
         'instrContent': {
-            en: 'a',
-            zh: '',
-            es: '',
-            ko: '',
-        },
-        'page': {
-            en: '1 of 5',
-            zh: '',
-            es: '',
-            ko: '',
+            en: 'Potato Timer is a Pomodoro Timer meant to improve your productivity by having you focus ' +
+                'for a set "work" time and a following "break" time. After every four work phases, a longer break period occurs ' +
+                '',
+            zh: '' +
+                'To switch to English, click the gear icon to open the settings menu.',
+            es: '' +
+                'To switch to English, click the gear icon to open the settings menu.',
+            ko: '' +
+                'To switch to English, click the gear icon to open the settings menu.',
         },
     },
     '2': {
@@ -197,13 +196,13 @@ var dict = {
             ko: '',
         },
         'instrContent': {
-            en: 'b',
-            zh: '',
-            es: '',
-            ko: '',
-        },
-        'page': {
-            en: '2 of 5',
+            en: 'To open the settings, click the gear icon in the top right corner.\n' + 
+                'There you can change to minimalist light and dark themes or our fun potato theme. ' +
+                'In the potato theme, you can disable dancing potatoes if they are too distracting!\n' +
+                'You can adjust how long you want the timer to run for each phase.\n' +
+                'You can adjust the volume or click on the icon to mute it.\n' +
+                'You can change your language to Español, 中文, 한국어.\n' +
+                '',
             zh: '',
             es: '',
             ko: '',
@@ -217,13 +216,15 @@ var dict = {
             ko: '',
         },
         'instrContent': {
-            en: 'c',
-            zh: '',
-            es: '',
-            ko: '',
-        },
-        'page': {
-            en: '3 of 5',
+            en: 'You can enter your own tasks in the white field below the start button. ' +
+                'To add a task, you may click the add button or press enter. ' +
+                'One task is automatically pinned to the main page. ' +
+                'If you want to see all of your tasks, click on the "Tasks" button! ' +
+                'You can mark tasks as complete by clicking on the circle, ' +
+                'pin or unpin tasks on the main page, and delete tasks. ' +
+                'If you mark all tasks as done, the timer ends! Well done!\n' + 
+                '*Unfinished tasks are locally stored in your cookies so you can get back to working ' +
+                'If you return to our website!',
             zh: '',
             es: '',
             ko: '',
@@ -237,26 +238,99 @@ var dict = {
             ko: '',
         },
         'instrContent': {
-            en: 'e',
-            zh: '',
-            es: '',
-            ko: '',
-        },
-        'page': {
-            en: '4 of 4',
+            en: 'Potato Timer is happily developed by: \n',
             zh: '',
             es: '',
             ko: '',
         },
      },
-
-    'taskNotif': {
+    'enableAnimation': {
+        en: 'Enable Potato Animation',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    'disableAnimation': {
+        en: 'Disable Potato Animation',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    'notification': {
+        'addTask': {
+            en: 'A task has been added!',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        'pinTask': {
+            en: 'A task has been pinned!',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        'unpinTask': {
+            en: 'A task has been unpinned!',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        'delTask': {
+            en: 'A task has been deleted!',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        
+    },
+    '': {
         en: '',
         zh: '',
         es: '',
         ko: '',
     },
-
+    '': {
+        en: '',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    '': {
+        en: '',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    '': {
+        en: '',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    '': {
+        en: '',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    '': {
+        en: '',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    '': {
+        en: '',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    '': {
+        en: '',
+        zh: '',
+        es: '',
+        ko: '',
+    },
 
     // A task has been added
     // A task has been deleted
