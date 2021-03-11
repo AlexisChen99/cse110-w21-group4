@@ -219,7 +219,7 @@ p {
 
 #notificationBar {
     margin-bottom: 20px;
-    font-size: 1.75rem;
+    font-size: 1.3rem;
 }
 
 @media screen and (max-width: 479px) {
@@ -275,16 +275,20 @@ p {
 ---------------------------------*/
 
 #instructionsMenu {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     padding: 20px 40px;
 }
 
 #instrTopic {
-    font-size: 1.75rem;
+    font-size: 1.65rem;
+    font-weight: bold;
+    padding-top: 10px;
 }
 
 #instrContent {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    margin-top: -10px;
 }
 #instrContent a img {
     margin-top: 10px;
@@ -381,7 +385,7 @@ button {
     background-color: #333;
 }
 
-#disableBtn {
+#animationBtn {
     font-size: 18px;
     margin: auto;
     margin-top: 20px;
@@ -612,6 +616,10 @@ input {
 #chooseTheme button{
     font-size: 18px;
     margin: 0 0;
+}
+
+#cycle {
+    padding-left: 20px;
 }
 
 #cycle1 {
