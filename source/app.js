@@ -473,7 +473,7 @@ function createTask(text) {
 function createPinnedTask(text, uniqueID) {
     let mainTasks = document.getElementById('mainTasks');
     let pinTask = document.createElement('div');
-    pinTask.className = 'userTask';
+    pinTask.classList.add('userTask', 'pinnedTask');
     pinTask.id = uniqueID + '-copy';
 
     let markBtn = document.createElement('button');
