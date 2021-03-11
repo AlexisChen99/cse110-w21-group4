@@ -172,7 +172,7 @@ p {
     display: inline-block;
     min-width: 100px;
     width: fit-content;
-    height: 75px;
+    height: 50px;
     margin: auto;
     white-space: normal;
 }
@@ -190,7 +190,6 @@ p {
 }
 
 .taskContainer:hover {
-    animation: opactiy .3s timing-function delay iteration-count direction fill-mode;
     animation: text_reveal .5s ease forwards;
 }
 
