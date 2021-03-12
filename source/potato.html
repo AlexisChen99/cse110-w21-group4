@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Potato Timer</title>
+    <link rel="stylesheet" href="potatoTheme.css">
+    <link rel="stylesheet" href="congrats.css">
+    <link rel="icon" type="image/png" href="img/potatoIcon.png">
+
+    <script src="app.js"></script>
+    <script src="drag.js"></script>
+    <script src="lang.js"></script>
+</head>
+
+<body id="background">
+    <div class="contentWrapper" id="contentWrapper">
+        <p id="title">Potato Timer</p>
+
+        <div id="options">
+            <button class="transparent" aria-label="Open Instructions" onclick="show('instructionsMenu')" id="help">
+                ?</button>
+
+            <!-- Instructions Menu -->
+            <div class="menu hidden" id="instructionsMenu">
+                <p>Instructions</p>
+                <p id="instrTopic"> [filler]</p>
+                <p id="instrContent"> [filler content Potato Timer is a Pomodoro timer meant to improve your
+                    productivity by
+                    breaking up your focus for a set "work" time and a following "break" time.
+                    After every four "work" phases, a longer break period happens. To switch to another language
+                    (English,
+                    Chinese, Spanish, Korean), click on the globe icon.]</p>
+                <button class="mainButton" id="back">Back</button>
+                <span id="page">1 of 5</span>
+                <button class="mainButton" id="next">Next</button>
+            </div>
+            <!-- End of Instructions Menu -->
+
+            <button class="transparent" onclick="show('settingsMenu')" >
+                <img src="img/settings.png" alt="Settings" id="settingsIcon">
+            </button>
+
+            <!-- Settings Menu -->
+            <div class="menu hidden" id="settingsMenu">
+                <div class="headerDark" id="settingsMenuHeader"></div>
+                <p id="settingsTitle">Settings</p>
+                <button class="close transparent" id="closeSettings" onclick="hide('settingsMenu')">Close</button>
+                <div id="chooseTheme">
+                    <p style="margin: 0 0; font-size: 18px;" id="selectTheme">Select a Theme</p><br>
+                    <button class="mainButton" id="lightTheme" onclick="changeTheme('Light')">Light</button>
+                    <button class="mainButton" id="darkTheme" onclick="changeTheme('Dark')">Dark</button>
+                    <button class="mainButton" id="potatoTheme" onclick="changeTheme('Potato')">Potato</button>
+                </div>
+
+                <div class="userInputContainer">
+                    <div>
+                        <label for="work" class="fieldLabel" id="workTime">Work Time</label>
+                        <input type="number" class="customTime" id="workMin" value="25" min="0" max="59" maxlength="2">
+                        <p>:</p>
+                        <input type="number" class="customTime" id="workSec" value="00" min="0" max="59" maxlength="2">
+                    </div>
+
+                    <div>
+                        <label for="shortBreak" class="fieldLabel" id="shortTime">Short Break</label>
+                        <input type="number" class="customTime" id="shortMin" value="5" min="0" max="59" maxlength="2">
+                        <p>:</p>
+                        <input type="number" class="customTime" id="shortSec" value="00" min="0" max="59" maxlength="2">
+                    </div>
+
+                    <div>
+                        <label for="longBreak" class="fieldLabel" id="longTime">Long Break</label>
+                        <input type="number" class="customTime" id="longMin" value="25" min="0" max="59" maxlength="2">
+                        <p>:</p>
+                        <input type="number" class="customTime" id="longSec" value="00" min="0" max="59" maxlength="2">
+                    </div>
+                    <div>
+                        <label for="volume" class="fieldLabel" id="volumeLabel">Volume (%)</label>
+                        <input type="number" class="customVolume" id="volume" value="10" min="0" max="100">
+                        <button class="transparent" onclick="toggleMute()">
+                            <img src="img/volume.png" alt="Mute?" id="volumeIcon">
+                        </button>
+                    </div>
+                    <button class="mainButton showing" onclick="toggleDance()">Toggle Dancing</button>
+                </div>
+
+                <span id="langContainer">
+                    <button class="transparent lightThemeText" id="English" onclick="setLang('en')">English</button>
+                    <button class="transparent lightThemeText" id="Spanish" onclick="setLang('es')">Español</button>
+                    <button class="transparent lightThemeText" id="Chinese" onclick="setLang('zh')">中文</button>
+                    <button class="transparent lightThemeText" id="Korean" onclick="setLang('ko')"
+                        onblur="hide('settingsMenu')">한국어</button>
+                </span>
+            </div>
+            <!-- End of Settings Menu -->
+        </div>
+
+
+        <!-- Start of Congrats Screen -->
+
+        <div id="congratsScreen" class = "modal">   
+            <div class="modal-content">
+                <h1>Congratulations!</h1>
+                <p id="congratsText">It took you $pomosDone pomos to complete your task</p>
+            </div>
+        </div>
+
+        <!-- End of Congrats Screen -->
+
+        <div id="phaseWrapper">
+            <p id="phaseDisplay">Idle</p>
+        </div>
+
+        <audio id="breakToWorkAudio" src='audio/newPM.mp3'></audio>
+        <audio id="workToBreakAudio" src='audio/GenericNotify.mp3'></audio>
+        <audio id="victoryAudio" src = 'audio/Tournament1st.mp3'></audio>
+
+        <div id="circleTimer">
+            <p class="timer" id="timerDisplay">- - : - -</p>
+        </div>
+
+        <div class="buttonWrapper">
+            <button class="mainButton" id="start" alt="start" onclick="start()">Start</button>
+            <button class="mainButton" id="taskBtn" onclick="show('taskMenu')">Tasks</button>
+        </div>
+
+        <!-- Task Menu -->
+        <div class="menu hidden" id="taskMenu">
+            <div class="headerDark" id="taskMenuHeader"></div>
+            <p id="tasksTitle">Tasks</p>
+            <button class="close transparent" id="closeTasks" onclick="hide('taskMenu')">Close</button>
+            <button class="close transparent" id="deleteAll" onclick="confirmationPrompt('Delete')">Delete All</button>
+            <p class="taskHelp">Mark a task as complete. Pin a task to the main display. </p>
+            <div id="taskListContainer"> </div>
+            <button id="ariaCloseTasks" onclick="hide('taskMenu')">Close</button>
+        </div>
+
+        <div class="taskContainer">
+            <input type="text" id="enterTask" placeholder="Enter a Task To Start" autocomplete="off" required>
+            <button class="mainButton" id="taskAdder" onclick="addTask()">Add</button>
+        </div>
+        <div id="mainTasks">
+
+        </div><br>
+        <!-- End of content wrapper -->
+    </div>
+
+    <div class="hidden" id="prompt">
+        <div id="confirmMessage">Unexpected Error</div>
+        <button class="mainButton" id="confirm">Confirm</button>
+        <button class="mainButton" id="cancel">Cancel</button>
+    </div>
+
+    <img src="img/potato-dance.gif" id="cycle0" class="hidden">
+    <img src="img/potato-dance.gif" id="cycle1" class="hidden">
+    <img src="img/potato-dance.gif" id="cycle2" class="hidden">
+    <img src="img/potato-dance.gif" id="cycle3" class="hidden">
+
+    <a href="#contentWrapper" class="top">Back to Top</a>
+    <noscript>
+        <img src="img/potential-potato-images/d5e1fcfc372db1f0-line-creators-stickers-dancing-potato-example-with-gif-animation.gif"
+            alt="Potato is Sad"> <br>
+        We're sorry, but this website application uses JavaScript to operate the timer.<br>
+        Please enable JavaScript for the best user experience!<br>
+    </noscript>
+</body>

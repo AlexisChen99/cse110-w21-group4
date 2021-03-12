@@ -8,7 +8,7 @@
   },
   "scripts": {
     "eslint": "eslint -c .eslintrc.json --ignore-path .lintgitignore ./source --fix",
-    "test": "jest",
+    "test": "jest --coverage",
     "gendocs": "jsdoc -d ./docs ./source",
     "cypress:open": "cypress open"
   },

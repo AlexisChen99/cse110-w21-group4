@@ -13,7 +13,6 @@ Rohan Patel - Developer
 Jessie Zou - Manager
 
 Absent:  
-Aaron Li - Developer  
 Ahmad Milad - Developer  
 Miaoqiu Sun - Developer  
 
