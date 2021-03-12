@@ -8,9 +8,9 @@
  */
 let lang;
 let phase = 'idle';         // idle, work, short break, long break, stopped
-let workLength = 5;             // work time (seconds)   15 mins (900)
-let shortBreakLength = 5;       // short break time      5 mins  (300)
-let longBreakLength = 10;        // long break time       25 mins (1500)
+let workLength = 900;             // work time (seconds)   15 mins (900)
+let shortBreakLength = 300;       // short break time      5 mins  (300)
+let longBreakLength = 1500;        // long break time       25 mins (1500)
 let timer;                  // Represents the interval change of 1s
 let secondsRemaining = 0;   // Displays on timer
 let MMSS;                   // {string} MM:SS format
@@ -177,7 +177,7 @@ function start() {
                 // Display the time MM:SS
                 MMSS = convertSeconds(secondsRemaining);
                 document.getElementById('timerDisplay').innerHTML = MMSS;
-                setPageTitle(MMSS);
+                document.title = setPageTitle(MMSS);
                 secondsRemaining--;
 
                 if (secondsRemaining < 0) {
@@ -219,7 +219,6 @@ function convertSeconds(secondsRemaining) {
     timerString += minutes + ':';
     if (seconds < 10) { timerString += '0'; }
     timerString += seconds;
-    // console.log(timerString);
     return timerString;
 }
 
@@ -350,6 +349,7 @@ function switchPotatoStill() {
  * Sets the <title> element for users to see remaining time off-page.
  * 
  * @param {string} MMSS 'MM:SS' form
+ * @return {string} New page title
  */
 function setPageTitle(MMSS) {
     let phaseSymbol;
@@ -359,14 +359,16 @@ function setPageTitle(MMSS) {
             break;
         case 'short break':
         case 'long break':
-            phaseSymbol = ' Break -';
+            phaseSymbol = ' Break - ';
             break;
         case 'stopped':
             phaseSymbol = ' Stopped - '
             break;
+        default:
+            phaseSymbol = ' - ';
     }
 
-    document.title = MMSS + phaseSymbol + 'Potato Timer';
+    return MMSS + phaseSymbol + 'Potato Timer';
 }
 
 
@@ -407,8 +409,6 @@ function addTask() {
     document.getElementById('enterTask').value = '';
     if(task != '') {
         createTask(task);
-    //    console.log('Created task with ID ' + uniqueID);
-        // console.log('Task count: ' + taskCount);
  
     }
 }
@@ -604,7 +604,6 @@ function markDone(uniqueID) {
     originalTask.setAttribute('marked','true');
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
-    // console.log('Tasks done: ' + tasksDone);
 }
 
 /**
@@ -625,7 +624,6 @@ function unmark(uniqueID) {
     originalTask.setAttribute('marked', 'false');
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
-    // console.log('Tasks done: ' + tasksDone);
 }
 
 /**
@@ -661,7 +659,6 @@ function deleteTask(uniqueID) {
     if(pinnedTask) {
         const mainTasks = document.getElementById('mainTasks');
         mainTasks.removeChild(pinnedTask);
-        // console.log('Deleted a pinned task.');
 
     }
     const taskListContainer = document.getElementById('taskListContainer');
@@ -681,8 +678,6 @@ function deleteTask(uniqueID) {
     savedTasks.splice(savedTasks.indexOf(taskText), 1);
     localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
 
-
-    // console.log('Task count: ' + taskCount);
 }
 
 /**
@@ -713,8 +708,6 @@ function deleteAllTasks() {
     }
     localStorage.setItem('savedTasks', null);
     hide('prompt');
-    // console.log('Deleted all tasks.');
-    // console.log('Task Count: ' + taskCount);
 }
 
 
@@ -725,7 +718,6 @@ function deleteAllTasks() {
  * @param {string} action The action to confirm. Either 'Reset' or 'Delete' all.
  */
  function confirmationPrompt(action) {
-    //  console.log('prompt');
     show('prompt');
     let message = document.getElementById('confirmMessage');
     let confirmBtn = document.getElementById('confirm');
@@ -811,7 +803,7 @@ function loadData() {
             // console.log(theme);
             break;
         default: 
-            console.log('no previous theme');
+            //console.log('no previous theme');
             changeTheme('Potato');
     }
     
@@ -859,7 +851,6 @@ function loadData() {
  * @param {string} newTheme The theme to change to.
  */
 function changeTheme(newTheme) {
-    // console.log("Changing theme to: " + newTheme);
     window.localStorage.setItem('theme', newTheme);
     theme = newTheme;
     const body = document.getElementById('background');
@@ -968,7 +959,6 @@ function changeTheme(newTheme) {
 function loadLang() {
     let savedLang = window.localStorage.getItem('lang');
     if(savedLang == null) { 
-        // console.log("No saved language detected. Your browser's language is: " + navigator.language);
         if(navigator.language.includes('es')) {
             lang = 'es';
         } else if(navigator.language.includes('zh')) {
@@ -981,7 +971,7 @@ function loadLang() {
         window.localStorage.setItem('lang', lang);
     } else {
         lang = savedLang;
-        console.log('language was saved');
+        //console.log('language was saved');
     }
     
     document.documentElement.lang = lang; // <HTML> tag
@@ -1026,3 +1016,19 @@ function loadTasks() {
         createTask(savedTasks[i]);
     }
 }
+
+/**
+ * Manually sets the phase--for testing.
+ * 
+ * @param {string} newPhase The phase to change to.
+ */
+function setPhase(newPhase) {
+    phase = newPhase;
+}
+
+module.exports = {
+    setPhase,
+    convertSeconds,
+    setTimeRemaining,
+    setPageTitle
+ }
