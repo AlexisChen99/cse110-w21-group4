@@ -244,8 +244,11 @@ noscript div {
 }
 
 #notificationBar {
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 30px;
     font-size: 1.3rem;
+    font-weight: bold;
 }
 
 @media screen and (max-width: 479px) {
@@ -776,16 +779,14 @@ input {
     text-decoration: none;
     font-weight: bolder;
 }
-
+    
 .top:focus {
-    /* position: static; */
-    top:auto;
-    left: auto;
-    right: auto;
-    bottom: 20px;
+    position: static;
     width: auto;
     height: auto;
-}
+    color: inherit;
+    border: 5px solid inherit;
+}   
 
 .contrastDark {
     color: white;

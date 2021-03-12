@@ -112,16 +112,8 @@
             <button class="mainButton" id="start" onclick="start()">Start</button>
         </div>
 
-        <!-- Task Menu -->
-        <div class="menu hidden" id="taskMenu">
-            <div class="headerDark" id="taskMenuHeader"></div>
-            <p id="tasksTitle">Tasks</p>
-            <button class="close transparent" id="closeTasks" onclick="hide('taskMenu')">Close</button>
-            <button class="close transparent" id="deleteAll" onclick="confirmationPrompt('Delete')">Delete All</button>
-            <p class="taskHelp">Mark a task as complete. Pin a task to the main display. </p>
-            <div id="taskListContainer">
-            </div>
-            <button id="ariaCloseTasks" onclick="hide('taskMenu')">Close</button>
+        <div id="notificationBar">
+            Welcome Back!
         </div>
 
         <div id="mainTasks">
@@ -131,11 +123,21 @@
             <input type="text" id="enterTask" placeholder="Enter a Task To Start" autocomplete="off" required>
             <button class="mainButton" id="taskAdder" onclick="addTask()">Add</button>
             <button class="mainButton" id="taskBtn" onclick="show('taskMenu')">Tasks</button>
-            <div id="notificationBar">
+            <!-- <div id="notificationBar" class="hidden">
                 A task has been added!
-            </div>
+            </div> -->
         </div> 
-        
+        <!-- Task Menu -->
+        <div class="menu hidden" id="taskMenu">
+            <div class="headerDark" id="taskMenuHeader"></div>
+            <p id="tasksTitle">Tasks</p>
+            <button class="close transparent" id="closeTasks" onclick="hide('taskMenu')">Close</button>
+            <button class="close transparent" id="deleteAll" onclick="confirmationPrompt('Delete')">Delete All</button>
+            <p class="taskHelp" id="taskHelp">Mark a task as complete. Pin a task to the main display. </p>
+            <div id="taskListContainer">
+            </div>
+            <button id="ariaCloseTasks" onclick="hide('taskMenu')">Close</button>
+        </div>
 
         <!-- End of content wrapper -->
     </div>
@@ -143,7 +145,7 @@
     <div class="hidden" id="prompt">
         <div id="confirmMessage">Unexpected Error</div>
         <button class="mainButton" id="confirm">Confirm</button>
-        <button class="mainButton" id="cancel">Cancel</button>
+        <button class="mainButton" id="cancel" onclick="hide('prompt')">Cancel</button>
     </div>
 
     <img src="img/potato-dance.gif" id="cycle1" class="hidden">

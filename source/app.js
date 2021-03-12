@@ -18,33 +18,27 @@ let tasksDone = 0;          // TODO: Change its application
 let pomosDone = 0;          // Number of pomo 'work' phases completed.
 let taskCount = 0;          // Used to keep track of all active tasks
 var uniqueID = 1;           // Used to assign uniqueID's when deleting specific tasks 
-                            // (may be copied from task list to main)
+// (may be copied from task list to main)
 let savedTasks = [];
 let volume = 25;
 let theme;                  // Potato, Dark, Light, undefined (Capitalized)
 let mute = false;
 let animation = true;
 
-window.onload = function() {
+window.onload = function () {
     const volumeInput = document.getElementById('volume');
     volumeInput.addEventListener('change', changeAudio);
 
-    const resetBtn = document.getElementById('reset');
-    resetBtn.onclick = function() { confirmationPrompt('Reset'); };
+    // const resetBtn = document.getElementById('reset');
+    // resetBtn.onclick = function() { confirmationPrompt('Reset'); };
 
-    const cancelBtn = document.getElementById('cancel');
-    cancelBtn.onclick = function() { hide('prompt'); };
-    
-    
     // Load's users theme, TODO previous input settings, taskList, language
-    loadData();
+    loadTheme();
     loadLang();
     loadTasks();
 }
 
-/**
- * Event Listener for muted audio
- */
+
 
 
 
@@ -57,7 +51,7 @@ window.onload = function() {
  */
 function playAudio(id) {
     // Check if the volume is muted
-    if(volume == 0) {
+    if (volume == 0) {
         return;
     }
 
@@ -69,23 +63,24 @@ function playAudio(id) {
     }
 }
 
+/**
+ * Locally stores audio. 
+ */
 function changeAudio() {
     const volumeInput = document.getElementById('volume');
     volume = volumeInput.value;
     windwos.localStorage.setItem('volume', volume);
 }
 
-{/* <audio id="breakToWorkAudio" src='audio/Rooster Crow.wav'></audio> */}
-
 /**
- * Mute currently does nothing
+ * 
  */
 function toggleMute() {
     // Audio icon and volume
     const volumeIcon = document.getElementById('volumeIcon');
     if (mute == false) {
         //change img
-        if(theme == 'Dark') {
+        if (theme == 'Dark') {
             volumeIcon.src = 'img/volume-mute-dark.png';
         } else {
             volumeIcon.src = 'img/volume-mute.png';
@@ -93,7 +88,7 @@ function toggleMute() {
         mute = true;
     } else {
         //change img
-        if(theme == 'Dark') {
+        if (theme == 'Dark') {
             volumeIcon.src = 'img/volume-dark.png';
         } else {
             volumeIcon.src = 'img/volume.png';
@@ -109,7 +104,7 @@ function toggleMute() {
  */
 function toggleAnimation() {
     animation = !animation;
-    if(animation) { // Turn on animation and say disable
+    if (animation) { // Turn on animation and say disable
         document.getElementById('animationBtn').innerText = dict['disableAnimation'][lang];
     } else {
         hidePotatos();
@@ -125,8 +120,8 @@ function toggleAnimation() {
  * @returns {number} The input time in seconds associated with the phase
  */
 function setInputTimes(phase) {
-    let minutes = document.getElementById(phase+'Min').value;
-    let seconds = document.getElementById(phase+'Sec').value;
+    let minutes = document.getElementById(phase + 'Min').value;
+    let seconds = document.getElementById(phase + 'Sec').value;
     return (+minutes) * 60 + (+seconds);
 }
 
@@ -135,7 +130,7 @@ function setInputTimes(phase) {
  * If the timer was stopped and resumed, the input times are not modified.
  */
 function start() {
-    if(phase != 'stopped') {
+    if (phase != 'stopped') {
         console.log('Setting input times');
         phase = 'work';
         workLength = setInputTimes('work');
@@ -152,7 +147,7 @@ function start() {
     //hide task container
     hideOptions();
     // Still synchronous
-    if (taskCount > 0) {    
+    if (taskCount > 0) {
         timer = setInterval(function () {
             // once all the tasks have ended, clear the timer
             if (taskCount == tasksDone) {   // FIXME
@@ -184,13 +179,13 @@ function start() {
 
                     // To change to dark background, need to create a new class
                     const background = document.getElementById('background');
-                    if(theme == 'Potato' && phase == 'short break' || phase == 'long break') {
+                    if (theme == 'Potato' && phase == 'short break' || phase == 'long break') {
                         background.classList.replace('potatoWork', 'potatoBreak');
                     } else if (theme == 'Potato') {
                         background.classList.replace('potatoBreak', 'potatoWork');
                     }
                 }
-           }
+            }
         }, 1000); //update the timer every second
     }
 }
@@ -205,7 +200,7 @@ function convertSeconds(secondsRemaining) {
     minutes = Math.floor(secondsRemaining / 60);
     seconds = secondsRemaining - (60 * minutes);
 
-    var timerString ='';
+    var timerString = '';
     if (minutes < 10) { timerString = '0'; }
     timerString += minutes + ':';
     if (seconds < 10) { timerString += '0'; }
@@ -224,36 +219,36 @@ function updatePhase() {
         pomosDone++;
         if (theme == 'Potato') {
             circle.className = 'circlePotato';
-            if(animation) {
+            if (animation) {
                 showPotatos();
             }
-         }
+        }
 
-        
+
         if (pomosDone % 4 != 0) {
             // If the pomos completed is less than 4 (1-3)
             phase = 'short break';
             if (theme == 'Potato') {
                 circle.className = 'circlePotatoBreak';
-             }
+            }
         } else {
             // If the pomos completed is divisible by 4
             phase = 'long break';
             if (theme == 'Potato') {
                 circle.className = 'circlePotatoBreak';
-             }
+            }
         }
     } else {
-        if(phase == 'long break') {
+        if (phase == 'long break') {
             if (theme == 'Potato') {
                 circle.className = 'circlePotatoBreak';
                 hidePotatos();
-             }
-         }
-         phase = 'work';
-         if (theme == 'Potato') {
+            }
+        }
+        phase = 'work';
+        if (theme == 'Potato') {
             circle.className = 'circlePotato';
-         }
+        }
     }
 }
 
@@ -268,7 +263,7 @@ function hidePotatos() {
 /**shows a a number of dancing potatoe gives based on the pomosDone */
 function showPotatos() {
 
-    document.getElementById('cycle'+pomosDone%4).style.display = 'inline';
+    document.getElementById('cycle' + pomosDone % 4).style.display = 'inline';
 
 }
 
@@ -280,10 +275,10 @@ function showPotatos() {
  * @return {number} The time remaining for the current timer state.
  */
 function setTimeRemaining() {
-    return (phase == 'work') ? workLength :     
-        (phase == 'short break') ? shortBreakLength : 
-        (phase == 'stopped') ? secondsRemaining :
-        longBreakLength;                        
+    return (phase == 'work') ? workLength :
+        (phase == 'short break') ? shortBreakLength :
+            (phase == 'stopped') ? secondsRemaining :
+                longBreakLength;
 }
 
 /**
@@ -293,7 +288,7 @@ function setTimeRemaining() {
  */
 function setPageTitle(MMSS) {
     let phaseSymbol;
-    switch(phase) {
+    switch (phase) {
         case 'work':
             phaseSymbol = ' Work - ';
             break;
@@ -324,7 +319,7 @@ function stop() {
     // document.getElementById('settingsIcon').style.opacity = 1; // show settings icon (top right)
     // document.getElementById('help').style.opacity = 1; //show help icon
     showOptions();
-    
+
 }
 /**
  * Resets the pomodoro cycle to the beginning.
@@ -332,8 +327,8 @@ function stop() {
 function reset() {
     console.log('reset timer');
     phase = 'idle';
-  
-    document.getElementById('timerDisplay').innerHTML='- - : - -';
+
+    document.getElementById('timerDisplay').innerHTML = '- - : - -';
     tasksDone = 0;
     pomosDone = 0;
 
@@ -343,23 +338,19 @@ function reset() {
 
 /** 
  * Adds a non-blank task to the list of tasks. 
- * TODO: If the taskCount is less than 4, add the task to the main page.
  */
 function addTask() {
     const task = document.getElementById('enterTask').value;
     document.getElementById('enterTask').value = '';
-    if(task != '') {
+    if (task != '') {
         createTask(task);
-       console.log('Created task with ID ' + uniqueID);
+        console.log('Created task with ID ' + uniqueID);
         console.log('Task count: ' + taskCount);
- 
+
     }
 }
 
 /**
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!1
- *          INCOMPLETE: POTATO THEME MARK TASK TO POTATO IMAGE
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * Creates a userTask in the taskListContainer. 
  * This does not display a task on the main page.
  * A userTask is identified with a unique numerical ID.
@@ -374,7 +365,7 @@ function createTask(text) {
     let newTask = document.createElement('div');
     newTask.className = 'userTask';
     newTask.id = uniqueID;
-    
+
     let markBtn = document.createElement('button');
     markBtn.className = 'transparent';
     markBtn.setAttribute('aria-label', 'Mark as Done');
@@ -388,27 +379,27 @@ function createTask(text) {
     delBtn.classList.add('transparent', 'smallIcon');
     delBtn.setAttribute('aria-label', 'Delete this Task');
 
-    if(theme == 'Dark') {
-       markBtn.innerHTML = '<div class="markCircle markDark" id="mark-' + uniqueID + '"></div>'
-       delBtn.innerHTML = '<img src="img/delete-task-dark.png" class="delete" id="del-'+uniqueID+'">';
+    if (theme == 'Dark') {
+        markBtn.innerHTML = '<div class="markCircle markDark" id="mark-' + uniqueID + '"></div>'
+        delBtn.innerHTML = '<img src="img/delete-task-dark.png" class="delete" id="del-' + uniqueID + '">';
     } else {
-       markBtn.innerHTML = '<div class="markCircle markLight" id="mark-' + uniqueID + '"></div>'
-       delBtn.innerHTML = '<img src="img/delete-task.png" class="delete" id="del-'+uniqueID+'">';
+        markBtn.innerHTML = '<div class="markCircle markLight" id="mark-' + uniqueID + '"></div>'
+        delBtn.innerHTML = '<img src="img/delete-task.png" class="delete" id="del-' + uniqueID + '">';
     }
 
-    markBtn.onclick = function() {
-        markedTask = document.getElementById('mark-' + newTask.id); 
-        if(markedTask.classList.contains('markFill')) {
+    markBtn.onclick = function () {
+        markedTask = document.getElementById('mark-' + newTask.id);
+        if (markedTask.classList.contains('markFill')) {
             unmark(newTask.id);
-        } else { 
+        } else {
             markDone(newTask.id);
         }
     };
 
-    pinBtn.onclick = function() {
+    pinBtn.onclick = function () {
         origTask = document.getElementById('pin-' + newTask.id);
         pinnedTask = document.getElementById(newTask.id + '-copy');
-        if(!pinnedTask) {
+        if (!pinnedTask) {
             createPinnedTask(text, newTask.id);
             origTask.src = 'img/pinned.png';
         } else {
@@ -417,11 +408,12 @@ function createTask(text) {
         }
     };
 
-    delBtn.onclick = function() {
+    delBtn.onclick = function () {
         deleteTask(newTask.id);
     }
 
     let content = document.createElement('p');
+    content.id = 'p' + uniqueID;
     content.innerHTML = text;
 
     let ariaSkip = document.createElement('a');
@@ -446,11 +438,11 @@ function createTask(text) {
     newTask.appendChild(delBtn);
     taskList.appendChild(newTask);
 
-    if(taskCount == 1) {
+    if (taskCount == 1) {
         createPinnedTask(text, uniqueID);
-        document.getElementById('pin-'+uniqueID).src = 'img/pinned.png';
+        document.getElementById('pin-' + uniqueID).src = 'img/pinned.png';
     }
-    
+
     notifyUser('addTask');
     return uniqueID++;
 }
@@ -474,40 +466,40 @@ function createPinnedTask(text, uniqueID) {
     let markBtn = document.createElement('button');
     markBtn.className = 'transparent';
     markBtn.setAttribute('aria-label', 'Mark as Done');
-    
+
     let pinBtn = document.createElement('button');
     pinBtn.classList.add('transparent'); //, 'smallIcon');
     pinBtn.innerHTML = '<img src="img/pinned.png">';
     pinBtn.setAttribute('aria-label', 'Pin to the Main Display');
 
-    let delBtn = document.createElement('button');
-    delBtn.classList.add('transparent', 'smallIcon');
-    delBtn.setAttribute('aria-label', 'Delete this Task');
+    // let delBtn = document.createElement('button');
+    // delBtn.classList.add('transparent', 'smallIcon');
+    // delBtn.setAttribute('aria-label', 'Delete this Task');
 
-    if(theme == 'Dark') {
-       markBtn.innerHTML = '<div class="markCircle markDark" id="mark-' + uniqueID + '-copy"></div>'
-       delBtn.innerHTML = '<img src="img/delete-task-dark.png" class="delete" id="del-'+uniqueID+'-copy">';
+    if (theme == 'Dark') {
+        markBtn.innerHTML = '<div class="markCircle markDark" id="mark-' + uniqueID + '-copy"></div>'
+        //    delBtn.innerHTML = '<img src="img/delete-task-dark.png" class="delete" id="del-'+uniqueID+'-copy">';
     } else {
-       markBtn.innerHTML = '<div class="markCircle markLight" id="mark-' + uniqueID + '-copy"></div>'
-       delBtn.innerHTML = '<img src="img/delete-task.png" class="delete" id="del-'+uniqueID+'-copy">';
+        markBtn.innerHTML = '<div class="markCircle markLight" id="mark-' + uniqueID + '-copy"></div>'
+        //    delBtn.innerHTML = '<img src="img/delete-task.png" class="delete" id="del-'+uniqueID+'-copy">';
     }
 
-    markBtn.onclick = function() {
-        markedTask = document.getElementById('mark-' + uniqueID); 
-        if(markedTask.classList.contains('markFill')) {
+    markBtn.onclick = function () {
+        markedTask = document.getElementById('mark-' + uniqueID);
+        if (markedTask.classList.contains('markFill')) {
             unmark(uniqueID);
-        } else { 
+        } else {
             markDone(uniqueID);
         }
     };
 
-    pinBtn.onclick = function() {
+    pinBtn.onclick = function () {
         unpinTask(uniqueID);
     };
 
-    delBtn.onclick = function() {
-        deleteTask(uniqueID);
-    }
+    // delBtn.onclick = function() {
+    //     deleteTask(uniqueID);
+    // }
 
     let content = document.createElement('p');
     content.innerHTML = text;
@@ -521,14 +513,14 @@ function createPinnedTask(text, uniqueID) {
     pinTask.appendChild(markBtn);
     pinTask.appendChild(pinBtn);
     pinTask.appendChild(content);
-    pinTask.appendChild(delBtn);
+    // pinTask.appendChild(delBtn);
 
     mainTasks.appendChild(pinTask);
 
-    if(document.getElementById('mark-'+uniqueID).classList.contains('markFill')) {
-        document.getElementById('mark-'+uniqueID+'-copy').classList.add('markFill');
+    if (document.getElementById('mark-' + uniqueID).classList.contains('markFill')) {
+        document.getElementById('mark-' + uniqueID + '-copy').classList.add('markFill');
     }
-
+    setPinnedSkip();
     notifyUser('pinTask');
     return uniqueID;
 }
@@ -544,11 +536,11 @@ function markDone(uniqueID) {
     document.getElementById('mark-' + uniqueID).classList.add('markFill');
     let pinnedTask = document.getElementById(uniqueID + '-copy');
 
-    if(pinnedTask) {
+    if (pinnedTask) {
         document.getElementById('mark-' + uniqueID + '-copy').classList.add('markFill');
     }
     tasksDone++;
-    originalTask.setAttribute('marked','true');
+    originalTask.setAttribute('marked', 'true');
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
@@ -565,8 +557,8 @@ function unmark(uniqueID) {
     document.getElementById('mark-' + uniqueID).classList.remove('markFill');
     let pinnedTask = document.getElementById(uniqueID + '-copy');
 
-    if(pinnedTask) {
-        document.getElementById('mark-'+uniqueID+'-copy').classList.remove('markFill');
+    if (pinnedTask) {
+        document.getElementById('mark-' + uniqueID + '-copy').classList.remove('markFill');
     }
     tasksDone--;
     originalTask.setAttribute('marked', 'false');
@@ -585,8 +577,9 @@ function unpinTask(uniqueID) {
     let pinnedTask = document.getElementById(uniqueID + '-copy');
     const mainTasks = document.getElementById('mainTasks');
     mainTasks.removeChild(pinnedTask);
-    document.getElementById('pin-'+uniqueID).src = 'img/unpinned.png';
+    document.getElementById('pin-' + uniqueID).src = 'img/unpinned.png';
     notifyUser('unpinTask');
+    setPinnedSkip();
 }
 
 /**
@@ -596,34 +589,35 @@ function unpinTask(uniqueID) {
  * 
  * @example Delete pinned task '1pin' calls function with '1'.
  */
-function deleteTask(uniqueID) {   
-    let taskText = document.getElementById(uniqueID).lastChild.innerText;
-    
+function deleteTask(uniqueID) {
+    let taskText = document.getElementById('p' + uniqueID).innerText;
+
     const pinnedTask = document.getElementById(uniqueID + '-copy');
 
-    if (document.getElementById(uniqueID).getAttribute('marked') == 'true'){
+    if (document.getElementById(uniqueID).getAttribute('marked') == 'true') {
         tasksDone--;
     }
 
-    if(pinnedTask) {
+    if (pinnedTask) {
         const mainTasks = document.getElementById('mainTasks');
         mainTasks.removeChild(pinnedTask);
         console.log('Deleted a pinned task.');
-
     }
     const taskListContainer = document.getElementById('taskListContainer');
     taskListContainer.removeChild(document.getElementById(uniqueID));
     taskCount--;
 
-
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
 
-    if (taskCount == 0){
+    if (taskCount == 0) {
         taskBtn.innerHTML = dict['tasks'][lang];
         taskBtn.style.fontSize = "25px";
         taskBtn.style.width = "150px";
     }
+
+    // ARIA
+    setARIASkip();
 
     savedTasks.splice(savedTasks.indexOf(taskText), 1);
     localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
@@ -639,12 +633,12 @@ function deleteTask(uniqueID) {
  */
 function deleteAllTasks() {
     const taskListContainer = document.getElementById('taskListContainer');
-    while(taskListContainer.firstChild) {
+    while (taskListContainer.firstChild) {
         taskListContainer.removeChild(taskListContainer.lastChild);
     }
 
     const mainTasks = document.getElementById('mainTasks');
-    while(mainTasks.firstChild) {
+    while (mainTasks.firstChild) {
         mainTasks.removeChild(mainTasks.lastChild);
     }
 
@@ -652,38 +646,61 @@ function deleteAllTasks() {
     uniqueID = 1;
     const taskBtn = document.getElementById('taskBtn');
 
-    if (taskCount == 0){
+    if (taskCount == 0) {
         taskBtn.innerHTML = dict['tasks'][lang];
         taskBtn.style.fontSize = "25px";
         taskBtn.style.width = "150px";
     }
-    localStorage.setItem('savedTasks', null);
+    savedTasks = [];
+    localStorage.removeItem('savedTasks');
     hide('prompt');
     notifyUser('deleteAll');
     console.log('Deleted all tasks.');
     console.log('Task Count: ' + taskCount);
 }
 
+/**
+ * If task 1 gets deleted, no change
+ * @param {*} uniqueID 
+ */
+function setARIASkip() {
+    let taskListContainer = document.getElementById('taskListContainer');
+    let userTaskList = taskListContainer.children; // <a list of userTask nodes
+    for (let i = 0; i < userTaskList.length - 1; i++) {
+        let userTask = userTaskList[i]; // The first userTask
+        let nextTask = userTaskList[i + 1];
+        userTask.firstChild.href = '#' + nextTask.id;
+    }
+}
 
+function setPinnedSkip() {
+    let mainTasks = document.getElementById('mainTasks');
+    let pinnedTaskList = mainTasks.children;
+    for (let i = 0; i < pinnedTaskList.length - 1; i++) {
+        let pinnedTask = pinnedTaskList[i];
+        let nextTask = pinnedTaskList[i + 1];
+        pinnedTask.firstChild.href = '#' + nextTask.id;
+    }
+}
 
 /**
  * Confirms a user's action to prevent major accidents. 
  * @param {string} action The action to confirm. Either 'Reset' or 'Delete' all.
  */
- function confirmationPrompt(action) {
-     console.log('prompt');
+function confirmationPrompt(action) {
+    console.log('prompt');
     show('prompt');
     let message = document.getElementById('confirmMessage');
     let confirmBtn = document.getElementById('confirm');
 
-    if(action == 'Reset') {
+    if (action == 'Reset') {
         message.innerHTML = dict['confirmReset'][lang];
         confirmBtn.onclick = reset;
     } else if (action == 'Delete') {
         message.innerHTML = dict['confirmDeleteAll'][lang];
         confirmBtn.onclick = deleteAllTasks;
-    }        
- }
+    }
+}
 
 /**
  * Shows an element by changing its display to block.
@@ -731,7 +748,7 @@ function hideOptions() {
 
 var page = 0;
 function back() {
-    if(page <= 1) {
+    if (page <= 1) {
         return;
     }
     --page;
@@ -739,16 +756,18 @@ function back() {
     topic.innerText = dict[page][topic.id][lang];
     let content = document.getElementById('instrContent');
     content.innerText = dict[page][content.id][lang];
-    if (page != 4 ){
-        content.classList.add('leftAlign');       
+    if (page != 4) {
+        content.classList.add('leftAlign');
     }
     document.getElementById('page').innerText = page + ' / 4';
 }
 
 function next() {
-    if(page >= 4) {
+    if (page >= 4) {
         hide('instructionsMenu');
         page = 0;
+        document.getElementById('next').innerHTML = 'Next';
+        return;
     }
     page++;
     let topic = document.getElementById('instrTopic');
@@ -756,11 +775,12 @@ function next() {
     let content = document.getElementById('instrContent');
     content.innerText = dict[page][content.id][lang];
     document.getElementById('page').innerText = page + ' / 4';
-    if(page == 4) {
+    if (page == 4) {
         content.classList.remove('leftAlign');
-        content.innerText = content.innerText + 
-        'Alexis Chen\nElizabeth Cho\nKevin Jang\nMarco Kuan\nAhmadMilad\nRohan Patel\nMiaoqiu Sun\nJessie Zou\n';
-        content.innerHTML = content.innerHTML + '<a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-32px.png"></a>'
+        content.innerText = content.innerText +
+            'Alexis Chen\nElizabeth Cho\nKevin Jang\nMarco Kuan\nAhmad Milad\nRohan Patel\nMiaoqiu Sun\nJessie Zou\n';
+        content.innerHTML = content.innerHTML + '<a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-32px.png"></a>';
+        document.getElementById('next').innerHTML = 'Close';
     }
 }
 //
@@ -768,15 +788,23 @@ function notifyUser(action) {
     let notif = document.getElementById('notificationBar');
     switch (action) {
         case 'addTask':
+            notif.innerText = 'a task was added';
         case 'pinTask':
-        case 'unpinTask': 
+        case 'unpinTask':
         case 'delTask':
-        case 'deleteAll': 
+        case 'deleteAll':
             notif.innerText = dict['notification'][action][lang];
             break;
-        default: 
-            notif.innerText = ''; 
-    }    
+        default:
+            notif.innerText = '';
+    }
+    // show('notificationBar');
+    // setTimeout(function() {
+    //     hide('notificationBar')
+    // }, 3000);
+    setTimeout(function () {
+        notif.innerText = '';
+    }, 5000);
     return action;
 }
 
@@ -784,9 +812,9 @@ function notifyUser(action) {
  * Save user's last theme selected locally 
  * TODO: Previous input settings, taskList, language
  */
-function loadData() {
+function loadTheme() {
     theme = window.localStorage.getItem('theme');
-    switch(theme) {
+    switch (theme) {
         case 'Potato':
             changeTheme('Potato');
             // console.log(theme);
@@ -799,7 +827,7 @@ function loadData() {
             changeTheme('Light');
             // console.log(theme);
             break;
-        default: 
+        default:
             console.log('no previous theme');
             changeTheme('Potato');
     }
@@ -808,7 +836,7 @@ function loadData() {
 /**
  * Changes the theme.
  * 
- * @event loadData() When the website is loaded.
+ * @event loadTheme() When the website is loaded.
  * @event button    When the user selects a theme.
  * @param {string} newTheme The theme to change to.
  */
@@ -819,51 +847,51 @@ function changeTheme(newTheme) {
     const body = document.getElementById('background');
     body.className = 'theme' + newTheme;
 
-    if(newTheme == 'Potato') {
+    if (newTheme == 'Potato') {
         body.classList.add('potatoWork');
     }
 
     const circle = document.getElementById('circleTimer');
     circle.className = 'circle' + newTheme;
 
-    if(newTheme == 'Dark') {
+    if (newTheme == 'Dark') {
         let settingsIcon = document.getElementById('settingsIcon');
         settingsIcon.src = 'img/settings-dark.png';
-        
+
         let volumeIcon = document.getElementById('volumeIcon');
-        if(volume != 0) {
+        if (volume != 0) {
             volumeIcon.src = 'img/volume-dark.png';
         } else {
             volumeIcon.src = 'img/volume-mute-dark.png';
         }
-        
-        
+
+
         let buttons = document.getElementsByClassName('mainButton');
-        for(let i = 0; i < buttons.length; i ++) {
+        for (let i = 0; i < buttons.length; i++) {
             buttons[i].classList.add('darkButton');
         }
-    
+
         let transparentBtns = document.getElementsByClassName('transparent');
-        for(let i = 0; i < transparentBtns.length; i++) {
+        for (let i = 0; i < transparentBtns.length; i++) {
             transparentBtns[i].classList.remove('textDark');
         }
 
         let menus = document.getElementsByClassName('menu');
-        for(let i = 0; i < menus.length; i++) {
+        for (let i = 0; i < menus.length; i++) {
             menus[i].classList.add('themeDark');
-            if(menus[i].classList.contains('menuLight')) {
+            if (menus[i].classList.contains('menuLight')) {
                 menus[i].classList.remove('menuLight');
             }
         }
 
         let prompt = document.getElementById('prompt');
         prompt.classList.add('themeDark');
-        if(prompt.classList.contains('themeLight')) {
+        if (prompt.classList.contains('themeLight')) {
             prompt.classList.remove('themeLight');
         }
-        
+
         let userTasks = document.getElementsByClassName('userTask');
-        for(let i = 0; i < userTasks.length; i++) {
+        for (let i = 0; i < userTasks.length; i++) {
             userTasks[i].children[1].firstChild.classList.replace('markLight', 'markDark');
             userTasks[i].children[4].firstChild.src = 'img/delete-task-dark.png';
         }
@@ -872,47 +900,47 @@ function changeTheme(newTheme) {
         settingsIcon.src = 'img/settings.png';
 
         let volumeIcon = document.getElementById('volumeIcon');
-        if(volume != 0) {
+        if (volume != 0) {
             volumeIcon.src = 'img/volume.png';
         } else {
             volumeIcon.src = 'img/volume-mute.png';
         }
-                
+
         let buttons = document.getElementsByClassName('mainButton');
-        for(let i = 0; i < buttons.length; i ++) {
-            if(buttons[i].classList.contains('darkButton')) {
+        for (let i = 0; i < buttons.length; i++) {
+            if (buttons[i].classList.contains('darkButton')) {
                 buttons[i].classList.remove('darkButton');
             }
         }
-    
+
         let transparentBtns = document.getElementsByClassName('transparent');
-        for(let i = 0; i < transparentBtns.length; i++) {
+        for (let i = 0; i < transparentBtns.length; i++) {
             transparentBtns[i].classList.add('textDark');
         }
 
         let menus = document.getElementsByClassName('menu');
-        for(let i = 0; i < menus.length; i++) {
+        for (let i = 0; i < menus.length; i++) {
             menus[i].classList.add('menuLight');
-            if(menus[i].classList.contains('themeDark')) {
+            if (menus[i].classList.contains('themeDark')) {
                 menus[i].classList.remove('themeDark');
             }
         }
-        
+
         let prompt = document.getElementById('prompt');
         prompt.classList.add('menuLight');
-        if(prompt.classList.contains('themeDark')) {
+        if (prompt.classList.contains('themeDark')) {
             prompt.classList.remove('themeDark');
         }
-        
+
         let userTasks = document.getElementsByClassName('userTask');
-        for(let i = 0; i < userTasks.length; i++) {
+        for (let i = 0; i < userTasks.length; i++) {
             console.log('changing tasks');
             userTasks[i].children[1].firstChild.classList.replace('markDark', 'markLight');
             userTasks[i].children[4].firstChild.src = 'img/delete-task.png';
         }
     }
 
-    if(theme == 'Potato') {
+    if (theme == 'Potato') {
         show('animationBtn');
     } else {
         hide('animationBtn');
@@ -928,13 +956,13 @@ function setLang(selectedLang) {
 
 function loadLang() {
     let savedLang = window.localStorage.getItem('lang');
-    if(savedLang == null) { 
+    if (savedLang == null) {
         console.log("No saved language detected. Your browser's language is: " + navigator.language);
-        if(navigator.language.includes('es')) {
+        if (navigator.language.includes('es')) {
             lang = 'es';
-        } else if(navigator.language.includes('zh')) {
+        } else if (navigator.language.includes('zh')) {
             lang = 'zh';
-        } else if(navigator.language == 'ko') {
+        } else if (navigator.language == 'ko') {
             lang = 'ko';
         } else {
             lang = 'en';
@@ -944,13 +972,13 @@ function loadLang() {
         lang = savedLang;
         console.log('language was saved');
     }
-    
+
     document.documentElement.lang = lang; // <HTML> tag
     document.getElementById('title').innerText = dict['title'][lang];
     document.getElementById('phaseDisplay').innerText = dict['phase']['idle'][lang];
     document.getElementById('start').innerText = dict['start'][lang];
     document.getElementById('taskBtn').innerText = dict['tasks'][lang];
-    document.getElementById('reset').innerText = dict['reset'][lang];
+    // document.getElementById('reset').innerText = dict['reset'][lang];
     document.getElementById('enterTask').placeholder = dict['enterTask'][lang];
     document.getElementById('taskAdder').innerText = dict['add'][lang];
 
@@ -969,18 +997,22 @@ function loadLang() {
     document.getElementById('tasksTitle').innerText = dict['tasks'][lang];
     document.getElementById('closeTasks').innerText = dict['close'][lang];
     document.getElementById('deleteAll').innerText = dict['deleteAll'][lang];
-    
+
     document.getElementById('confirm').innerText = dict['confirm'][lang];
     document.getElementById('cancel').innerText = dict['cancel'][lang];
 }
 
+/**
+ * All unmarked tasks are loaded onto the page.
+ * @returns nothing
+ */
 function loadTasks() {
     let savedTasks = JSON.parse(localStorage.getItem('savedTasks'));
-    if(!savedTasks) {
+    if (!savedTasks) {
         return;
     }
 
-    for(let i = 0; i < savedTasks.length; i++) {
+    for (let i = 0; i < savedTasks.length; i++) {
         createTask(savedTasks[i]);
     }
 }

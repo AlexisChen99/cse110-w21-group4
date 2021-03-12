@@ -265,6 +265,18 @@ var dict = {
         ko: '',
     },
     'notification': {
+        'mark': {
+            en: 'You marked a task as done!',
+            zh: '',
+            es: '',
+            ko: '',
+        },
+        'unmark': {
+            en: 'You marked a task as incomplete!',
+            zh: '',
+            es: '',
+            ko: '',
+        },
         'addTask': {
             en: 'A task has been added!',
             zh: '',
@@ -337,6 +349,38 @@ var dict = {
             es: '',
             ko: '어머! ', 
         },
+    },
+
+    'markBtn': { // ARIA Screen Reader aria-label="Mark as done"
+        en: 'Mark as Done',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    'pinBtn': { // ARIA Screen Reader 
+        en: 'Pin to the Main Display',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    'delBtn': { // ARIA Screen Reader
+        en: 'Delete this Task',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    'taskHelp': {
+        en: 'Mark a task as complete. Pin a task to the main display.',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+
+    '': {
+        en: '',
+        zh: '',
+        es: '',
+        ko: '',
     },
     '': {
         en: '',
