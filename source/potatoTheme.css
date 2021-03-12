@@ -195,6 +195,12 @@ noscript div {
     box-shadow: 0 0 50px rgb(214, 207, 138),0 0 150px rgb(236, 198, 91);
 }
 
+.circlePotatoBreakAsian {
+    border: 8px solid rgb(248, 205, 111);
+    background-color: rgb(248, 205, 111);
+    box-shadow: 0 0 50px rgb(216, 210, 158),0 0 150px rgb(240, 213, 140);
+}
+
 #timerDisplay {
     margin:31px auto;
     padding: 26px 0px;

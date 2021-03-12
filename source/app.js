@@ -229,19 +229,31 @@ function updatePhase() {
             // If the pomos completed is less than 4 (1-3)
             phase = 'short break';
             if (theme == 'Potato') {
-                circle.className = 'circlePotatoBreak';
+                if (lang == 'ko' || lang == 'zh') {
+                    circle.className = 'circlePotatoBreakAsian';
+                } else {
+                    circle.className = 'circlePotatoBreak';
+                }
             }
         } else {
             // If the pomos completed is divisible by 4
             phase = 'long break';
             if (theme == 'Potato') {
-                circle.className = 'circlePotatoBreak';
+                if (lang == 'ko' || lang == 'zh') {
+                    circle.className = 'circlePotatoBreakAsian';
+                } else {
+                    circle.className = 'circlePotatoBreak';
+                }
             }
         }
     } else {
         if (phase == 'long break') {
             if (theme == 'Potato') {
-                circle.className = 'circlePotatoBreak';
+                if (lang == 'ko' || lang == 'zh') {
+                    circle.className = 'circlePotatoBreakAsian';
+                } else {
+                    circle.className = 'circlePotatoBreak';
+                }
                 hidePotatos();
             }
         }
