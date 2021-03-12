@@ -48,12 +48,35 @@ p {
     margin-bottom: 0px;
 }
 
+.showing {
+    display: block;
+}
+
 .hidden {
     display: none;
 }
 
-.showing {
-    display: block;
+.opacityShow {
+    opacity: 1;
+}
+
+.opacityHide {
+    opacity: 0;
+}
+
+noscript {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    z-index: 10000;
+}
+
+noscript div {
+    padding: 20px 40px;
+    font-size: 2.25rem;
 }
 /*---------------------------------
          Main Page Display
@@ -107,11 +130,17 @@ p {
 #help {
     font-size: 3rem;
 }
+#help:hover {
+    animation: text_reveal .5s ease forwards;
+}
 #settingsIcon {
     /* position: absolute;
     top: 3%;
     right: 5%; */
     float : right;
+}
+#settingsIcon:hover {
+    animation: text_reveal .5s ease forwards;
 }
 
 @media screen and (max-width: 768px) {
@@ -177,9 +206,6 @@ p {
     white-space: normal;
 }
 
-#reset {
-    display: none;
-}
 #enterTask {
     border-radius: 18px;
 }
@@ -275,8 +301,12 @@ p {
 ---------------------------------*/
 
 #instructionsMenu {
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
     font-size: 1.3rem;
     padding: 20px 40px;
+    
 }
 
 #instrTopic {
@@ -296,6 +326,11 @@ p {
 .leftAlign{
     text-align: left;
 }
+
+#page {
+    font-size: 1.4rem;
+}
+
 /*---------------------------------
          Settings Menu Display
 ---------------------------------*/
@@ -303,6 +338,7 @@ p {
     position: absolute;
     top: 0%;
     left: 0%;
+    right: 0%;
     overflow: hidden;
     min-height: 200px;
     max-width: 768px;
@@ -313,6 +349,9 @@ p {
     z-index: 999;
 }
 
+#settingsMenu {
+    max-width: 375px;
+}
 .taskHelp {
     font-size: 17px;
     margin: 5px 0px;
@@ -368,6 +407,12 @@ p {
     cursor: pointer;
     /* color: black; */
     margin-right: 20px;
+}
+
+
+#selectTheme {
+    margin: 0 0; 
+    font-size: 18px;
 }
 
 button {
@@ -515,9 +560,20 @@ input {
     text-align: left;
     display: flex;
     margin: auto;
-    border-bottom: solid 1px;
+    /* border-top: solid 2px; */
+    border-bottom: solid 2px;
+    border-left: solid 4px;
+    border-radius: 10px 0px 0px 10px;
+
 }
 
+.userTask:first-child {
+    border-top: solid 2px;
+}
+
+.userTask:last-child {
+    border-bottom: solid 2px;
+}
 .markCircle {
     min-width: 20px;
     margin-left: 10px;
@@ -544,25 +600,34 @@ input {
 
 .userTask img {
     display: inline-block;
-    height: 30px;
+    height: 25px;
     cursor: pointer;
     margin: 4px;
 }
 
+.userTask .smallIcon img {
+    height: 20px;
+}
 .userTask p {
     display: inline;
     font-size: 25px;
     margin-left: 12px;
     margin-bottom: 15px;
     margin-top: 7px;
+    max-width: 540px;
+    flex-grow: 1;
+    overflow-wrap: break-word;
 }
 
-.pinnedTask {
-    border-bottom: 2px solid black;
-}
-.pinnedTask:first-child {
-    border-top: 2px solid black;
-}
+/* .pinnedTask {
+    border-bottom: 4px solid;
+    border-left: 4px solid;
+    border-radius: 10px 0px 0px 10px;
+} */
+
+/* .pinnedTask:first-child {
+    border-top: 4px solid;
+} */
 
 
 
@@ -618,8 +683,8 @@ input {
     margin: 0 0;
 }
 
-#cycle {
-    padding-left: 20px;
+#cycleNum {
+    font-size: 1.5rem;
 }
 
 #cycle1 {
@@ -708,10 +773,16 @@ input {
     width: 1px;
     height: 1px;
     overflow: hidden;
+    text-decoration: none;
+    font-weight: bolder;
 }
 
 .top:focus {
-    position: static;
+    /* position: static; */
+    top:auto;
+    left: auto;
+    right: auto;
+    bottom: 20px;
     width: auto;
     height: auto;
 }
@@ -722,4 +793,10 @@ input {
 
 .contrastLight {
     color: #333;
+}
+
+
+
+#reset {
+    display: none;
 }

@@ -77,7 +77,7 @@ var dict = {
         en: 'Delete All',
         zh: '全部删除',
         es: 'Borrar Todo',
-        ko: '모두 삭제하기', //삭제
+        ko: '모두 삭제하기',
     },
     'close': {
         en: 'Close',
@@ -133,12 +133,12 @@ var dict = {
         es: 'Descanso Largo',
         ko: '긴 휴식',
     },
-    'cycleLength': {
-        en: 'Length of a Cycle',
-        zh: '单个周期长度',
-        es: '',
-        ko: '한 사이클의 길이',
-    },
+    // 'cycleLength': {
+    //     en: 'Length of a Cycle',
+    //     zh: '单个周期长度',
+    //     es: '',
+    //     ko: '한 사이클의 길이',
+    // },
     'volume': {
         en: 'Volume',
         zh: '音量',
@@ -171,29 +171,37 @@ var dict = {
     },
     '1': {
         'instrTopic': {
-            en: 'How to Use',
-            zh: '怎样使用',
+            en: 'Introduction', // CHANGED
+            zh: '怎样使用',      // OLD PLEASE CHANGE
             es: '',
-            ko: '',
+            ko: '소개', // Check
         },
         'instrContent': {
             en: 'Potato Timer is a Pomodoro Timer meant to improve your productivity by having you focus ' +
-                'for a set "work" time and a following "break" time. After every four work phases, a longer break period occurs ' +
-                '',
+                'for a set "work" time and a following "break" time. After every four work phases, a longer break period occurs.\n' +
+                '[Chinese]\n' + // These lines should be for users who don't know english (see other three areas)
+                '[Spanish]\n' +
+                '[Korean]\n', // 한국어에 설정 :)
             zh: '' +
-                'To switch to English, click the gear icon to open the settings menu.',
+                'To switch to English, click the gear icon to open the settings menu.' + // Translated to something like this 
+                '[Spanish]\n' +
+                '[Korean]\n',
             es: '' +
-                'To switch to English, click the gear icon to open the settings menu.',
+                'To switch to English, click the gear icon to open the settings menu.' +
+                '[Chinese]\n' +
+                '[Korean]\n',
             ko: '' +
-                'To switch to English, click the gear icon to open the settings menu.',
+                'To switch to English, click the gear icon to open the settings menu.' +
+                '[Chinese]\n' +
+                '[Spanish]\n',
         },
     },
     '2': {
         'instrTopic': {
             en: 'Settings',
             zh: '设置',
-            es: '',
-            ko: '',
+            es: 'Configuración', // Copied from earlier--no need to check
+            ko: '설정',
         },
         'instrContent': {
             en: 'To open the settings, click the gear icon in the top right corner.\n' + 
@@ -213,7 +221,7 @@ var dict = {
             en: 'Tasks',
             zh: '任务',
             es: '',
-            ko: '',
+            ko: '과제',
         },
         'instrContent': {
             en: 'You can enter your own tasks in the white field below the start button. ' +
@@ -235,7 +243,7 @@ var dict = {
             en: 'About',
             zh: '关于',
             es: '',
-            ko: '',
+            ko: '개발자 소개', // Developer Intro
         },
         'instrContent': {
             en: 'Potato Timer is happily developed by: \n',
@@ -261,33 +269,74 @@ var dict = {
             en: 'A task has been added!',
             zh: '',
             es: '',
-            ko: '',
+            ko: '과제를 추가했어!', // Informal :)
+            // Uh 하다 / 되다?
         },
         'pinTask': {
             en: 'A task has been pinned!',
             zh: '',
             es: '',
-            ko: '',
+            ko: '핀을 추가됐어!', // Pin was added
         },
         'unpinTask': {
             en: 'A task has been unpinned!',
             zh: '',
             es: '',
-            ko: '',
+            ko: '핀을 뺐어!', // Pin was removed
         },
         'delTask': {
             en: 'A task has been deleted!',
             zh: '',
             es: '',
-            ko: '',
+            ko: '과제를 삭제됐어!', // 되????????
+        },
+        'deleteAll': {
+            en: 'All tasks have been deleted!',
+            zh: '',
+            es: '',
+            ko: '과제를 모두 삭제됐어!',
         },
         
     },
-    '': {
-        en: '',
+    'help': { // aria-label="Show Instructions"
+        en: 'Show Instructions',
         zh: '',
         es: '',
-        ko: '',
+        ko: '설명은 보여',
+    },
+    'settingsIcon': { // alt="Show Settings"
+        en: 'Show Settings',
+        zh: '',
+        es: '',
+        ko: '설정은 보여', // Subject particle used because these are topics?
+    },
+    'mute': { // Mute volume
+        en: 'Mute volume', // alt="Mute volume"
+        zh: '',
+        es: '',
+        ko: '소리를 숨기다', // Check
+    },
+    'unmute': {
+        en: 'Unmute volume',
+        zh: '',
+        es: '',
+        ko: '소리를 듣다', // ??????
+    },
+    'noscript': {
+        'sadPotato': { // alt="Sad Potato is Sad"
+            en: 'Sad Potato is Sad',
+            zh: '',
+            es: '',
+            ko: '슬픈 감자',
+        },
+        'jsDisabled': {
+            en: 'Oh no!\n' +
+            'We\'re sorry, but this website application uses JavaScript to operate the timer.\n' +
+            'Please enable JavaScript for the best user experience!',
+            zh: '啊',
+            es: '',
+            ko: '어머! ', 
+        },
     },
     '': {
         en: '',
@@ -295,53 +344,8 @@ var dict = {
         es: '',
         ko: '',
     },
-    '': {
-        en: '',
-        zh: '',
-        es: '',
-        ko: '',
-    },
-    '': {
-        en: '',
-        zh: '',
-        es: '',
-        ko: '',
-    },
-    '': {
-        en: '',
-        zh: '',
-        es: '',
-        ko: '',
-    },
-    '': {
-        en: '',
-        zh: '',
-        es: '',
-        ko: '',
-    },
-    '': {
-        en: '',
-        zh: '',
-        es: '',
-        ko: '',
-    },
-    '': {
-        en: '',
-        zh: '',
-        es: '',
-        ko: '',
-    },
-
-    // A task has been added
-    // A task has been deleted
-    // A task has been pinned/unpinned
-    // 
 } 
 
-function setLang(selectedLang) {
-    window.localStorage.setItem('lang', selectedLang);
-    window.location.reload();
-}
 // Potato Timer             土豆计时器
 // Work                     专注
 // Reset                    重置

@@ -19,7 +19,6 @@ let pomosDone = 0;          // Number of pomo 'work' phases completed.
 let taskCount = 0;          // Used to keep track of all active tasks
 var uniqueID = 1;           // Used to assign uniqueID's when deleting specific tasks 
                             // (may be copied from task list to main)
-var pinCount = 0;
 let savedTasks = [];
 let volume = 25;
 let theme;                  // Potato, Dark, Light, undefined (Capitalized)
@@ -151,9 +150,7 @@ function start() {
     document.getElementById('start').onclick = stop;
     document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
     //hide task container
-    document.getElementById('taskManager').style.opacity = 0; //hide task Container
-    document.getElementById('settingsIcon').style.opacity = 0; //hide settings Icon
-    document.getElementById('help').style.opacity = 0;   //hide help icon
+    hideOptions();
     // Still synchronous
     if (taskCount > 0) {    
         timer = setInterval(function () {
@@ -163,14 +160,10 @@ function start() {
                 phase = 'idle';
                 // Update the phase
                 document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
-                // Disable the reset button
-                document.getElementById('reset').disabled = true;
-                //show task Container
-                document.getElementById('taskManager').style.opacity = 1;
-                //show settings icon
-                document.getElementById('settingsIcon').style.opacity = 1;
-                //show help icon
-                document.getElementById('help').style.opacity = 1;
+                document.getElementById('timerDisplay').innerHTML = '- - : - -';
+                document.getElementById('start').innerHTML = dict['start'][lang];
+                document.getElementById('start').onclick = start;
+                showOptions();
             } else {
                 // Display the time MM:SS
                 MMSS = convertSeconds(secondsRemaining);
@@ -327,9 +320,10 @@ function stop() {
     document.getElementById('reset').disabled = false;
     document.getElementById('start').innerHTML = dict['start'][lang];
     document.getElementById('start').onclick = start;
-    document.getElementById('taskManager').style.opacity = 1; //show task Container
-    document.getElementById('settingsIcon').style.opacity = 1; // show settings icon (top right)
-    document.getElementById('help').style.opacity = 1; //show help icon
+    // document.getElementById('taskManager').style.opacity = 1; //show task Container
+    // document.getElementById('settingsIcon').style.opacity = 1; // show settings icon (top right)
+    // document.getElementById('help').style.opacity = 1; //show help icon
+    showOptions();
     
 }
 /**
@@ -386,12 +380,12 @@ function createTask(text) {
     markBtn.setAttribute('aria-label', 'Mark as Done');
 
     let pinBtn = document.createElement('button');
-    pinBtn.className = 'transparent';
+    pinBtn.classList.add('transparent'); //, 'smallIcon');
     pinBtn.innerHTML = '<img src="img/unpinned.png" id="pin-' + uniqueID + '">';
     pinBtn.setAttribute('aria-label', 'Pin to the Main Display');
 
     let delBtn = document.createElement('button');
-    delBtn.className = 'transparent';
+    delBtn.classList.add('transparent', 'smallIcon');
     delBtn.setAttribute('aria-label', 'Delete this Task');
 
     if(theme == 'Dark') {
@@ -452,11 +446,12 @@ function createTask(text) {
     newTask.appendChild(delBtn);
     taskList.appendChild(newTask);
 
-    if(pinCount < 1) {
+    if(taskCount == 1) {
         createPinnedTask(text, uniqueID);
         document.getElementById('pin-'+uniqueID).src = 'img/pinned.png';
     }
     
+    notifyUser('addTask');
     return uniqueID++;
 }
 
@@ -481,12 +476,12 @@ function createPinnedTask(text, uniqueID) {
     markBtn.setAttribute('aria-label', 'Mark as Done');
     
     let pinBtn = document.createElement('button');
-    pinBtn.className = 'transparent';
+    pinBtn.classList.add('transparent'); //, 'smallIcon');
     pinBtn.innerHTML = '<img src="img/pinned.png">';
     pinBtn.setAttribute('aria-label', 'Pin to the Main Display');
 
     let delBtn = document.createElement('button');
-    delBtn.className = 'transparent';
+    delBtn.classList.add('transparent', 'smallIcon');
     delBtn.setAttribute('aria-label', 'Delete this Task');
 
     if(theme == 'Dark') {
@@ -530,11 +525,11 @@ function createPinnedTask(text, uniqueID) {
 
     mainTasks.appendChild(pinTask);
 
-    pinCount++;
     if(document.getElementById('mark-'+uniqueID).classList.contains('markFill')) {
         document.getElementById('mark-'+uniqueID+'-copy').classList.add('markFill');
     }
 
+    notifyUser('pinTask');
     return uniqueID;
 }
 
@@ -591,7 +586,7 @@ function unpinTask(uniqueID) {
     const mainTasks = document.getElementById('mainTasks');
     mainTasks.removeChild(pinnedTask);
     document.getElementById('pin-'+uniqueID).src = 'img/unpinned.png';
-    pinCount--;
+    notifyUser('unpinTask');
 }
 
 /**
@@ -633,10 +628,10 @@ function deleteTask(uniqueID) {
     savedTasks.splice(savedTasks.indexOf(taskText), 1);
     localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
 
-
+    notifyUser('delTask');
     console.log('Task count: ' + taskCount);
 }
-
+// So you can see me code
 /**
  * Deletes all of the tasks from both the tsak list and main display, if possible.
  * Resets taskCount to 0 and uniqueID to 1.
@@ -664,10 +659,10 @@ function deleteAllTasks() {
     }
     localStorage.setItem('savedTasks', null);
     hide('prompt');
+    notifyUser('deleteAll');
     console.log('Deleted all tasks.');
     console.log('Task Count: ' + taskCount);
 }
-
 
 
 
@@ -688,8 +683,6 @@ function deleteAllTasks() {
         message.innerHTML = dict['confirmDeleteAll'][lang];
         confirmBtn.onclick = deleteAllTasks;
     }        
-
-
  }
 
 /**
@@ -714,6 +707,28 @@ function hide(id) {
     elem.classList.replace('showing', 'hidden');
 }
 
+/** 
+ * 
+ */
+function showOptions() {
+    //show task Container
+    document.getElementById('taskManager').classList.replace('opacityHide', 'opacityShow');
+    //show settings icon
+    document.getElementById('settingsIcon').classList.replace('opacityHide', 'opacityShow');
+    //show help icon
+    document.getElementById('help').classList.replace('opacityHide', 'opacityShow');
+}
+
+/**
+ * 
+ */
+function hideOptions() {
+    document.getElementById('taskManager').classList.replace('opacityShow', 'opacityHide'); //hide task Container
+    document.getElementById('settingsIcon').classList.replace('opacityShow', 'opacityHide');//hide settings Icon
+    document.getElementById('help').classList.replace('opacityShow', 'opacityHide');   //hide help icon
+}
+
+
 var page = 0;
 function back() {
     if(page <= 1) {
@@ -735,7 +750,7 @@ function next() {
         hide('instructionsMenu');
         page = 0;
     }
-    ++page;
+    page++;
     let topic = document.getElementById('instrTopic');
     topic.innerText = dict[page][topic.id][lang];
     let content = document.getElementById('instrContent');
@@ -748,6 +763,23 @@ function next() {
         content.innerHTML = content.innerHTML + '<a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-32px.png"></a>'
     }
 }
+//
+function notifyUser(action) {
+    let notif = document.getElementById('notificationBar');
+    switch (action) {
+        case 'addTask':
+        case 'pinTask':
+        case 'unpinTask': 
+        case 'delTask':
+        case 'deleteAll': 
+            notif.innerText = dict['notification'][action][lang];
+            break;
+        default: 
+            notif.innerText = ''; 
+    }    
+    return action;
+}
+
 /** 
  * Save user's last theme selected locally 
  * TODO: Previous input settings, taskList, language
@@ -880,7 +912,18 @@ function changeTheme(newTheme) {
         }
     }
 
+    if(theme == 'Potato') {
+        show('animationBtn');
+    } else {
+        hide('animationBtn');
+    }
+
     hide('settingsMenu');
+}
+
+function setLang(selectedLang) {
+    window.localStorage.setItem('lang', selectedLang);
+    window.location.reload();
 }
 
 function loadLang() {
@@ -920,7 +963,7 @@ function loadLang() {
     document.getElementById('workTime').innerText = dict['workTime'][lang];
     document.getElementById('shortTime').innerText = dict['shortBreak'][lang];
     document.getElementById('longTime').innerText = dict['longBreak'][lang];
-    document.getElementById('cycleLength').innerText = dict['cycleLength'][lang];
+    // document.getElementById('cycleLength').innerText = dict['cycleLength'][lang];
     document.getElementById('volume').innerText = dict['volume'][lang];
 
     document.getElementById('tasksTitle').innerText = dict['tasks'][lang];

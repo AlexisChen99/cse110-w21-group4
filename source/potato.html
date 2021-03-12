@@ -18,29 +18,24 @@
         <p id="title">Potato Timer</p>
 
         <div id="options">
-            <button class="transparent" aria-label="Open Instructions" onclick="show('instructionsMenu')" id="help">
+            <button class="transparent opacityShow" aria-label="Open Instructions" onclick="show('instructionsMenu'); next()" id="help">
                 ?</button>
 
             <!-- Instructions Menu -->
             <div class="menu hidden" id="instructionsMenu">
                 Instructions
-                <p id="instrTopic"> [filler]</p>
-                <p class= "leftAlign" id="instrContent"> [filler content Potato Timer is a Pomodoro timer meant to improve your
-                    productivity by
-                    breaking up your focus for a set "work" time and a following "break" time.
-                    After every four "work" phases, a longer break period happens. To switch to another language
-                    (English,
-                    Chinese, Spanish, Korean), click on the globe icon.]</p>
+                <p id="instrTopic"></p>
+                <p class= "leftAlign" id="instrContent"></p>
                 <div class="instrNav">
                     <button class="mainButton" id="back" onclick="back()">Back</button>
-                    <span id="page" style="font-size: 1.4rem;">1 / 5</span>
+                    <span id="page"></span>
                     <button class="mainButton" id="next" onclick="next()">Next</button>
                 </div>
             </div>
             <!-- End of Instructions Menu -->
 
             <button class="transparent" onclick="show('settingsMenu')" >
-                <img src="img/settings.png" alt="Settings" id="settingsIcon">
+                <img src="img/settings.png" alt="Settings" class="opacityShow" id="settingsIcon">
             </button>
 
             <!-- Settings Menu -->
@@ -49,7 +44,7 @@
                 <p id="settingsTitle">Settings</p>
                 <button class="close transparent" id="closeSettings" onclick="hide('settingsMenu')">Close</button>
                 <div id="chooseTheme">
-                    <p style="margin: 0 0; font-size: 18px;" id="selectTheme">Select a Theme</p><br>
+                    <p id="selectTheme">Select a Theme</p><br>
                     <button class="mainButton" id="lightTheme" onclick="changeTheme('Light')">Light</button>
                     <button class="mainButton" id="darkTheme" onclick="changeTheme('Dark')">Dark</button>
                     <button class="mainButton" id="potatoTheme" onclick="changeTheme('Potato')">Potato</button>
@@ -84,7 +79,7 @@
                         <label for="volume" class="fieldLabel" id="volume">Volume (%)</label>
                         <input type="number" class="customVolume" id="volume" value="25" min="0" max="100">
                         <button class="transparent" onclick="toggleMute()">
-                            <img src="img/volume.png" alt="Mute?" id="volumeIcon">
+                            <img src="img/volume.png" alt="Mute volume" id="volumeIcon">
                         </button>
                     </div>
                 </div>
@@ -93,19 +88,15 @@
                     <button class="transparent lightThemeText" id="English" onclick="setLang('en')">English</button>
                     <button class="transparent lightThemeText" id="Spanish" onclick="setLang('es')">Español</button>
                     <button class="transparent lightThemeText" id="Chinese" onclick="setLang('zh')">中文</button>
-                    <button class="transparent lightThemeText" id="Korean" onclick="setLang('ko')"
-                        onblur="hide('settingsMenu')">한국어</button>
+                    <button class="transparent lightThemeText" id="Korean" onclick="setLang('ko')" >한국어</button>
+                    <!-- <a onblur="hide('settingsMenu')">Close</a> -->
                 </span>
             </div>
             <!-- End of Settings Menu -->
         </div>
 
         <div id="phaseWrapper">
-            <p class="cycle" id="cycle" style="
-                display: block;
-                font-size:  16px;
-                font-weight: bold;
-                ">1 of 4</p>
+            <p id="cycleNum">1 of 4</p>
             <p id="phaseDisplay">Idle</p>
         </div>
 
@@ -118,7 +109,7 @@
 
         <div class="buttonWrapper">
             <button class="mainButton" id="reset" onclick="confirmationPrompt('Reset')">Reset</button>
-            <button class="mainButton" id="start" alt="start" onclick="start()">Start</button>
+            <button class="mainButton" id="start" onclick="start()">Start</button>
         </div>
 
         <!-- Task Menu -->
@@ -128,19 +119,19 @@
             <button class="close transparent" id="closeTasks" onclick="hide('taskMenu')">Close</button>
             <button class="close transparent" id="deleteAll" onclick="confirmationPrompt('Delete')">Delete All</button>
             <p class="taskHelp">Mark a task as complete. Pin a task to the main display. </p>
-            <div id="taskListContainer"> </div>
+            <div id="taskListContainer">
+            </div>
             <button id="ariaCloseTasks" onclick="hide('taskMenu')">Close</button>
         </div>
 
         <div id="mainTasks">
+        </div>
 
-        </div><br>
-
-        <div class="taskContainer" id="taskManager">
+        <div class="taskContainer opacityShow" id="taskManager">
             <input type="text" id="enterTask" placeholder="Enter a Task To Start" autocomplete="off" required>
             <button class="mainButton" id="taskAdder" onclick="addTask()">Add</button>
             <button class="mainButton" id="taskBtn" onclick="show('taskMenu')">Tasks</button>
-            <div  id="notificationBar">
+            <div id="notificationBar">
                 A task has been added!
             </div>
         </div> 
@@ -161,10 +152,12 @@
     <img src="img/potato-dance.gif" id="cycle0" class="hidden">
 
     <a href="#contentWrapper" class="top">Back to Top</a>
+
     <noscript>
         <img src="img/potential-potato-images/d5e1fcfc372db1f0-line-creators-stickers-dancing-potato-example-with-gif-animation.gif"
-            alt="Potato is Sad"> <br>
+            alt="Sad Potato is Sad">
+        <div id="jsDisabled">Oh no! <br> 
         We're sorry, but this website application uses JavaScript to operate the timer.<br>
-        Please enable JavaScript for the best user experience!<br>
+        Please enable JavaScript for the best user experience!</div>
     </noscript>
 </body>
