@@ -76,12 +76,8 @@
                         <input type="number" class="customTime" id="longSec" value="00" min="0" max="59" maxlength="2">
                     </div>
                     <div>
-                        <label for="cycleLength" class="fieldLabel" id="cycleLength">Length of Cycle</label>
-                        <input type="number" class="customTime" id="cycleLength" value="4">
-                    </div>
-                    <div>
-                        <label for="volume" class="fieldLabel" id="volume">Volume (%)</label>
-                        <input type="number" class="customVolume" id="volume" value="25" min="0" max="100">
+                        <label for="volume" class="fieldLabel" id="volumeLabel">Volume (%)</label>
+                        <input type="number" class="customVolume" id="volume" value="10" min="0" max="100">
                         <button class="transparent" onclick="toggleMute()">
                             <img src="img/volume.png" alt="Mute?" id="volumeIcon">
                         </button>
@@ -103,16 +99,11 @@
 
         <!-- Start of Congrats Screen -->
 
-        <div id="congratsScreen" class = "modal">
-            
+        <div id="congratsScreen" class = "modal">   
             <div class="modal-content">
-
                 <h1>Congratulations!</h1>
-                <p id="congratsText">It took you pomos to complete your task</p>
-
-
+                <p id="congratsText">It took you $pomosDone pomos to complete your task</p>
             </div>
-
         </div>
 
         <!-- End of Congrats Screen -->
@@ -130,7 +121,6 @@
         </div>
 
         <div class="buttonWrapper">
-            <button class="mainButton" id="reset" onclick="confirmationPrompt('Reset')">Reset</button>
             <button class="mainButton" id="start" alt="start" onclick="start()">Start</button>
             <button class="mainButton" id="taskBtn" onclick="show('taskMenu')">Tasks</button>
         </div>
