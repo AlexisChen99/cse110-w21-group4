@@ -612,8 +612,6 @@ function deleteTask(uniqueID) {
 
     if (taskCount == 0) {
         taskBtn.innerHTML = dict['tasks'][lang];
-        taskBtn.style.fontSize = "25px";
-        taskBtn.style.width = "150px";
     }
 
     // ARIA
@@ -1000,6 +998,16 @@ function loadLang() {
 
     document.getElementById('confirm').innerText = dict['confirm'][lang];
     document.getElementById('cancel').innerText = dict['cancel'][lang];
+
+    if (lang == 'es') {
+        document.getElementById('settingsTitle').style.fontSize = "32px";
+        document.getElementById('closeSettings').style.fontSize = "17px";
+        var elements = document.getElementsByClassName('fieldLabel');
+        for (var i = 0; i < elements.length; i++) {
+            var element = elements[i];
+            element.style.fontSize = "16.5px";
+        }  
+    }
 }
 
 /**

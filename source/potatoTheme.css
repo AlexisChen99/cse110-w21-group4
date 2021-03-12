@@ -436,6 +436,7 @@ button {
 .mainButton {
     background-color: #333;
     font-size: 20px;
+    height: 52px;
 }
 
 #animationBtn {
