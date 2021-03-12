@@ -76,9 +76,19 @@ function playAudio(id) {
         return;
     }
     const audioObj = document.getElementById(id);
-    audioObj.volume = volume / 100;
-    if (mute == false) {
-        audioObj.play();
+    //check if volume is not negative
+    if(volume > 0)
+    {
+        //if volume is over 100, set it to 100
+        if(volume > 100)
+        {
+            volume = 100;
+        }
+
+        audioObj.volume = volume / 100;
+        if (mute == false) {
+             audioObj.play();
+        }
     }
 }
 
@@ -139,7 +149,7 @@ function start() {
 
     phase = 'work';
 
-    console.log('Setting input times');
+    // console.log('Setting input times');
     workLength = setInputTimes('work');
     shortBreakLength = setInputTimes('short');
     longBreakLength = setInputTimes('long');
@@ -209,7 +219,7 @@ function convertSeconds(secondsRemaining) {
     timerString += minutes + ':';
     if (seconds < 10) { timerString += '0'; }
     timerString += seconds;
-    console.log(timerString);
+    // console.log(timerString);
     return timerString;
 }
 
@@ -365,7 +375,7 @@ function setPageTitle(MMSS) {
  * Resets the pomodoro cycle to the beginning.
  */
 function stop() {
-    console.log('stop the timer and reset everything');
+    // console.log('stop the timer and reset everything');
     clearInterval(timer);
     document.getElementById('circleTimer').className = 'circlePotato';
     let bg = document.getElementById('background');
@@ -397,8 +407,8 @@ function addTask() {
     document.getElementById('enterTask').value = '';
     if(task != '') {
         createTask(task);
-       console.log('Created task with ID ' + uniqueID);
-        console.log('Task count: ' + taskCount);
+    //    console.log('Created task with ID ' + uniqueID);
+        // console.log('Task count: ' + taskCount);
  
     }
 }
@@ -480,9 +490,9 @@ function createTask(text) {
     taskBtn.style.width = "fit-content";
 
     savedTasks.push(text);
-    console.log(JSON.stringify(savedTasks));
+    // console.log(JSON.stringify(savedTasks));
     localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
-    console.log(localStorage.getItem("savedTasks"));
+    // console.log(localStorage.getItem("savedTasks"));
 
     newTask.appendChild(markBtn);
     newTask.appendChild(pinBtn);
@@ -594,7 +604,7 @@ function markDone(uniqueID) {
     originalTask.setAttribute('marked','true');
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
-    console.log('Tasks done: ' + tasksDone);
+    // console.log('Tasks done: ' + tasksDone);
 }
 
 /**
@@ -615,7 +625,7 @@ function unmark(uniqueID) {
     originalTask.setAttribute('marked', 'false');
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
-    console.log('Tasks done: ' + tasksDone);
+    // console.log('Tasks done: ' + tasksDone);
 }
 
 /**
@@ -651,7 +661,7 @@ function deleteTask(uniqueID) {
     if(pinnedTask) {
         const mainTasks = document.getElementById('mainTasks');
         mainTasks.removeChild(pinnedTask);
-        console.log('Deleted a pinned task.');
+        // console.log('Deleted a pinned task.');
 
     }
     const taskListContainer = document.getElementById('taskListContainer');
@@ -672,7 +682,7 @@ function deleteTask(uniqueID) {
     localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
 
 
-    console.log('Task count: ' + taskCount);
+    // console.log('Task count: ' + taskCount);
 }
 
 /**
@@ -703,8 +713,8 @@ function deleteAllTasks() {
     }
     localStorage.setItem('savedTasks', null);
     hide('prompt');
-    console.log('Deleted all tasks.');
-    console.log('Task Count: ' + taskCount);
+    // console.log('Deleted all tasks.');
+    // console.log('Task Count: ' + taskCount);
 }
 
 
@@ -715,7 +725,7 @@ function deleteAllTasks() {
  * @param {string} action The action to confirm. Either 'Reset' or 'Delete' all.
  */
  function confirmationPrompt(action) {
-     console.log('prompt');
+    //  console.log('prompt');
     show('prompt');
     let message = document.getElementById('confirmMessage');
     let confirmBtn = document.getElementById('confirm');
@@ -849,7 +859,7 @@ function loadData() {
  * @param {string} newTheme The theme to change to.
  */
 function changeTheme(newTheme) {
-    console.log("Changing theme to: " + newTheme);
+    // console.log("Changing theme to: " + newTheme);
     window.localStorage.setItem('theme', newTheme);
     theme = newTheme;
     const body = document.getElementById('background');
@@ -944,7 +954,7 @@ function changeTheme(newTheme) {
         
         let userTasks = document.getElementsByClassName('userTask');
         for(let i = 0; i < userTasks.length; i++) {
-            console.log('changing tasks');
+            // console.log('changing tasks');
             userTasks[i].children[1].firstChild.classList.replace('markDark', 'markLight');
             userTasks[i].children[4].firstChild.src = 'img/delete-task.png';
         }
@@ -958,7 +968,7 @@ function changeTheme(newTheme) {
 function loadLang() {
     let savedLang = window.localStorage.getItem('lang');
     if(savedLang == null) { 
-        console.log("No saved language detected. Your browser's language is: " + navigator.language);
+        // console.log("No saved language detected. Your browser's language is: " + navigator.language);
         if(navigator.language.includes('es')) {
             lang = 'es';
         } else if(navigator.language.includes('zh')) {
