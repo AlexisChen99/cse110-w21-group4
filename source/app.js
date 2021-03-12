@@ -23,14 +23,18 @@ var pinCount = 0;
 let savedTasks = [];
 let volume = 10;
 let theme;                  // Potato, Dark, Light, undefined (Capitalized)
-let mute = false;
+let mute = false;           // whether the volume is muted
+let dance = true;           // show dancing potatoes or still potatoes
+
+let congrats;               // the congratulations modal
+let volumeInput;            // the volume input
 
 window.onload = function() {
-    const volumeInput = document.getElementById('volume');
-    volumeInput.addEventListener('change', changeAudio);
+    volumeInput = document.getElementById('volume');
+    volumeInput.addEventListener('change', changeVolume);
 
-    const resetBtn = document.getElementById('reset');
-    resetBtn.onclick = function() { confirmationPrompt('Reset'); };
+    /*const resetBtn = document.getElementById('reset');
+    resetBtn.onclick = function() { confirmationPrompt('Stop'); };*/
 
     const cancelBtn = document.getElementById('cancel');
     cancelBtn.onclick = function() { hide('prompt'); };
@@ -38,8 +42,21 @@ window.onload = function() {
     backBtn.onclick = function() { back(); };
     const nextBtn = document.getElementById('next');
     nextBtn.onclick = function() { next(); };
-    
-    
+
+    congrats = document.getElementById('congratsScreen');
+    //make addTask execute on enter press
+    window.addEventListener('keyup', function (e) {
+        //if the pressed key is the enter key
+        if(e.keyCode === 13) {
+            addTask();
+        }
+    })
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == congrats) {
+        congrats.style.display = 'none';
+        }
+    } 
     // Load's users theme, TODO previous input settings, taskList, language
     loadData();
     loadLang();
@@ -47,15 +64,9 @@ window.onload = function() {
 }
 
 /**
- * Event Listener for muted audio
- */
-
-
-
-/**
  * Play the audio from break to work
  * id:   'breakToWorkAudio',         'workToBreakAudio'
- * Path: 'audio/Rooster Crow.wav', 'audio/Dove.wav'
+ *      ,'victoryAudio'
  * 
  * @param {string} id The audio block involved with the rooster call
  */
@@ -64,24 +75,35 @@ function playAudio(id) {
     if(volume == 0) {
         return;
     }
-
     const audioObj = document.getElementById(id);
-    audioObj.volume = volume / 100;
+    //check if volume is not negative
+    if(volume > 0)
+    {
+        //if volume is over 100, set it to 100
+        if(volume > 100)
+        {
+            volume = 100;
+        }
 
-    if (mute == false) {
-        audioObj.play();
+        audioObj.volume = volume / 100;
+        if (mute == false) {
+             audioObj.play();
+        }
     }
 }
 
-function changeAudio() {
-    const volumeInput = document.getElementById('volume');
-    volume = volumeInput.value;
+/**
+ * Adjusts volume for all sounds to be played
+ *  
+ */
+function changeVolume(event) {
+    //const volumeInput = document.getElementById('volume');
+    volume = event.target.value;
+    localStorage.setItem('volume', volume);
 }
 
-{/* <audio id="breakToWorkAudio" src='audio/Rooster Crow.wav'></audio> */}
-
 /**
- * Mute currently does nothing
+ * Mute adjusts the boolean which decides whether we play audio or not
  */
 function toggleMute() {
     // Audio icon and volume
@@ -96,11 +118,10 @@ function toggleMute() {
         mute = false;
     }
 
+    localStorage.setItem('mute', mute);
 }
 
 /**
- * MIGHT CHANGE TO LISTEN TO AN 'INPUT' EVENT LISTENER
- * https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event
  * Sets the input times when the cycle isn't in progress.
  * @param {string} phase The phase to set the input times
  * @returns {number} The input time in seconds associated with the phase
@@ -108,39 +129,50 @@ function toggleMute() {
 function setInputTimes(phase) {
     let minutes = document.getElementById(phase+'Min').value;
     let seconds = document.getElementById(phase+'Sec').value;
+
+    localStorage.setItem(phase+'Min', minutes);
+    localStorage.setItem(phase+'Sec', seconds);
+
     return (+minutes) * 60 + (+seconds);
 }
+
 
 /**
  * Starts the timer and decrements the timer's MM:SS every second.
  * If the timer was stopped and resumed, the input times are not modified.
  */
 function start() {
-    if(phase != 'stopped') {
-        //console.log('Setting input times');
-        phase = 'work';
-        workLength = setInputTimes('work');
-        shortBreakLength = setInputTimes('short');
-        longBreakLength = setInputTimes('long');
+
+    if(taskCount == 0) {
+        return;
     }
 
+    phase = 'work';
+
+    // console.log('Setting input times');
+    workLength = setInputTimes('work');
+    shortBreakLength = setInputTimes('short');
+    longBreakLength = setInputTimes('long');
 
     secondsRemaining = setTimeRemaining();
-    document.getElementById('reset').disabled = true;
+    //document.getElementById('reset').disabled = true;
     document.getElementById('start').innerHTML = dict['stop'][lang];
-    document.getElementById('start').onclick = stop;
+    document.getElementById('start').onclick = function() { confirmationPrompt('Stop'); };
     document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
-    // Still synchronous
+
     if (taskCount > 0) {    
         timer = setInterval(function () {
-            // once all the tasks have ended, clear the timer
-            if (taskCount == tasksDone) {   // FIXME
+            // once all the tasks have ended, clear the timer and show congrats screen
+            if (taskCount == tasksDone) {
                 clearInterval(timer);
                 phase = 'idle';
                 // Update the phase
                 document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
                 // Disable the reset button
-                document.getElementById('reset').disabled = true;
+                //document.getElementById('reset').disabled = true;
+                displayCongrats();
+                stop();
+                deleteAllTasks();
             } else {
                 // Display the time MM:SS
                 MMSS = convertSeconds(secondsRemaining);
@@ -150,7 +182,7 @@ function start() {
 
                 if (secondsRemaining < 0) {
                     if (phase == 'work') {
-                        playAudio('breakToWorkAudio');
+                        playAudio('workToBreakAudio');
                     }
                     if (phase != 'work') {
                         playAudio('breakToWorkAudio');
@@ -158,7 +190,6 @@ function start() {
                     updatePhase();
                     secondsRemaining = setTimeRemaining();
                     document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
-
                     // To change to dark background, need to create a new class
                     const background = document.getElementById('background');
                     if(theme == 'Potato' && phase == 'short break' || phase == 'long break') {
@@ -171,6 +202,7 @@ function start() {
         }, 1000); //update the timer every second
     }
 }
+
 
 /**
  * Converts the seconds in the remaining time to the format {min}:{sec}
@@ -187,7 +219,6 @@ function convertSeconds(secondsRemaining) {
     timerString += minutes + ':';
     if (seconds < 10) { timerString += '0'; }
     timerString += seconds;
-    //console.log(timerString);
     return timerString;
 }
 
@@ -199,10 +230,11 @@ function updatePhase() {
 
     if (phase == 'work') {
         pomosDone++;
+        localStorage.setItem('pomosDone', pomosDone);
         if (theme == 'Potato') {
             circle.className = 'circlePotato';
+            showPotatos();
          }
-        showPotatos();
         
         if (pomosDone % 4 != 0) {
             // If the pomos completed is less than 4 (1-3)
@@ -231,21 +263,6 @@ function updatePhase() {
     }
 }
 
-/** hides all of the dancing potato gifs */
-function hidePotatos() {
-    document.getElementById('cycle1').style.display = 'none';
-    document.getElementById('cycle2').style.display = 'none';
-    document.getElementById('cycle3').style.display = 'none';
-    document.getElementById('cycle0').style.display = 'none';
-}
-
-/**shows a a number of dancing potatoe gives based on the pomosDone */
-function showPotatos() {
-
-    document.getElementById('cycle'+pomosDone%4).style.display = 'inline';
-
-}
-
 /**
  * Checks what the current timer state is from 
  * 'work', 'short break', 'long break', 'stopped'
@@ -256,8 +273,76 @@ function showPotatos() {
 function setTimeRemaining() {
     return (phase == 'work') ? workLength :     
         (phase == 'short break') ? shortBreakLength : 
-        (phase == 'stopped') ? secondsRemaining :
         longBreakLength;                        
+}
+
+/**
+ *  Appends a pomotato to the congrats screen
+ *  for each pomo done and displays the congrats screen
+ */
+function displayCongrats() {
+    for(let i = 0; i < pomosDone; i++) {
+        let potato = document.createElement('img');
+        if(dance) {
+            potato.src = 'img/potato-dance.gif';
+        } else {
+            potato.src ='img/pomotato.png';
+        }
+        congrats.appendChild(potato);
+    }
+    document.getElementById("congratsText").innerHTML = 'it took you ' + pomosDone + ' pomos to finish all your tasks';
+    playAudio('victoryAudio');
+    congrats.style.display = 'block';
+}
+
+/** 
+ * hides all of the dancing potato gifs 
+ */
+function hidePotatos() {
+    document.getElementById('cycle0').style.display = 'none';
+    document.getElementById('cycle1').style.display = 'none';
+    document.getElementById('cycle2').style.display = 'none';
+    document.getElementById('cycle3').style.display = 'none';
+}
+
+/**
+ *   Shows a a number of dancing potatoe gives based on the pomosDone 
+ */
+function showPotatos() {
+    document.getElementById('cycle'+pomosDone%4).style.display = 'inline';
+}
+
+/**
+ * Switches between dancing and still potatos 
+ */
+function toggleDance() {
+    if(dance == true) {
+        dance = false;
+        switchPotatoStill();
+    } else {
+        dance = true;
+        switchPotatoDance();
+    }
+}
+
+/**
+ * Makes the src of all the pomotato images a gif
+*/
+function switchPotatoDance() {
+    document.getElementById('cycle0').src = 'img/potato-dance.gif';
+    document.getElementById('cycle1').src = 'img/potato-dance.gif';
+    document.getElementById('cycle2').src = 'img/potato-dance.gif';
+    document.getElementById('cycle3').src = 'img/potato-dance.gif';
+}
+
+/**
+ * Makes the src of all the pomotato images a png
+ */
+function switchPotatoStill() {
+    document.getElementById('cycle0').src = 'img/pomotato.png';
+    document.getElementById('cycle1').src = 'img/pomotato.png';
+    document.getElementById('cycle2').src = 'img/pomotato.png';
+    document.getElementById('cycle3').src = 'img/pomotato.png';   
 }
 
 /**
@@ -286,28 +371,30 @@ function setPageTitle(MMSS) {
     return MMSS + phaseSymbol + 'Potato Timer';
 }
 
-/**
- * Stops the timer. The current time remaining in the phase is saved. 
- */
-function stop() {
-    clearInterval(timer);
-    phase = 'stopped';
-    document.title = setPageTitle(MMSS);
-    document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
-    document.getElementById('reset').disabled = false;
-    document.getElementById('start').innerHTML = dict['start'][lang];
-    document.getElementById('start').onclick = start;
-}
+
+
 /**
  * Resets the pomodoro cycle to the beginning.
  */
-function reset() {
-    //console.log('reset timer');
+function stop() {
+    // console.log('stop the timer and reset everything');
+    clearInterval(timer);
+    document.getElementById('circleTimer').className = 'circlePotato';
+    let bg = document.getElementById('background');
+    if(theme == 'Potato' && phase != 'work') {
+        bg.classList.replace('potatoBreak', 'potatoWork');
+    }
+    hidePotatos();
     phase = 'idle';
-  
     document.getElementById('timerDisplay').innerHTML='- - : - -';
-    tasksDone = 0;
+    document.getElementById('phaseDisplay').innerHTML=dict['phase'][phase][lang];
+
+    document.getElementById('start').innerHTML = dict['start'][lang];
+    document.getElementById('start').onclick = start;
+
+    //tasksDone = 0;
     pomosDone = 0;
+    localStorage.setItem('pomosDone',pomosDone);
 
     uniqueID = 1;
     hide('prompt');
@@ -315,23 +402,18 @@ function reset() {
 
 /** 
  * Adds a non-blank task to the list of tasks. 
- * TODO: If the taskCount is less than 4, add the task to the main page.
+ * 
  */
 function addTask() {
     const task = document.getElementById('enterTask').value;
     document.getElementById('enterTask').value = '';
     if(task != '') {
         createTask(task);
-        //console.log('Created task with ID ' + uniqueID);
-        //console.log('Task count: ' + taskCount);
  
     }
 }
 
 /**
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!1
- *          INCOMPLETE: POTATO THEME MARK TASK TO POTATO IMAGE
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * Creates a userTask in the taskListContainer. 
  * This does not display a task on the main page.
  * A userTask is identified with a unique numerical ID.
@@ -408,9 +490,9 @@ function createTask(text) {
     taskBtn.style.width = "fit-content";
 
     savedTasks.push(text);
-    //console.log(JSON.stringify(savedTasks));
+    // console.log(JSON.stringify(savedTasks));
     localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
-    //console.log(localStorage.getItem("savedTasks"));
+    // console.log(localStorage.getItem("savedTasks"));
 
     newTask.appendChild(markBtn);
     newTask.appendChild(pinBtn);
@@ -427,9 +509,6 @@ function createTask(text) {
 }
 
 /** 
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!1111
- * INCOMPLETE: POTATO THEME MARK TASK TO POTATO IMAGE
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * Creates 'pinned' userTask in the mainTasks container. 
  * This display an existing task on the main page.
  * A pinned task is identified as '#pin' where # is the uniqueID.
@@ -525,7 +604,6 @@ function markDone(uniqueID) {
     originalTask.setAttribute('marked','true');
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
-    //console.log('Tasks done: ' + tasksDone);
 }
 
 /**
@@ -546,7 +624,6 @@ function unmark(uniqueID) {
     originalTask.setAttribute('marked', 'false');
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
-    //console.log('Tasks done: ' + tasksDone);
 }
 
 /**
@@ -582,7 +659,6 @@ function deleteTask(uniqueID) {
     if(pinnedTask) {
         const mainTasks = document.getElementById('mainTasks');
         mainTasks.removeChild(pinnedTask);
-        //console.log('Deleted a pinned task.');
 
     }
     const taskListContainer = document.getElementById('taskListContainer');
@@ -602,8 +678,6 @@ function deleteTask(uniqueID) {
     savedTasks.splice(savedTasks.indexOf(taskText), 1);
     localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
 
-
-    //console.log('Task count: ' + taskCount);
 }
 
 /**
@@ -623,6 +697,7 @@ function deleteAllTasks() {
     }
 
     taskCount = 0;
+    tasksDone = 0;
     uniqueID = 1;
     const taskBtn = document.getElementById('taskBtn');
 
@@ -633,8 +708,6 @@ function deleteAllTasks() {
     }
     localStorage.setItem('savedTasks', null);
     hide('prompt');
-    //console.log('Deleted all tasks.');
-    //console.log('Task Count: ' + taskCount);
 }
 
 
@@ -645,14 +718,13 @@ function deleteAllTasks() {
  * @param {string} action The action to confirm. Either 'Reset' or 'Delete' all.
  */
  function confirmationPrompt(action) {
-    //console.log('prompt');
     show('prompt');
     let message = document.getElementById('confirmMessage');
     let confirmBtn = document.getElementById('confirm');
 
-    if(action == 'Reset') {
+    if(action == 'Stop') {
         message.innerHTML = dict['confirmReset'][lang];
-        confirmBtn.onclick = reset;
+        confirmBtn.onclick = stop;
     } else if (action == 'Delete') {
         message.innerHTML = dict['confirmDeleteAll'][lang];
         confirmBtn.onclick = deleteAllTasks;
@@ -711,10 +783,11 @@ function next() {
     currPage.innerText = dict[page][currPage.id][lang];
 }
 /** 
- * Save user's last theme selected locally 
- * TODO: Previous input settings, taskList, language
+ * Save user's last theme and settings selected locally 
  */
 function loadData() {
+
+    //Theme data
     theme = window.localStorage.getItem('theme');
     switch(theme) {
         case 'Potato':
@@ -733,6 +806,41 @@ function loadData() {
             //console.log('no previous theme');
             changeTheme('Potato');
     }
+    
+    //Timer Data
+    if(localStorage.getItem('longMin') != null) {
+        //console.log('setting time settings');
+        document.getElementById('longMin').value = localStorage.getItem('longMin');
+        document.getElementById('longSec').value = localStorage.getItem('longSec');
+        document.getElementById('shortMin').value = localStorage.getItem('shortMin');
+        document.getElementById('shortSec').value = localStorage.getItem('shortSec');
+        document.getElementById('workMin').value = localStorage.getItem('workMin');
+        document.getElementById('workSec').value = localStorage.getItem('workSec');
+    } else {
+        console.log('no previous time settings');
+    }
+
+    //Volume Data
+    if(localStorage.getItem('volume') != null) {
+        volume = Number(localStorage.getItem('volume'));
+        document.getElementById('volume').value = volume;
+    } else {
+        console.log('no previous volume settings');
+    }
+
+    //Mute Data
+    if(localStorage.getItem('mute') == 'true') {
+        toggleMute();
+    } else {
+        console.log('no previous mute settings');
+    }
+
+    //Pomo Data
+    if(localStorage.getItem('pomosDone') != null) {
+        pomosDone = localStorage.getItem('pomosDone');
+    } else {
+        console.log('no previous pomos');
+    }
 }
 
 /**
@@ -743,7 +851,6 @@ function loadData() {
  * @param {string} newTheme The theme to change to.
  */
 function changeTheme(newTheme) {
-    //console.log("Changing theme to: " + newTheme);
     window.localStorage.setItem('theme', newTheme);
     theme = newTheme;
     const body = document.getElementById('background');
@@ -751,6 +858,8 @@ function changeTheme(newTheme) {
 
     if(newTheme == 'Potato') {
         body.classList.add('potatoWork');
+    } else {
+        hidePotatos();
     }
 
     const circle = document.getElementById('circleTimer');
@@ -836,7 +945,7 @@ function changeTheme(newTheme) {
         
         let userTasks = document.getElementsByClassName('userTask');
         for(let i = 0; i < userTasks.length; i++) {
-            console.log('changing tasks');
+            // console.log('changing tasks');
             userTasks[i].children[1].firstChild.classList.replace('markDark', 'markLight');
             userTasks[i].children[4].firstChild.src = 'img/delete-task.png';
         }
@@ -844,11 +953,12 @@ function changeTheme(newTheme) {
 
     hide('settingsMenu');
 }
-
+/**
+ * Loads the language settings and applies them
+ */
 function loadLang() {
     let savedLang = window.localStorage.getItem('lang');
     if(savedLang == null) { 
-        //console.log("No saved language detected. Your browser's language is: " + navigator.language);
         if(navigator.language.includes('es')) {
             lang = 'es';
         } else if(navigator.language.includes('zh')) {
@@ -869,7 +979,7 @@ function loadLang() {
     document.getElementById('phaseDisplay').innerText = dict['phase']['idle'][lang];
     document.getElementById('start').innerText = dict['start'][lang];
     document.getElementById('taskBtn').innerText = dict['tasks'][lang];
-    document.getElementById('reset').innerText = dict['reset'][lang];
+    //document.getElementById('reset').innerText = dict['reset'][lang];
     document.getElementById('enterTask').placeholder = dict['enterTask'][lang];
     document.getElementById('taskAdder').innerText = dict['add'][lang];
 
@@ -882,7 +992,6 @@ function loadLang() {
     document.getElementById('workTime').innerText = dict['workTime'][lang];
     document.getElementById('shortTime').innerText = dict['shortBreak'][lang];
     document.getElementById('longTime').innerText = dict['longBreak'][lang];
-    document.getElementById('cycleLength').innerText = dict['cycleLength'][lang];
     document.getElementById('volume').innerText = dict['volume'][lang];
 
     document.getElementById('tasksTitle').innerText = dict['tasks'][lang];
@@ -893,6 +1002,10 @@ function loadLang() {
     document.getElementById('cancel').innerText = dict['cancel'][lang];
 }
 
+/**
+ * Loads the tasks from local storage and creates them again
+ * 
+ */
 function loadTasks() {
     let savedTasks = JSON.parse(localStorage.getItem('savedTasks'));
     if(!savedTasks) {

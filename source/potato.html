@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Potato Timer</title>
     <link rel="stylesheet" href="potatoTheme.css">
+    <link rel="stylesheet" href="congrats.css">
     <link rel="icon" type="image/png" href="img/potatoIcon.png">
 
     <script src="app.js"></script>
@@ -75,17 +76,13 @@
                         <input type="number" class="customTime" id="longSec" value="00" min="0" max="59" maxlength="2">
                     </div>
                     <div>
-                        <label for="cycleLength" class="fieldLabel" id="cycleLength">Length of Cycle</label>
-                        <input type="number" class="customTime" id="cycleLength" value="4">
-                    </div>
-                    <div>
-                        <label for="volume" class="fieldLabel" id="volume">Volume (%)</label>
-                        <input type="number" class="customVolume" id="volume" value="25" min="0" max="100">
+                        <label for="volume" class="fieldLabel" id="volumeLabel">Volume (%)</label>
+                        <input type="number" class="customVolume" id="volume" value="10" min="0" max="100">
                         <button class="transparent" onclick="toggleMute()">
                             <img src="img/volume.png" alt="Mute?" id="volumeIcon">
                         </button>
                     </div>
-                    <button class="mainButton showing">Disable Potato Animation</button>
+                    <button class="mainButton showing" onclick="toggleDance()">Toggle Dancing</button>
                 </div>
 
                 <span id="langContainer">
@@ -99,19 +96,31 @@
             <!-- End of Settings Menu -->
         </div>
 
+
+        <!-- Start of Congrats Screen -->
+
+        <div id="congratsScreen" class = "modal">   
+            <div class="modal-content">
+                <h1>Congratulations!</h1>
+                <p id="congratsText">It took you $pomosDone pomos to complete your task</p>
+            </div>
+        </div>
+
+        <!-- End of Congrats Screen -->
+
         <div id="phaseWrapper">
             <p id="phaseDisplay">Idle</p>
         </div>
 
-        <audio id="breakToWorkAudio" src='audio/Rooster Crow.wav'></audio>
-        <audio id="workToBreakAudio" src='audio/Dove.wav'></audio>
+        <audio id="breakToWorkAudio" src='audio/newPM.mp3'></audio>
+        <audio id="workToBreakAudio" src='audio/GenericNotify.mp3'></audio>
+        <audio id="victoryAudio" src = 'audio/Tournament1st.mp3'></audio>
 
         <div id="circleTimer">
             <p class="timer" id="timerDisplay">- - : - -</p>
         </div>
 
         <div class="buttonWrapper">
-            <button class="mainButton" id="reset" onclick="confirmationPrompt('Reset')">Reset</button>
             <button class="mainButton" id="start" alt="start" onclick="start()">Start</button>
             <button class="mainButton" id="taskBtn" onclick="show('taskMenu')">Tasks</button>
         </div>
@@ -143,10 +152,10 @@
         <button class="mainButton" id="cancel">Cancel</button>
     </div>
 
+    <img src="img/potato-dance.gif" id="cycle0" class="hidden">
     <img src="img/potato-dance.gif" id="cycle1" class="hidden">
     <img src="img/potato-dance.gif" id="cycle2" class="hidden">
     <img src="img/potato-dance.gif" id="cycle3" class="hidden">
-    <img src="img/potato-dance.gif" id="cycle0" class="hidden">
 
     <a href="#contentWrapper" class="top">Back to Top</a>
     <noscript>
