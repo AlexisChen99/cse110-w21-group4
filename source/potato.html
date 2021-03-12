@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Potato Timer</title>
     <link rel="stylesheet" href="potatoTheme.css">
+    <link rel="stylesheet" href="congrats.css">
     <link rel="icon" type="image/png" href="img/potatoIcon.png">
 
     <script src="app.js"></script>
@@ -85,7 +86,7 @@
                             <img src="img/volume.png" alt="Mute?" id="volumeIcon">
                         </button>
                     </div>
-                    <button class="mainButton showing">Disable Potato Animation</button>
+                    <button class="mainButton showing" onclick="toggleDance()">Toggle Dancing</button>
                 </div>
 
                 <span id="langContainer">
@@ -99,12 +100,30 @@
             <!-- End of Settings Menu -->
         </div>
 
+
+        <!-- Start of Congrats Screen -->
+
+        <div id="congratsScreen" class = "modal">
+            
+            <div class="modal-content">
+
+                <h1>Congratulations!</h1>
+                <p id="congratsText">It took you pomos to complete your task</p>
+
+
+            </div>
+
+        </div>
+
+        <!-- End of Congrats Screen -->
+
         <div id="phaseWrapper">
             <p id="phaseDisplay">Idle</p>
         </div>
 
-        <audio id="breakToWorkAudio" src='audio/Rooster Crow.wav'></audio>
-        <audio id="workToBreakAudio" src='audio/Dove.wav'></audio>
+        <audio id="breakToWorkAudio" src='audio/newPM.mp3'></audio>
+        <audio id="workToBreakAudio" src='audio/GenericNotify.mp3'></audio>
+        <audio id="victoryAudio" src = 'audio/Tournament1st.mp3'></audio>
 
         <div id="circleTimer">
             <p class="timer" id="timerDisplay">- - : - -</p>
@@ -143,10 +162,10 @@
         <button class="mainButton" id="cancel">Cancel</button>
     </div>
 
+    <img src="img/potato-dance.gif" id="cycle0" class="hidden">
     <img src="img/potato-dance.gif" id="cycle1" class="hidden">
     <img src="img/potato-dance.gif" id="cycle2" class="hidden">
     <img src="img/potato-dance.gif" id="cycle3" class="hidden">
-    <img src="img/potato-dance.gif" id="cycle0" class="hidden">
 
     <a href="#contentWrapper" class="top">Back to Top</a>
     <noscript>
