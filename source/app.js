@@ -804,7 +804,7 @@ function notifyUser(action) {
     // }, 3000);
     setTimeout(function () {
         notif.innerText = '';
-    }, 5000);
+    }, 3000);
     return action;
 }
 

@@ -1,6 +1,10 @@
 /*---------------------------------
          Background Display
 ---------------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
 
 body {
     margin: 0;
@@ -98,8 +102,8 @@ noscript div {
     margin-bottom: 18px;
     margin-left: 30px;
     /* text-shadow: 1px 1px 1px #000; */
-    font-family: Georgia,serif;
-    font-size: 20px;
+    font-family: 'Kaushan Script', cursive;
+    font-size: 25px;
     font-variant: small-caps; 
     text-transform: none; 
     font-weight: 100;
@@ -431,6 +435,7 @@ button {
 
 .mainButton {
     background-color: #333;
+    font-size: 20px;
 }
 
 #animationBtn {
@@ -537,7 +542,7 @@ input {
     top: 60px;
     right: auto;
     bottom: auto;
-    padding-left: 20px;
+    padding-left: 10px;
     color: red;
     font-size: 20px;
     font-weight: bold;
