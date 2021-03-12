@@ -36,11 +36,6 @@ describe('Test setTimeRemaining', () => {
 		app.setPhase("long break");
 		expect(app.setTimeRemaining("long break")).toBe(1500);
 	});
-
-    test('Test "stopped", return 0min (0)', () => {
-		app.setPhase("stopped");
-		expect(app.setTimeRemaining("stopped")).toBe(0);
-	});
 });
 
 describe('Test setPageTitle', () => {
