@@ -646,8 +646,6 @@ function deleteAllTasks() {
 
     if (taskCount == 0) {
         taskBtn.innerHTML = dict['tasks'][lang];
-        taskBtn.style.fontSize = "25px";
-        taskBtn.style.width = "150px";
     }
     savedTasks = [];
     localStorage.removeItem('savedTasks');
@@ -925,7 +923,7 @@ function changeTheme(newTheme) {
         }
 
         let prompt = document.getElementById('prompt');
-        prompt.classList.add('menuLight');
+        prompt.classList.add('themeLight');
         if (prompt.classList.contains('themeDark')) {
             prompt.classList.remove('themeDark');
         }
