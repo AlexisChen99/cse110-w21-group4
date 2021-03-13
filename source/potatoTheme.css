@@ -65,7 +65,8 @@ p {
 }
 
 .opacityHide {
-    opacity: 0;
+    /* opacity: 0; */
+    animation: text_hide .3s ease forwards;
 }
 
 noscript {
