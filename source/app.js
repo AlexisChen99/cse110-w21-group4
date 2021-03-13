@@ -25,75 +25,6 @@ let theme;                  // Potato, Dark, Light, undefined (Capitalized)
 let mute = false;
 let animation;
 
-window.onload = function () {
-    // Load's users theme, TODO previous input settings, taskList, language
-    loadTheme();
-    loadLang();
-    if(window.localStorage.getItem('returning') == 'true') {
-        loadTasks();
-        loadSettings();
-
-    } else { 
-        window.localStorage.setItem('returning', true);
-        console.log('first time');
-    }
-}
-
-
-/**
- * 
- */
-function toggleMute() {
-    mute = '' + !(mute === 'true');
-    changeMuteIcon();
-    window.localStorage.setItem('mute', mute);
-}
-
-function changeMuteIcon() {
-    let volumeIcon = document.getElementById('volumeIcon');
-    if (mute == 'true') {
-        if (theme == 'Dark') {
-            volumeIcon.src = 'img/volume-mute-dark.png';
-        } else {
-            volumeIcon.src = 'img/volume-mute.png';
-        }
-        volumeIcon.alt = dict['unmute'][lang];
-    } else {
-        if (theme == 'Dark') {
-            volumeIcon.src = 'img/volume-dark.png';
-        } else {
-            volumeIcon.src = 'img/volume.png';
-        }
-        volumeIcon.alt = dict['mute'][lang];
-    }
-}
-/**
- * Disables or enables the dancing potato animation. 
- * @returns Flag if animations are turned on or off
- */
-function toggleAnimation() {
-    animation = !animation;
-    if (animation) { // Turn on animation and say disable
-        document.getElementById('animationBtn').innerText = dict['disableAnimation'][lang];
-    } else {
-        hidePotatos();
-        document.getElementById('animationBtn').innerText = dict['enableAnimation'][lang];
-    }
-    localStorage.setItem('animation', animation);
-    return animation;
-}
-/**
- * MIGHT CHANGE TO LISTEN TO AN 'INPUT' EVENT LISTENER
- * https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event
- * Sets the input times when the cycle isn't in progress.
- * @param {string} phase The phase to set the input times
- * @returns {number} The input time in seconds associated with the phase
- */
-function setInputTimes(phase) {
-    let minutes = document.getElementById(phase + 'Min').value;
-    let seconds = document.getElementById(phase + 'Sec').value;
-    return (+minutes) * 60 + (+seconds);
-}
 
 /**
  * Play the audio from break to work
@@ -113,9 +44,70 @@ function setInputTimes(phase) {
     audioObj.volume = volume / 100;
     audioObj.play();
 }
+
+/**
+ * Flips the value of mute from string 'true' or 'false'.
+ */
+function toggleMute() {
+    mute = '' + !(mute === 'true');
+    changeMuteIcon();
+    window.localStorage.setItem('mute', mute);
+}
+
+/**
+ * Changes the icon and ARIA of the mute volume.
+ */
+function changeMuteIcon() {
+    let volumeIcon = document.getElementById('volumeIcon');
+    if (mute == 'true') {
+        if (theme == 'Dark') {
+            volumeIcon.src = 'img/volume-mute-dark.png';
+        } else {
+            volumeIcon.src = 'img/volume-mute.png';
+        }
+        volumeIcon.alt = dict['unmute'][lang];
+    } else {
+        if (theme == 'Dark') {
+            volumeIcon.src = 'img/volume-dark.png';
+        } else {
+            volumeIcon.src = 'img/volume.png';
+        }
+        volumeIcon.alt = dict['mute'][lang];
+    }
+}
+
+/**
+ * Disables or enables the dancing potato animation. 
+ * @returns Flag if animations are turned on or off
+ */
+function toggleAnimation() {
+    animation = '' + !(animation === 'true');
+    if (animation == 'true') {
+        document.getElementById('animationBtn').innerText = dict['disableAnimation'][lang];
+    } else {
+        hidePotatoes();
+        document.getElementById('animationBtn').innerText = dict['enableAnimation'][lang];
+    }
+    localStorage.setItem('animation', animation);
+    return animation;
+}
+
+/**
+ * Sets the input times when the cycle isn't in progress.
+ * @param {string} phase The phase to set the input times
+ * @returns {number} The input time in seconds associated with the phase
+ */
+function setInputTimes(phase) {
+    let minutes = document.getElementById(phase + 'Min').value;
+    let seconds = document.getElementById(phase + 'Sec').value;
+    return (+minutes) * 60 + (+seconds);
+}
+
+
 /**
  * Checks each input after user leaves the input to see if they entered a number
  * beyond the min and max. If so, change the overflowed number to min/max.
+ * Locally stores every input, so each place that uses this should take from local storage.
  * @param {number} input 
  */
 function checkValue(input) {
@@ -131,19 +123,6 @@ function checkValue(input) {
     localStorage.setItem(input, inputValue);
 }
 
-function loadSettings() {
-    document.getElementById('workMin').value = (+localStorage.getItem('workMin'));
-    document.getElementById('workSec').value = (+localStorage.getItem('workSec'));
-    document.getElementById('shortMin').value = (+localStorage.getItem('shortMin'));
-    document.getElementById('shortSec').value = (+localStorage.getItem('shortSec'));
-    document.getElementById('longMin').value = (+localStorage.getItem('longMin'));
-    document.getElementById('longSec').value = (+localStorage.getItem('longSec'));
-    document.getElementById('volume').value = (+localStorage.getItem('volume'));
-    
-    changeAudio();
-    mute = window.localStorage.getItem('mute');
-    changeMuteIcon();
-}
 
 /**
  * Starts the timer and decrements the timer's MM:SS every second.
@@ -242,11 +221,10 @@ function updatePhase() {
         pomosDone++;
         if (theme == 'Potato') {
             circle.className = 'circlePotato';
-            if (animation) {
-                showPotatos();
+            if (animation === 'true') {
+                showPotatoes();
             }
         }
-
 
         if (pomosDone % 4 != 0) {
             // If the pomos completed is less than 4 (1-3)
@@ -279,7 +257,7 @@ function updatePhase() {
                 } else {
                     circle.className = 'circlePotatoBreak';
                 }
-                hidePotatos();
+                hidePotatoes();
             }
         }
         phase = 'work';
@@ -290,7 +268,7 @@ function updatePhase() {
 }
 
 /** hides all of the dancing potato gifs */
-function hidePotatos() {
+function hidePotatoes() {
     document.getElementById('cycle1').style.display = 'none';
     document.getElementById('cycle2').style.display = 'none';
     document.getElementById('cycle3').style.display = 'none';
@@ -298,10 +276,8 @@ function hidePotatos() {
 }
 
 /**shows a a number of dancing potatoe gives based on the pomosDone */
-function showPotatos() {
-
+function showPotatoes() {
     document.getElementById('cycle' + pomosDone % 4).style.display = 'inline';
-
 }
 
 /**
@@ -866,24 +842,36 @@ function notifyUser(action) {
     return action;
 }
 
+
+window.onload = function () {
+    // Load's users theme, TODO previous input settings, taskList, language
+    loadTheme();
+    loadLang();
+    if(window.localStorage.getItem('returning') == 'true') {
+        loadTasks();
+        loadSettings();
+    } else { 
+        window.localStorage.setItem('returning', true);
+        console.log('first time');
+    }
+}
+
+
+
 /** 
  * Save user's last theme selected locally 
  * TODO: Previous input settings, taskList, language
  */
 function loadTheme() {
-    theme = window.localStorage.getItem('theme');
-    switch (theme) {
+    switch (window.localStorage.getItem('theme')) {
         case 'Potato':
             changeTheme('Potato');
-            // console.log(theme);
             break;
         case 'Dark':
             changeTheme('Dark');
-            // console.log(theme);
             break;
         case 'Light':
             changeTheme('Light');
-            // console.log(theme);
             break;
         default:
             console.log('no previous theme');
@@ -923,7 +911,6 @@ function changeTheme(newTheme) {
             volumeIcon.src = 'img/volume-mute-dark.png';
         }
 
-
         let buttons = document.getElementsByClassName('mainButton');
         for (let i = 0; i < buttons.length; i++) {
             buttons[i].classList.add('darkButton');
@@ -951,7 +938,15 @@ function changeTheme(newTheme) {
         let userTasks = document.getElementsByClassName('userTask');
         for (let i = 0; i < userTasks.length; i++) {
             userTasks[i].children[1].firstChild.classList.replace('markLight', 'markDark');
-            userTasks[i].children[4].firstChild.src = 'img/delete-task-dark.png';
+            let pinSrc = userTasks[i].children[2].firstChild.src;
+            if(pinSrc.includes('img/pinned.png')) {
+                userTasks[i].children[2].firstChild.src = 'img/pinned-dark.png';
+            } else {
+                userTasks[i].children[2].firstChild.src = 'img/unpinned-dark.png';
+            }
+            if(userTasks[i].children[4]) {
+                userTasks[i].children[4].firstChild.src = 'img/delete-task-dark.png';
+            }
         }
     } else if (newTheme == 'Potato' || newTheme == 'Light') {
         let settingsIcon = document.getElementById('settingsIcon');
@@ -994,7 +989,15 @@ function changeTheme(newTheme) {
         for (let i = 0; i < userTasks.length; i++) {
             console.log('changing tasks');
             userTasks[i].children[1].firstChild.classList.replace('markDark', 'markLight');
-            userTasks[i].children[4].firstChild.src = 'img/delete-task.png';
+            let pinSrc = userTasks[i].children[2].firstChild.src;
+            if(pinSrc.includes('img/pinned-dark.png')) {
+                userTasks[i].children[2].firstChild.src = 'img/pinned.png';
+            } else {
+                userTasks[i].children[2].firstChild.src = 'img/unpinned.png';
+            }
+            if(userTasks[i].children[4]) {
+                userTasks[i].children[4].firstChild.src = 'img/delete-task.png';
+            }        
         }
     }
 
@@ -1002,8 +1005,8 @@ function changeTheme(newTheme) {
         show('animationBtn');
     } else {
         hide('animationBtn');
+        hidePotatoes();
     }
-
     hide('settingsMenu');
 }
 
@@ -1036,7 +1039,6 @@ function loadLang() {
     document.getElementById('phaseDisplay').innerText = dict['phase']['idle'][lang];
     document.getElementById('start').innerText = dict['start'][lang];
     document.getElementById('taskBtn').innerText = dict['tasks'][lang];
-    // document.getElementById('reset').innerText = dict['reset'][lang];
     document.getElementById('enterTask').placeholder = dict['enterTask'][lang];
     document.getElementById('taskAdder').innerText = dict['add'][lang];
 
@@ -1090,5 +1092,26 @@ function loadTasks() {
 
     for (let i = 0; i < savedTasks.length; i++) {
         createTask(savedTasks[i]);
+    }
+}
+
+/**
+ * Loads all of the user-custom settings in the settings menu.
+ */
+function loadSettings() {
+    document.getElementById('workMin').value = (+localStorage.getItem('workMin'));
+    document.getElementById('workSec').value = (+localStorage.getItem('workSec'));
+    document.getElementById('shortMin').value = (+localStorage.getItem('shortMin'));
+    document.getElementById('shortSec').value = (+localStorage.getItem('shortSec'));
+    document.getElementById('longMin').value = (+localStorage.getItem('longMin'));
+    document.getElementById('longSec').value = (+localStorage.getItem('longSec'));
+    document.getElementById('volume').value = (+localStorage.getItem('volume'));
+    mute = window.localStorage.getItem('mute');
+    changeMuteIcon();
+    animation = window.localStorage.getItem('animation');
+    if(animation == 'true') {
+        document.getElementById('animationBtn').innerText = dict['disableAnimation'][lang];
+    } else {
+        document.getElementById('animationBtn').innerText = dict['enableAnimation'][lang];
     }
 }

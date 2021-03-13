@@ -370,7 +370,7 @@ noscript div {
 }
 
 #settingsMenu {
-    max-width: 375px;
+    max-width: 380px;
 }
 .taskHelp {
     font-size: 17px;
@@ -470,7 +470,7 @@ button:hover {
     margin: 20px 20px 20px 20px;
     padding-left: 15px;
     padding-right: 15px;
-    max-width: 350px;
+    /* max-width: 350px; */
     text-align: right;
 }
 
@@ -498,7 +498,8 @@ input {
 #volumeIcon {
     display: inline-block;
     width: 40px;
-    margin-left: 12px;
+    margin-left: 11px;
+    margin-right: 10px;
     vertical-align: middle;
     cursor: pointer;
 }
@@ -515,7 +516,7 @@ input {
 
 .userInputContainer p {
     display: inline;
-    margin: 0 -10px;
+    margin: 0 -5px;
     font-size: 25px;
 }
 
