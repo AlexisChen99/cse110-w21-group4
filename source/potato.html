@@ -89,8 +89,8 @@
                     <button class="transparent lightThemeText" id="Spanish" onclick="setLang('es')">Español</button>
                     <button class="transparent lightThemeText" id="Chinese" onclick="setLang('zh')">中文</button>
                     <button class="transparent lightThemeText" id="Korean" onclick="setLang('ko')" >한국어</button>
-                    <!-- <a onblur="hide('settingsMenu')">Close</a> -->
                 </span>
+                <button class="ariaClose" onclick="hide('settingsMenu')">Close</button>
             </div>
             <!-- End of Settings Menu -->
         </div>
@@ -136,7 +136,7 @@
             <p class="taskHelp" id="taskHelp">Mark a task as complete. Pin a task to the main display. </p>
             <div id="taskListContainer">
             </div>
-            <button id="ariaCloseTasks" onclick="hide('taskMenu')">Close</button>
+            <button class="ariaClose" onclick="hide('taskMenu')">Close</button>
         </div>
 
         <!-- End of content wrapper -->

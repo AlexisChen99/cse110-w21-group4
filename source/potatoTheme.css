@@ -768,16 +768,19 @@ input {
     color: inherit;
 }
 
-#ariaCloseTasks {
+.ariaClose {
     position: absolute;
     left: -10000px;
     top: auto;
+    margin-bottom: 10px;
     width: 1px;
     height: 1px;
     overflow: hidden;
+    border: none;
+    background: none;
 }
 
-#ariaCloseTasks:focus {
+.ariaClose:focus {
     position: static;
     width: auto;
     height: auto;
