@@ -179,21 +179,21 @@ var dict = {
         'instrContent': {
             en: 'Potato Timer is a Pomodoro Timer meant to improve your productivity by having you focus ' +
                 'for a set "work" time and a following "break" time. After every four work phases, a longer break period occurs.\n' +
-                '[Chinese]\n' + // These lines should be for users who don't know english (see other three areas)
+                '若想中文版，请点击右上角设置图标打开菜单。\n' + // These lines should be for users who don't know english (see other three areas)
                 '[Spanish]\n' +
                 '[Korean]\n', // 한국어에 설정 :)
             zh: '土豆计时器是一个帮助提高效率的番茄钟定时器，其通过使你专注在特定的工作时间' +
                 '并伴随之后的休息时间。在每四个工作阶段后，将会出现一个长休息时段。\n'+
-                '若想切回英文版，请点击右上角设置图标打开菜单。\n' + // Translated to something like this 
+                'To switch to English, click the gear icon to open the settings menu.\n' + // Translated to something like this 
                 '[Spanish]\n' +
                 '[Korean]\n',
             es: '' +
-                'To switch to English, click the gear icon to open the settings menu.' +
-                '[Chinese]\n' +
+                'To switch to English, click the gear icon to open the settings menu.\n' +
+                '若想中文版，请点击右上角设置图标打开菜单\n' +
                 '[Korean]\n',
             ko: '' +
-                'To switch to English, click the gear icon to open the settings menu.' +
-                '[Chinese]\n' +
+                'To switch to English, click the gear icon to open the settings menu.\n' +
+                '若想中文版，请点击右上角设置图标打开菜单\n' +
                 '[Spanish]\n',
         },
     },
@@ -329,6 +329,12 @@ var dict = {
         es: '',
         ko: '설명은 보여',
     },
+    'instructions': {
+        en: 'Instructions',
+        zh: '帮助菜单',
+        es: '',
+        ko: '설명',
+    },
     'settingsIcon': { // alt="Show Settings"
         en: 'Show Settings',
         zh: '显示设置菜单',
@@ -390,12 +396,17 @@ var dict = {
         es: '',
         ko: '',
     },
-
-    '': {
-        en: '',
-        zh: '',
+    'back': {
+        en: 'Back',
+        zh: '回去',
         es: '',
-        ko: '',
+        ko: '뒤로',
+    },
+    'next': {
+        en: 'Next',
+        zh: '下一',
+        es: '',
+        ko: '다음',
     },
     '': {
         en: '',

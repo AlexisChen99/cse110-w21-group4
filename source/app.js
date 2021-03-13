@@ -23,7 +23,7 @@ let savedTasks = [];
 let volume = 25;
 let theme;                  // Potato, Dark, Light, undefined (Capitalized)
 let mute = false;
-let animation = true;
+let animation;
 
 window.onload = function () {
     const volumeInput = document.getElementById('volume');
@@ -69,7 +69,7 @@ function playAudio(id) {
 function changeAudio() {
     const volumeInput = document.getElementById('volume');
     volume = volumeInput.value;
-    windwos.localStorage.setItem('volume', volume);
+    window.localStorage.setItem('volume', volume);
 }
 
 /**
@@ -110,6 +110,7 @@ function toggleAnimation() {
         hidePotatos();
         document.getElementById('animationBtn').innerText = dict['enableAnimation'][lang];
     }
+    localStorage.setItem('animation', animation);
     return animation;
 }
 /**
@@ -168,7 +169,7 @@ function start() {
 
                 if (secondsRemaining < 0) {
                     if (phase == 'work') {
-                        playAudio('breakToWorkAudio');
+                        playAudio('workToBreakAudio');
                     }
                     if (phase != 'work') {
                         playAudio('breakToWorkAudio');
@@ -228,6 +229,8 @@ function updatePhase() {
         if (pomosDone % 4 != 0) {
             // If the pomos completed is less than 4 (1-3)
             phase = 'short break';
+            // document.getElementById('cycleNum').innerText = (pomosDone % 4) + ' / 4';
+
             if (theme == 'Potato') {
                 if (lang == 'ko' || lang == 'zh') {
                     circle.className = 'circlePotatoBreakAsian';
@@ -380,22 +383,23 @@ function createTask(text) {
 
     let markBtn = document.createElement('button');
     markBtn.className = 'transparent';
-    markBtn.setAttribute('aria-label', 'Mark as Done');
+    markBtn.setAttribute('aria-label', dict['markBtn'][lang]);
 
     let pinBtn = document.createElement('button');
     pinBtn.classList.add('transparent'); //, 'smallIcon');
-    pinBtn.innerHTML = '<img src="img/unpinned.png" id="pin-' + uniqueID + '">';
-    pinBtn.setAttribute('aria-label', 'Pin to the Main Display');
+    pinBtn.setAttribute('aria-label', dict['pinBtn'][lang]);
 
     let delBtn = document.createElement('button');
     delBtn.classList.add('transparent', 'smallIcon');
-    delBtn.setAttribute('aria-label', 'Delete this Task');
+    delBtn.setAttribute('aria-label', dict['delBtn'][lang]);
 
     if (theme == 'Dark') {
-        markBtn.innerHTML = '<div class="markCircle markDark" id="mark-' + uniqueID + '"></div>'
+        markBtn.innerHTML = '<div class="markCircle markDark" id="mark-' + uniqueID + '"></div>';
+        pinBtn.innerHTML = '<img src="img/unpinned-dark.png" id="pin-' + uniqueID + '">';
         delBtn.innerHTML = '<img src="img/delete-task-dark.png" class="delete" id="del-' + uniqueID + '">';
     } else {
-        markBtn.innerHTML = '<div class="markCircle markLight" id="mark-' + uniqueID + '"></div>'
+        markBtn.innerHTML = '<div class="markCircle markLight" id="mark-' + uniqueID + '"></div>';
+        pinBtn.innerHTML = '<img src="img/unpinned.png" id="pin-' + uniqueID + '">';
         delBtn.innerHTML = '<img src="img/delete-task.png" class="delete" id="del-' + uniqueID + '">';
     }
 
@@ -413,9 +417,18 @@ function createTask(text) {
         pinnedTask = document.getElementById(newTask.id + '-copy');
         if (!pinnedTask) {
             createPinnedTask(text, newTask.id);
-            origTask.src = 'img/pinned.png';
+            if(theme == 'Dark') {
+                origTask.src = 'img/pinned-dark.png';
+                console.log('dark pin');
+            } else {
+                origTask.src = 'img/pinned.png';
+            }
         } else {
-            origTask.src = 'img/unpinned.png';
+            if(theme == 'Dark') {
+                origTask.src = 'img/unpinned-dark.png';
+            } else {
+                origTask.src = 'img/unpinned.png';
+            }
             unpinTask(newTask.id);
         }
     };
@@ -452,7 +465,11 @@ function createTask(text) {
 
     if (taskCount == 1) {
         createPinnedTask(text, uniqueID);
-        document.getElementById('pin-' + uniqueID).src = 'img/pinned.png';
+        if(theme == 'Dark') {
+            document.getElementById('pin-' + uniqueID).src = 'img/pinned-dark.png';
+        } else {
+            document.getElementById('pin-' + uniqueID).src = 'img/pinned.png';
+        }
     }
 
     notifyUser('addTask');
@@ -477,22 +494,23 @@ function createPinnedTask(text, uniqueID) {
 
     let markBtn = document.createElement('button');
     markBtn.className = 'transparent';
-    markBtn.setAttribute('aria-label', 'Mark as Done');
+    markBtn.setAttribute('aria-label', dict['markBtn'][lang]);
 
     let pinBtn = document.createElement('button');
     pinBtn.classList.add('transparent'); //, 'smallIcon');
-    pinBtn.innerHTML = '<img src="img/pinned.png">';
-    pinBtn.setAttribute('aria-label', 'Pin to the Main Display');
+    pinBtn.setAttribute('aria-label', dict['pinBtn'][lang]);
 
     // let delBtn = document.createElement('button');
     // delBtn.classList.add('transparent', 'smallIcon');
     // delBtn.setAttribute('aria-label', 'Delete this Task');
 
     if (theme == 'Dark') {
-        markBtn.innerHTML = '<div class="markCircle markDark" id="mark-' + uniqueID + '-copy"></div>'
+        markBtn.innerHTML = '<div class="markCircle markDark" id="mark-' + uniqueID + '-copy"></div>';
+        pinBtn.innerHTML = '<img src="img/pinned-dark.png">';
         //    delBtn.innerHTML = '<img src="img/delete-task-dark.png" class="delete" id="del-'+uniqueID+'-copy">';
     } else {
-        markBtn.innerHTML = '<div class="markCircle markLight" id="mark-' + uniqueID + '-copy"></div>'
+        markBtn.innerHTML = '<div class="markCircle markLight" id="mark-' + uniqueID + '-copy"></div>';
+        pinBtn.innerHTML = '<img src="img/pinned.png">';
         //    delBtn.innerHTML = '<img src="img/delete-task.png" class="delete" id="del-'+uniqueID+'-copy">';
     }
 
@@ -589,7 +607,11 @@ function unpinTask(uniqueID) {
     let pinnedTask = document.getElementById(uniqueID + '-copy');
     const mainTasks = document.getElementById('mainTasks');
     mainTasks.removeChild(pinnedTask);
-    document.getElementById('pin-' + uniqueID).src = 'img/unpinned.png';
+    if(theme == 'Dark') {
+        document.getElementById('pin-' + uniqueID).src = 'img/unpinned-dark.png';
+    } else {
+        document.getElementById('pin-' + uniqueID).src = 'img/unpinned.png';
+    }
     notifyUser('unpinTask');
     setPinnedSkip();
 }
@@ -768,13 +790,15 @@ function back() {
         content.classList.add('leftAlign');
     }
     document.getElementById('page').innerText = page + ' / 4';
+    document.getElementById('next').innerHTML = dict['next'][lang];
+
 }
 
 function next() {
     if (page >= 4) {
         hide('instructionsMenu');
         page = 0;
-        document.getElementById('next').innerHTML = 'Next';
+        // document.getElementById('next').innerHTML = ;
         return;
     }
     page++;
@@ -787,8 +811,12 @@ function next() {
         content.classList.remove('leftAlign');
         content.innerText = content.innerText +
             'Alexis Chen\nElizabeth Cho\nKevin Jang\nMarco Kuan\nAhmad Milad\nRohan Patel\nMiaoqiu Sun\nJessie Zou\n';
-        content.innerHTML = content.innerHTML + '<a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-32px.png"></a>';
-        document.getElementById('next').innerHTML = 'Close';
+        if(theme == 'Dark') {
+            content.innerHTML = content.innerHTML + '<a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-Light-32px.png"></a>';
+        } else {
+            content.innerHTML = content.innerHTML + '<a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-32px.png"></a>';
+        }
+        document.getElementById('next').innerHTML = dict['close'][lang];
     }
 }
 //
@@ -1003,12 +1031,20 @@ function loadLang() {
     document.getElementById('volume').innerText = dict['volume'][lang];
 
     document.getElementById('tasksTitle').innerText = dict['tasks'][lang];
+    document.getElementById('taskHelp').innerText = dict['taskHelp'][lang];
     document.getElementById('closeTasks').innerText = dict['close'][lang];
     document.getElementById('deleteAll').innerText = dict['deleteAll'][lang];
 
     document.getElementById('confirm').innerText = dict['confirm'][lang];
     document.getElementById('cancel').innerText = dict['cancel'][lang];
-
+    document.getElementById('instrTitle').innerText = dict['instructions'][lang];
+    document.getElementById('back').innerText = dict['back'][lang];
+    document.getElementById('next').innerText = dict['next'][lang];
+    if(animation) {
+        document.getElementById('animationBtn').innerText = dict['disableAnimation'][lang];
+    } else {
+        document.getElementById('animationBtn').innerText = dict['enableAnimation'][lang];
+    }
     if (lang == 'es') {
         document.getElementById('settingsTitle').style.fontSize = "32px";
         document.getElementById('closeSettings').style.fontSize = "17px";
