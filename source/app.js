@@ -442,7 +442,7 @@ function createTask(text) {
     let ariaSkip = document.createElement('a');
     ariaSkip.href = '#' + (uniqueID + 1);
     ariaSkip.className = 'ariaSkipTask';
-    ariaSkip.innerText = 'Skip';
+    ariaSkip.innerText = dict['skip'][lang];
     newTask.appendChild(ariaSkip);
 
     taskCount++;
@@ -572,6 +572,7 @@ function markDone(uniqueID) {
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
+    notifyUser('mark');
 }
 
 /**
@@ -593,6 +594,7 @@ function unmark(uniqueID) {
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
     console.log('Tasks done: ' + tasksDone);
+    notifyUser('unmark');
 }
 
 /**
@@ -820,22 +822,7 @@ function next() {
 //
 function notifyUser(action) {
     let notif = document.getElementById('notificationBar');
-    switch (action) {
-        case 'addTask':
-            notif.innerText = 'a task was added';
-        case 'pinTask':
-        case 'unpinTask':
-        case 'delTask':
-        case 'deleteAll':
-            notif.innerText = dict['notification'][action][lang];
-            break;
-        default:
-            notif.innerText = '';
-    }
-    // show('notificationBar');
-    // setTimeout(function() {
-    //     hide('notificationBar')
-    // }, 3000);
+    notif.innerText = dict['notification'][action][lang];
     setTimeout(function () {
         notif.innerText = '';
     }, 3000);
@@ -1057,6 +1044,10 @@ function loadLang() {
     document.getElementById('tasksTitle').innerText = dict['tasks'][lang];
     document.getElementById('taskHelp').innerText = dict['taskHelp'][lang];
     document.getElementById('closeTasks').innerText = dict['close'][lang];
+    let close = document.getElementsByClassName('ariaClose');
+    for(let i = 0; i < close.length; i++) {
+        close.innerText = dict['close'][lang];
+    }
     document.getElementById('deleteAll').innerText = dict['deleteAll'][lang];
 
     document.getElementById('confirm').innerText = dict['confirm'][lang];

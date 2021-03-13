@@ -408,6 +408,18 @@ var dict = {
         es: '',
         ko: '다음',
     },
+    'skip': {
+        en: 'Skip',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    'top': {
+        en: 'Back to Top', // ARIA Back to top of the page
+        zh: '',
+        es: '',
+        ko: '',
+    },
     '': {
         en: '',
         zh: '',
