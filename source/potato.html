@@ -53,31 +53,31 @@
                 <div class="userInputContainer">
                     <div>
                         <label for="work" class="fieldLabel" id="workTime">Work Time</label>
-                        <input type="number" class="customTime" id="workMin" value="25" min="0" max="59" maxlength="2">
+                        <input type="number" class="customTime" id="workMin" value="25" min="0" max="59" maxlength="2" onblur="checkValue('workMin')">
                         <p>:</p>
-                        <input type="number" class="customTime" id="workSec" value="00" min="0" max="59" maxlength="2">
+                        <input type="number" class="customTime" id="workSec" value="00" min="0" max="59" maxlength="2" onblur="checkValue('workSec')">
                     </div>
 
                     <div>
                         <label for="shortBreak" class="fieldLabel" id="shortTime">Short Break</label>
-                        <input type="number" class="customTime" id="shortMin" value="5" min="0" max="59" maxlength="2">
+                        <input type="number" class="customTime" id="shortMin" value="5" min="0" max="59" maxlength="2"  autocomplete="off" onblur="checkValue('shortMin')">
                         <p>:</p>
-                        <input type="number" class="customTime" id="shortSec" value="00" min="0" max="59" maxlength="2">
+                        <input type="number" class="customTime" id="shortSec" value="00" min="0" max="59" maxlength="2"  autocomplete="off" onblur="checkValue('shortSec')">
                     </div>
 
                     <div>
                         <label for="longBreak" class="fieldLabel" id="longTime">Long Break</label>
-                        <input type="number" class="customTime" id="longMin" value="25" min="0" max="59" maxlength="2">
+                        <input type="number" class="customTime" id="longMin" value="25" min="0" max="59" maxlength="2"  autocomplete="off" onblur="checkValue('longMin')">
                         <p>:</p>
-                        <input type="number" class="customTime" id="longSec" value="00" min="0" max="59" maxlength="2">
+                        <input type="number" class="customTime" id="longSec" value="00" min="0" max="59" maxlength="2"  autocomplete="off" onblur="checkValue('longSec')">
                     </div>
                     <!-- <div>
                         <label for="cycleLength" class="fieldLabel" id="cycleLength">Length of Cycle</label>
                         <input type="number" class="customTime" id="cycleLength" value="4">
                     </div> -->
                     <div>
-                        <label for="volume" class="fieldLabel" id="volume">Volume (%)</label>
-                        <input type="number" class="customVolume" id="volume" value="25" min="0" max="100">
+                        <label for="volume" class="fieldLabel" id="volumeTitle">Volume (%)</label>
+                        <input type="number" class="customVolume" id="volume" value="25" min="0" max="100" autocomplete="off" onblur="checkValue('volume')">
                         <button class="transparent" onclick="toggleMute()">
                             <img src="img/volume.png" alt="Mute volume" id="volumeIcon">
                         </button>

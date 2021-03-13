@@ -26,78 +26,47 @@ let mute = false;
 let animation;
 
 window.onload = function () {
-    const volumeInput = document.getElementById('volume');
-    volumeInput.addEventListener('change', changeAudio);
-
-    // const resetBtn = document.getElementById('reset');
-    // resetBtn.onclick = function() { confirmationPrompt('Reset'); };
-
     // Load's users theme, TODO previous input settings, taskList, language
     loadTheme();
     loadLang();
-    loadTasks();
-}
+    if(window.localStorage.getItem('returning') == 'true') {
+        loadTasks();
+        loadSettings();
 
-
-
-
-
-/**
- * Play the audio from break to work
- * id:   'breakToWorkAudio',         'workToBreakAudio'
- * Path: 'audio/Rooster Crow.wav', 'audio/Dove.wav'
- * 
- * @param {string} id The audio block involved with the rooster call
- */
-function playAudio(id) {
-    // Check if the volume is muted
-    if (volume == 0) {
-        return;
-    }
-
-    const audioObj = document.getElementById(id);
-    audioObj.volume = volume / 100;
-
-    if (mute == false) {
-        audioObj.play();
+    } else { 
+        window.localStorage.setItem('returning', true);
+        console.log('first time');
     }
 }
 
-/**
- * Locally stores audio. 
- */
-function changeAudio() {
-    const volumeInput = document.getElementById('volume');
-    volume = volumeInput.value;
-    window.localStorage.setItem('volume', volume);
-}
 
 /**
  * 
  */
 function toggleMute() {
-    // Audio icon and volume
-    const volumeIcon = document.getElementById('volumeIcon');
-    if (mute == false) {
-        //change img
+    mute = '' + !(mute === 'true');
+    changeMuteIcon();
+    window.localStorage.setItem('mute', mute);
+}
+
+function changeMuteIcon() {
+    let volumeIcon = document.getElementById('volumeIcon');
+    if (mute == 'true') {
         if (theme == 'Dark') {
             volumeIcon.src = 'img/volume-mute-dark.png';
         } else {
             volumeIcon.src = 'img/volume-mute.png';
         }
-        mute = true;
+        volumeIcon.alt = dict['unmute'][lang];
     } else {
-        //change img
         if (theme == 'Dark') {
             volumeIcon.src = 'img/volume-dark.png';
         } else {
             volumeIcon.src = 'img/volume.png';
         }
-        mute = false;
+        volumeIcon.alt = dict['mute'][lang];
     }
-    windows.localStorage.setItem('mute', mute);
 }
-
 /**
  * Disables or enables the dancing potato animation. 
  * @returns Flag if animations are turned on or off
@@ -127,6 +96,56 @@ function setInputTimes(phase) {
 }
 
 /**
+ * Play the audio from break to work
+ * id:   'breakToWorkAudio',         'workToBreakAudio'
+ * Path: 'audio/Rooster Crow.wav', 'audio/Dove.wav'
+ * 
+ * @param {string} id The audio block involved with the rooster call
+ */
+ function playAudio(id) {
+    volume = (+localStorage.getItem('volume'));
+    // Check if the volume is muted
+    if (volume == 0 || mute =='true') {
+        return;
+    }
+
+    const audioObj = document.getElementById(id);
+    audioObj.volume = volume / 100;
+    audioObj.play();
+}
+/**
+ * Checks each input after user leaves the input to see if they entered a number
+ * beyond the min and max. If so, change the overflowed number to min/max.
+ * @param {number} input 
+ */
+function checkValue(input) {
+    let inputValue = document.getElementById(input).value;
+    if(inputValue < 0) {
+        inputValue = 0;
+    } else if (input == 'volume' && inputValue > 100) {
+        inputValue = 100;
+    } else if (input != 'volume' && inputValue >= 60) {
+        inputValue = 59;
+    }
+    document.getElementById(input).value = inputValue;
+    localStorage.setItem(input, inputValue);
+}
+
+function loadSettings() {
+    document.getElementById('workMin').value = (+localStorage.getItem('workMin'));
+    document.getElementById('workSec').value = (+localStorage.getItem('workSec'));
+    document.getElementById('shortMin').value = (+localStorage.getItem('shortMin'));
+    document.getElementById('shortSec').value = (+localStorage.getItem('shortSec'));
+    document.getElementById('longMin').value = (+localStorage.getItem('longMin'));
+    document.getElementById('longSec').value = (+localStorage.getItem('longSec'));
+    document.getElementById('volume').value = (+localStorage.getItem('volume'));
+    
+    changeAudio();
+    mute = window.localStorage.getItem('mute');
+    changeMuteIcon();
+}
+
+/**
  * Starts the timer and decrements the timer's MM:SS every second.
  * If the timer was stopped and resumed, the input times are not modified.
  */
@@ -137,6 +156,9 @@ function start() {
         workLength = setInputTimes('work');
         shortBreakLength = setInputTimes('short');
         longBreakLength = setInputTimes('long');
+        window.localStorage.setItem('workTime', workLength);
+        window.localStorage.setItem('shortTime', shortBreakLength);
+        window.localStorage.setItem('longTime', longBreakLength);
     }
 
 
@@ -1028,7 +1050,7 @@ function loadLang() {
     document.getElementById('shortTime').innerText = dict['shortBreak'][lang];
     document.getElementById('longTime').innerText = dict['longBreak'][lang];
     // document.getElementById('cycleLength').innerText = dict['cycleLength'][lang];
-    document.getElementById('volume').innerText = dict['volume'][lang];
+    document.getElementById('volumeTitle').innerText = dict['volume'][lang];
 
     document.getElementById('tasksTitle').innerText = dict['tasks'][lang];
     document.getElementById('taskHelp').innerText = dict['taskHelp'][lang];
