@@ -8,9 +8,9 @@
  */
 let lang;
 let phase = 'idle';         // idle, work, short break, long break, stopped
-let workLength = 5;             // work time (seconds)   15 mins (900)
-let shortBreakLength = 5;       // short break time      5 mins  (300)
-let longBreakLength = 10;        // long break time       25 mins (1500)
+let workLength = 900;             // work time (seconds)   15 mins (900)
+let shortBreakLength = 300;       // short break time      5 mins  (300)
+let longBreakLength = 1500;        // long break time       25 mins (1500)
 let timer;                  // Represents the interval change of 1s
 let secondsRemaining = 0;   // Displays on timer
 let MMSS;                   // {string} MM:SS format
@@ -22,14 +22,32 @@ var uniqueID = 1;           // Used to assign uniqueID's when deleting specific 
 let savedTasks = [];
 let volume = 25;
 let theme;                  // Potato, Dark, Light, undefined (Capitalized)
-let mute = false;
-let animation;
+let mute = false;           // whether the volume is muted
+let animation = true;           // show dancing potatoes or still potatoes
+let congrats;               // the congratulations modal
+let volumeInput;            // the volume input
 
+window.onload = function() {
+    congrats = document.getElementById('congratsScreen');
+    //make addTask execute on enter press
+    window.addEventListener('keyup', function (e) {
+        //if the pressed key is the enter key
+        if(e.keyCode === 13) {
+            addTask();
+        }
+    })
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == congrats) {
+        congrats.style.display = 'none';
+        }
+    } 
+}
 
 /**
  * Play the audio from break to work
  * id:   'breakToWorkAudio',         'workToBreakAudio'
- * Path: 'audio/Rooster Crow.wav', 'audio/Dove.wav'
+ *      ,'victoryAudio'
  * 
  * @param {string} id The audio block involved with the rooster call
  */
@@ -39,7 +57,6 @@ let animation;
     if (volume == 0 || mute =='true') {
         return;
     }
-
     const audioObj = document.getElementById(id);
     audioObj.volume = volume / 100;
     audioObj.play();
@@ -100,9 +117,9 @@ function toggleAnimation() {
 function setInputTimes(phase) {
     let minutes = document.getElementById(phase + 'Min').value;
     let seconds = document.getElementById(phase + 'Sec').value;
+  
     return (+minutes) * 60 + (+seconds);
 }
-
 
 /**
  * Checks each input after user leaves the input to see if they entered a number
@@ -123,49 +140,49 @@ function checkValue(input) {
     localStorage.setItem(input, inputValue);
 }
 
-
 /**
  * Starts the timer and decrements the timer's MM:SS every second.
  * If the timer was stopped and resumed, the input times are not modified.
  */
 function start() {
-    if (phase != 'stopped') {
-        console.log('Setting input times');
-        phase = 'work';
-        workLength = setInputTimes('work');
-        shortBreakLength = setInputTimes('short');
-        longBreakLength = setInputTimes('long');
-        window.localStorage.setItem('workTime', workLength);
-        window.localStorage.setItem('shortTime', shortBreakLength);
-        window.localStorage.setItem('longTime', longBreakLength);
+
+    if(taskCount == 0) {
+        return;
     }
 
+    phase = 'work';
+
+    // console.log('Setting input times');
+    workLength = setInputTimes('work');
+    shortBreakLength = setInputTimes('short');
+    longBreakLength = setInputTimes('long');
 
     secondsRemaining = setTimeRemaining();
-    document.getElementById('reset').disabled = true;
+    //document.getElementById('reset').disabled = true;
     document.getElementById('start').innerHTML = dict['stop'][lang];
-    document.getElementById('start').onclick = stop;
+    document.getElementById('start').onclick = function() { confirmationPrompt('Stop'); };
     document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
+    
     //hide task container
     hideOptions();
-    // Still synchronous
-    if (taskCount > 0) {
+
+    if (taskCount > 0) {    
         timer = setInterval(function () {
-            // once all the tasks have ended, clear the timer
-            if (taskCount == tasksDone) {   // FIXME
+            // once all the tasks have ended, clear the timer and show congrats screen
+            if (taskCount == tasksDone) {
                 clearInterval(timer);
                 phase = 'idle';
                 // Update the phase
                 document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
-                document.getElementById('timerDisplay').innerHTML = '- - : - -';
-                document.getElementById('start').innerHTML = dict['start'][lang];
-                document.getElementById('start').onclick = start;
                 showOptions();
+                displayCongrats();
+                stop();
+                deleteAllTasks();
             } else {
                 // Display the time MM:SS
                 MMSS = convertSeconds(secondsRemaining);
                 document.getElementById('timerDisplay').innerHTML = MMSS;
-                setPageTitle(MMSS);
+                document.title = setPageTitle(MMSS);
                 secondsRemaining--;
 
                 if (secondsRemaining < 0) {
@@ -178,7 +195,6 @@ function start() {
                     updatePhase();
                     secondsRemaining = setTimeRemaining();
                     document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
-
                     // To change to dark background, need to create a new class
                     const background = document.getElementById('background');
                     if (theme == 'Potato' && phase == 'short break' || phase == 'long break') {
@@ -191,6 +207,7 @@ function start() {
         }, 1000); //update the timer every second
     }
 }
+
 
 /**
  * Converts the seconds in the remaining time to the format {min}:{sec}
@@ -207,7 +224,6 @@ function convertSeconds(secondsRemaining) {
     timerString += minutes + ':';
     if (seconds < 10) { timerString += '0'; }
     timerString += seconds;
-    console.log(timerString);
     return timerString;
 }
 
@@ -219,6 +235,7 @@ function updatePhase() {
 
     if (phase == 'work') {
         pomosDone++;
+        localStorage.setItem('pomosDone', pomosDone);
         if (theme == 'Potato') {
             circle.className = 'circlePotato';
             if (animation === 'true') {
@@ -267,19 +284,6 @@ function updatePhase() {
     }
 }
 
-/** hides all of the dancing potato gifs */
-function hidePotatoes() {
-    document.getElementById('cycle1').style.display = 'none';
-    document.getElementById('cycle2').style.display = 'none';
-    document.getElementById('cycle3').style.display = 'none';
-    document.getElementById('cycle0').style.display = 'none';
-}
-
-/**shows a a number of dancing potatoe gives based on the pomosDone */
-function showPotatoes() {
-    document.getElementById('cycle' + pomosDone % 4).style.display = 'inline';
-}
-
 /**
  * Checks what the current timer state is from 
  * 'work', 'short break', 'long break', 'stopped'
@@ -288,16 +292,87 @@ function showPotatoes() {
  * @return {number} The time remaining for the current timer state.
  */
 function setTimeRemaining() {
-    return (phase == 'work') ? workLength :
-        (phase == 'short break') ? shortBreakLength :
-            (phase == 'stopped') ? secondsRemaining :
-                longBreakLength;
+    return (phase == 'work') ? workLength :     
+        (phase == 'short break') ? shortBreakLength : 
+        longBreakLength;                        
+}
+
+/**
+ *  Appends a pomotato to the congrats screen
+ *  for each pomo done and displays the congrats screen
+ */
+function displayCongrats() {
+    for(let i = 0; i < pomosDone; i++) {
+        let potato = document.createElement('img');
+        if(dance) {
+            potato.src = 'img/potato-dance.gif';
+        } else {
+            potato.src ='img/pomotato.png';
+        }
+        congrats.appendChild(potato);
+    }
+    document.getElementById("congratsText").innerHTML = 'it took you ' + pomosDone + ' pomos to finish all your tasks';
+    playAudio('victoryAudio');
+    congrats.style.display = 'block';
+}
+
+/** 
+ * hides all of the dancing potato gifs 
+ */
+function hidePotatoes() {
+    document.getElementById('cycle0').style.display = 'none';
+    document.getElementById('cycle1').style.display = 'none';
+    document.getElementById('cycle2').style.display = 'none';
+    document.getElementById('cycle3').style.display = 'none';
+}
+
+/**
+ *   Shows a number of dancing potatoe gives based on the pomosDone 
+ */
+function showPotatoes() {
+    document.getElementById('cycle'+pomosDone%4).style.display = 'inline';
+}
+
+/**
+ * Switches between dancing and still potatoes 
+ */
+function toggleDance() {
+    animation = '' + !(animation === 'true');
+    if (animation == 'true') {
+        switchPotatoDance();
+        document.getElementById('animationBtn').innerText = dict['disableAnimation'][lang];
+    } else {
+        switchPotatoStill();
+        document.getElementById('animationBtn').innerText = dict['enableAnimation'][lang];
+    }
+    localStorage.setItem('animation', animation);
+}
+
+/**
+ * Makes the src of all the pomotato images a gif
+*/
+function switchPotatoDance() {
+    document.getElementById('cycle0').src = 'img/potato-dance.gif';
+    document.getElementById('cycle1').src = 'img/potato-dance.gif';
+    document.getElementById('cycle2').src = 'img/potato-dance.gif';
+    document.getElementById('cycle3').src = 'img/potato-dance.gif';
+}
+
+/**
+ * Makes the src of all the pomotato images a png
+ */
+function switchPotatoStill() {
+    document.getElementById('cycle0').src = 'img/pomotato.png';
+    document.getElementById('cycle1').src = 'img/pomotato.png';
+    document.getElementById('cycle2').src = 'img/pomotato.png';
+    document.getElementById('cycle3').src = 'img/pomotato.png';   
 }
 
 /**
  * Sets the <title> element for users to see remaining time off-page.
  * 
  * @param {string} MMSS 'MM:SS' form
+ * @return {string} New page title
  */
 function setPageTitle(MMSS) {
     let phaseSymbol;
@@ -307,43 +382,42 @@ function setPageTitle(MMSS) {
             break;
         case 'short break':
         case 'long break':
-            phaseSymbol = ' Break -';
+            phaseSymbol = ' Break - ';
             break;
         case 'stopped':
             phaseSymbol = ' Stopped - '
             break;
+        default:
+            phaseSymbol = ' - ';
     }
 
-    document.title = MMSS + phaseSymbol + 'Potato Timer';
+    return MMSS + phaseSymbol + 'Potato Timer';
 }
 
-/**
- * Stops the timer. The current time remaining in the phase is saved. 
- */
-function stop() {
-    clearInterval(timer);
-    phase = 'stopped';
-    setPageTitle(MMSS);
-    document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
-    document.getElementById('reset').disabled = false;
-    document.getElementById('start').innerHTML = dict['start'][lang];
-    document.getElementById('start').onclick = start;
-    // document.getElementById('taskManager').style.opacity = 1; //show task Container
-    // document.getElementById('settingsIcon').style.opacity = 1; // show settings icon (top right)
-    // document.getElementById('help').style.opacity = 1; //show help icon
-    showOptions();
 
-}
+
 /**
  * Resets the pomodoro cycle to the beginning.
  */
-function reset() {
-    console.log('reset timer');
+function stop() {
+    // console.log('stop the timer and reset everything');
+    clearInterval(timer);
+    let bg = document.getElementById('background');
+    if(theme == 'Potato' && phase != 'work') {
+        document.getElementById('circleTimer').className = 'circlePotato';
+        bg.classList.replace('potatoBreak', 'potatoWork');
+    }
+    hidePotatoes();
     phase = 'idle';
+    document.getElementById('timerDisplay').innerHTML='- - : - -';
+    document.getElementById('phaseDisplay').innerHTML=dict['phase'][phase][lang];
 
-    document.getElementById('timerDisplay').innerHTML = '- - : - -';
-    tasksDone = 0;
+    document.getElementById('start').innerHTML = dict['start'][lang];
+    document.getElementById('start').onclick = start;
+
+    //tasksDone = 0;
     pomosDone = 0;
+    localStorage.setItem('pomosDone',pomosDone);
 
     uniqueID = 1;
     hide('prompt');
@@ -357,9 +431,8 @@ function addTask() {
     document.getElementById('enterTask').value = '';
     if (task != '') {
         createTask(task);
-        console.log('Created task with ID ' + uniqueID);
-        console.log('Task count: ' + taskCount);
-
+        // console.log('Created task with ID ' + uniqueID);
+        // console.log('Task count: ' + taskCount);
     }
 }
 
@@ -451,9 +524,9 @@ function createTask(text) {
     taskBtn.style.width = "fit-content";
 
     savedTasks.push(text);
-    console.log(JSON.stringify(savedTasks));
+    // console.log(JSON.stringify(savedTasks));
     localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
-    console.log(localStorage.getItem("savedTasks"));
+    // console.log(localStorage.getItem("savedTasks"));
 
     newTask.appendChild(markBtn);
     newTask.appendChild(pinBtn);
@@ -571,7 +644,7 @@ function markDone(uniqueID) {
     originalTask.setAttribute('marked', 'true');
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
-    console.log('Tasks done: ' + tasksDone);
+    // console.log('Tasks done: ' + tasksDone);
     notifyUser('mark');
 }
 
@@ -593,7 +666,7 @@ function unmark(uniqueID) {
     originalTask.setAttribute('marked', 'false');
     const taskBtn = document.getElementById('taskBtn');
     taskBtn.innerHTML = dict['tasks'][lang] + ' (' + tasksDone + '/' + taskCount + ')';
-    console.log('Tasks done: ' + tasksDone);
+    // console.log('Tasks done: ' + tasksDone);
     notifyUser('unmark');
 }
 
@@ -635,7 +708,7 @@ function deleteTask(uniqueID) {
     if (pinnedTask) {
         const mainTasks = document.getElementById('mainTasks');
         mainTasks.removeChild(pinnedTask);
-        console.log('Deleted a pinned task.');
+        // console.log('Deleted a pinned task.');
     }
     const taskListContainer = document.getElementById('taskListContainer');
     taskListContainer.removeChild(document.getElementById(uniqueID));
@@ -655,9 +728,9 @@ function deleteTask(uniqueID) {
     localStorage.setItem('savedTasks', JSON.stringify(savedTasks));
 
     notifyUser('delTask');
-    console.log('Task count: ' + taskCount);
+    // console.log('Task count: ' + taskCount);
 }
-// So you can see me code
+
 /**
  * Deletes all of the tasks from both the tsak list and main display, if possible.
  * Resets taskCount to 0 and uniqueID to 1.
@@ -675,6 +748,7 @@ function deleteAllTasks() {
     }
 
     taskCount = 0;
+    tasksDone = 0;
     uniqueID = 1;
     const taskBtn = document.getElementById('taskBtn');
 
@@ -685,8 +759,8 @@ function deleteAllTasks() {
     localStorage.removeItem('savedTasks');
     hide('prompt');
     notifyUser('deleteAll');
-    console.log('Deleted all tasks.');
-    console.log('Task Count: ' + taskCount);
+    // console.log('Deleted all tasks.');
+    // console.log('Task Count: ' + taskCount);
 }
 
 /**
@@ -718,14 +792,14 @@ function setPinnedSkip() {
  * @param {string} action The action to confirm. Either 'Reset' or 'Delete' all.
  */
 function confirmationPrompt(action) {
-    console.log('prompt');
+    // console.log('prompt');
     show('prompt');
     let message = document.getElementById('confirmMessage');
     let confirmBtn = document.getElementById('confirm');
-
-    if (action == 'Reset') {
+  
+    if(action == 'Stop') {
         message.innerHTML = dict['confirmReset'][lang];
-        confirmBtn.onclick = reset;
+        confirmBtn.onclick = stop;
     } else if (action == 'Delete') {
         message.innerHTML = dict['confirmDeleteAll'][lang];
         confirmBtn.onclick = deleteAllTasks;
@@ -846,8 +920,7 @@ window.onload = function () {
 
 
 /** 
- * Save user's last theme selected locally 
- * TODO: Previous input settings, taskList, language
+ * Save user's last theme and settings selected locally 
  */
 function loadTheme() {
     switch (window.localStorage.getItem('theme')) {
@@ -860,9 +933,44 @@ function loadTheme() {
         case 'Light':
             changeTheme('Light');
             break;
-        default:
-            console.log('no previous theme');
+        default: 
+            //console.log('no previous theme');
             changeTheme('Potato');
+    }
+    
+    //Timer Data
+    if(localStorage.getItem('longMin') != null) {
+        //console.log('setting time settings');
+        document.getElementById('longMin').value = localStorage.getItem('longMin');
+        document.getElementById('longSec').value = localStorage.getItem('longSec');
+        document.getElementById('shortMin').value = localStorage.getItem('shortMin');
+        document.getElementById('shortSec').value = localStorage.getItem('shortSec');
+        document.getElementById('workMin').value = localStorage.getItem('workMin');
+        document.getElementById('workSec').value = localStorage.getItem('workSec');
+    } else {
+        console.log('no previous time settings');
+    }
+
+    //Volume Data
+    if(localStorage.getItem('volume') != null) {
+        volume = Number(localStorage.getItem('volume'));
+        document.getElementById('volume').value = volume;
+    } else {
+        console.log('no previous volume settings');
+    }
+
+    //Mute Data
+    if(localStorage.getItem('mute') == 'true') {
+        toggleMute();
+    } else {
+        console.log('no previous mute settings');
+    }
+
+    //Pomo Data
+    if(localStorage.getItem('pomosDone') != null) {
+        pomosDone = localStorage.getItem('pomosDone');
+    } else {
+        console.log('no previous pomos');
     }
 }
 
@@ -874,7 +982,6 @@ function loadTheme() {
  * @param {string} newTheme The theme to change to.
  */
 function changeTheme(newTheme) {
-    console.log("Changing theme to: " + newTheme);
     window.localStorage.setItem('theme', newTheme);
     theme = newTheme;
     const body = document.getElementById('background');
@@ -882,6 +989,8 @@ function changeTheme(newTheme) {
 
     if (newTheme == 'Potato') {
         body.classList.add('potatoWork');
+    } else {
+        hidePotatoes();
     }
 
     const circle = document.getElementById('circleTimer');
@@ -973,8 +1082,8 @@ function changeTheme(newTheme) {
         }
 
         let userTasks = document.getElementsByClassName('userTask');
-        for (let i = 0; i < userTasks.length; i++) {
-            console.log('changing tasks');
+        for(let i = 0; i < userTasks.length; i++) {
+            // console.log('changing tasks');
             userTasks[i].children[1].firstChild.classList.replace('markDark', 'markLight');
             let pinSrc = userTasks[i].children[2].firstChild.src;
             if(pinSrc.includes('img/pinned-dark.png')) {
@@ -1005,7 +1114,7 @@ function setLang(selectedLang) {
 function loadLang() {
     let savedLang = window.localStorage.getItem('lang');
     if (savedLang == null) {
-        console.log("No saved language detected. Your browser's language is: " + navigator.language);
+        // console.log("No saved language detected. Your browser's language is: " + navigator.language);
         if (navigator.language.includes('es')) {
             lang = 'es';
         } else if (navigator.language.includes('zh')) {
@@ -1018,7 +1127,7 @@ function loadLang() {
         window.localStorage.setItem('lang', lang);
     } else {
         lang = savedLang;
-        console.log('language was saved');
+        //console.log('language was saved');
     }
 
     document.documentElement.lang = lang; // <HTML> tag
@@ -1072,8 +1181,8 @@ function loadLang() {
 }
 
 /**
- * All unmarked tasks are loaded onto the page.
- * @returns nothing
+ * Loads the tasks from local storage and creates them again
+ * @returns 
  */
 function loadTasks() {
     let savedTasks = JSON.parse(localStorage.getItem('savedTasks'));
@@ -1106,3 +1215,19 @@ function loadSettings() {
         document.getElementById('animationBtn').innerText = dict['enableAnimation'][lang];
     }
 }
+
+/**
+ * Manually sets the phase--for testing.
+ * 
+ * @param {string} newPhase The phase to change to.
+ */
+function setPhase(newPhase) {
+    phase = newPhase;
+}
+
+module.exports = {
+    setPhase,
+    convertSeconds,
+    setTimeRemaining,
+    setPageTitle
+ }
