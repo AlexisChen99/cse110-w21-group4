@@ -69,7 +69,7 @@ var dict = {
     },
     'enterTask': {
         en: 'Enter a Task To Start',
-        zh: '',
+        zh: '请输入任务来开始使用',
         es: 'Ingresa una tarea para empezar',
         ko: '시작하기 전에 과제가 추가하십시오',
     },
@@ -279,8 +279,8 @@ var dict = {
     },
     'notification': {
         'welcome': {
-            en: '',
-            zh: '',
+            en: 'Welcome Back!',
+            zh: '欢迎回来',
             es: '',
             ko: '',
         },
@@ -404,37 +404,37 @@ var dict = {
     },
     'back': {
         en: 'Back',
-        zh: '回去',
+        zh: '上一页',
         es: '',
         ko: '뒤로',
     },
     'next': {
         en: 'Next',
-        zh: '下一',
+        zh: '下一页',
         es: '',
         ko: '다음',
     },
     'skip': {
         en: 'Skip',
-        zh: '',
+        zh: '跳过',
         es: '',
         ko: '',
     },
     'top': {
         en: 'Back to Top', // ARIA Back to top of the page
-        zh: '',
+        zh: '回到最上方',
         es: '',
         ko: '',
     },
     'congratsTitle': {
         en: 'Congratulations!',
-        zh: '',
+        zh: '恭喜',
         es: '',
         ko: '',
     },
     'congrats1': {
         en: 'It took you ',
-        zh: '',
+        zh: '你花了总共 ',
         es: '',
         ko: '',
     },
@@ -444,31 +444,31 @@ var dict = {
     'congrats2': {
         en: ' pomotatoes to finish all of your tasks!', 
         //pomotatoes in English, pomodoros in other languages?
-        zh: '',
+        zh: ' 个土豆来完成所有任务',
         es: '',
         ko: '',
     },
     'potatoDance': {
         en: 'Dancing potato',
-        zh: '',
+        zh: '土豆跳舞',
         es: '',
         ko: '감자가 추고 있어',
     },
     'pomotato': {
         en: 'Pomotato', // Potato
-        zh: '',
+        zh: '周期土豆',
         es: '',
         ko: '감자',
     },
     'openInstr': {
         en: 'Open Instructions',
-        zh: '',
+        zh: '打开帮助菜单',
         es: '',
         ko: '',
     },
     'openSettings': {
         en: 'Open Settings',
-        zh: '',
+        zh: '打开设置',
         es: '',
         ko: '',
     },
