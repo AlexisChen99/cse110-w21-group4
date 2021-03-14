@@ -278,6 +278,12 @@ var dict = {
         ko: '',
     },
     'notification': {
+        'welcome': {
+            en: '',
+            zh: '',
+            es: '',
+            ko: '',
+        },
         'mark': {
             en: 'You marked a task as done!',
             zh: '已标记该任务为完成!',

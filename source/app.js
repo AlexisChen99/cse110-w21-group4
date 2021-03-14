@@ -324,6 +324,8 @@ function setTimeRemaining() {
  *  for each pomo done and displays the congrats screen
  */
 function displayCongrats() {
+    document.getElementById('potatoImgs').innerHTML = '';
+
     // Output potato images to the congrats screen (limit amount of potatoes)
     // Max Potatoes: 16
     for (let i = 0; i < pomosDone; i++) {
@@ -1196,6 +1198,7 @@ function loadLang() {
     document.getElementById('cycle1').innerText = dict['potatoDance'][lang];
     document.getElementById('cycle2').innerText = dict['potatoDance'][lang];
     document.getElementById('cycle3').innerText = dict['potatoDance'][lang];
+    document.getElementById('notificationBar').innerText = dict['notification']['welcome'][lang];
 
 }
 
