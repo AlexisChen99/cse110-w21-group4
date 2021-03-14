@@ -214,9 +214,11 @@ function start() {
                 if (secondsRemaining < 0) {
                     if (phase == 'work') {
                         playAudio('workToBreakAudio');
+                        showOptions();
                     }
                     if (phase != 'work') {
                         playAudio('breakToWorkAudio');
+                        hideOptions();
                     }
                     updatePhase();
                     secondsRemaining = setTimeRemaining();
