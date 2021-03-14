@@ -48,11 +48,29 @@ describe('Testing task creation', () => {
         cy.get('#taskListContainer').children().should('not.exist');
         cy.get('#mainTasks').children().should('not.exist');
     });
+
+    it('Check that enter can create task', () => {
+        cy.get('#enterTask').clear().type('Write essay{enter}');
+        cy.get('#taskListContainer').children().then(
+            $el => {
+                expect($el).to.have.lengthOf(1);
+            }
+        );
+        cy.get('#mainTasks').children().then(
+            $el => {
+                expect($el).to.have.lengthOf(1);
+            }
+        );
+    });
 });
 
 describe('Testing task deletion', () => {
     beforeEach(() => {
         cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
+        cy.get("#next").click();
+        cy.get("#next").click();
+        cy.get("#next").click();
+        cy.get("#next").click();
         cy.get('#enterTask').clear().type('Write essay 1');
         cy.get('#taskAdder').click();
         cy.get('#enterTask').clear().type('Write essay 2');
@@ -97,5 +115,56 @@ describe('Testing task deletion', () => {
         cy.get('#confirm').click();
         cy.get('#taskListContainer').children().should('not.exist');
         cy.get('#mainTasks').children().should('not.exist');
+    });
+});
+
+describe('Testing theme change', () => {
+    beforeEach(() => {
+        cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
+        cy.get("#next").click();
+        cy.get("#next").click();
+        cy.get("#next").click();
+        cy.get("#next").click();
+    });
+
+    it('Check dark theme change', () => {
+        cy.get('#settingsIcon').click();
+        cy.get('#darkTheme').click();
+        cy.getLocalStorage('theme').should('equal', 'Dark');
+    });
+
+    it('Check light theme change', () => {
+        cy.get('#settingsIcon').click();
+        cy.get('#darkTheme').click();
+        cy.getLocalStorage('theme').should('equal', 'Dark');
+    });
+
+    it('Check potato theme change', () => {
+        cy.get('#settingsIcon').click();
+        cy.get('#darkTheme').click();
+        cy.getLocalStorage('theme').should('equal', 'Dark');
+    });
+});
+
+describe('Testing volume change', () => {
+    beforeEach(() => {
+        cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
+        cy.get("#next").click();
+        cy.get("#next").click();
+        cy.get("#next").click();
+        cy.get("#next").click();
+    });
+
+    it('Check general volume change', () => {
+        cy.get('#settingsIcon').click();
+        cy.get('#volume').type('20{enter}');
+        cy.getLocalStorage('volume').should('equal', '20');
+    });
+
+    it('Check mute', () => {
+        cy.get('#settingsIcon').click();
+        cy.get('#volume').type('0{enter}');
+        cy.getLocalStorage('volume').should('equal', '0');
+        cy.get('#volumeIcon').contains('mute');
     });
 });
