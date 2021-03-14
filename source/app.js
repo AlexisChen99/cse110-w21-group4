@@ -1256,9 +1256,9 @@ function setPhase(newPhase) {
     phase = newPhase;
 }
 
-// module.exports = {
-//     setPhase,
-//     convertSeconds,
-//     setTimeRemaining,
-//     setPageTitle
-//  }
+module.exports = {
+     setPhase,
+     convertSeconds,
+     setTimeRemaining,
+     setPageTitle
+  }
