@@ -919,6 +919,7 @@ function back() {
 }
 
 function next() {
+    document.getElementById('next').innerHTML = dict['next'][lang];
     if (page >= 4) {
         hide('instructionsMenu');
         page = 0;
