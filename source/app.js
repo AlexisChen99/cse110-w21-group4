@@ -14,7 +14,7 @@ let longBreakLength = 1500;        // long break time       25 mins (1500)
 let timer;                  // Represents the interval change of 1s
 let secondsRemaining = 0;   // Displays on timer
 let MMSS;                   // {string} MM:SS format
-let tasksDone = 0;          // TODO: Change its application
+let tasksDone = 0;          // the number of tasks finished
 let pomosDone = 0;          // Number of pomo 'work' phases completed.
 let taskCount = 0;          // Used to keep track of all active tasks
 var uniqueID = 1;           // Used to assign uniqueID's when deleting specific tasks 
@@ -55,7 +55,7 @@ window.onload = function () {
      * Function that stores themes, languages, and adds tasks back into the 
      * website
      */
-    // Load's users theme, TODO previous input settings, taskList, language
+    // Load's users theme and laguage and settings
     loadTheme();
     loadLang();
     if (window.localStorage.getItem('returning') == 'true') {
@@ -75,7 +75,7 @@ window.onload = function () {
  * id:   'breakToWorkAudio',         'workToBreakAudio'
  *      ,'victoryAudio'
  * 
- * @param {string} id The audio block involved with the rooster call
+ * @param {string} id The audio block involved with the sound called
  */
 function playAudio(id) {
     volume = (+localStorage.getItem('volume'));
@@ -182,6 +182,7 @@ function start() {
     shortBreakLength = setInputTimes('short');
     longBreakLength = setInputTimes('long');
 
+    saveSettings();
     window.localStorage.setItem('savedSettings', true);
     secondsRemaining = setTimeRemaining();
 
@@ -266,7 +267,7 @@ function updatePhase() {
         localStorage.setItem('pomosDone', pomosDone);
         if (theme == 'Potato') {
             circle.className = 'circlePotato';
-            if (animation === 'true') {
+            if (animation == true || animation == 'true') {
                 showPotatoes();
             }
         }
@@ -855,17 +856,20 @@ function show(id) {
 
 /**
  * Hides an element by changing its display to none.
- * CHANGE TO .CLASSLIST REPLACE .SHOW WITH .HIDE
+ * also saves settings if the element to be hidden is the settings menu
  * @param {string} id The id of the element to hide.
  */
 function hide(id) {
     const elem = document.getElementById(id);
+    if(id == 'settingsMenu') {
+        saveSettings();
+    }
     // console.log('hiding');
     elem.classList.replace('showing', 'hidden');
 }
 
 /** 
- * 
+ * Shows the various options and buttons available to the user
  */
 function showOptions() {
     document.getElementById('help').classList.replace('opacityHide', 'opacityShow');
@@ -883,7 +887,7 @@ function showOptions() {
 }
 
 /**
- * 
+ * Hides the various options and buttons available to the user
  */
 function hideOptions() {
     document.getElementById('help').classList.replace('opacityShow', 'opacityHide');
@@ -901,6 +905,10 @@ function hideOptions() {
 
 
 var page = 0;
+/**
+ * Goes to the previous page of the instructions menu
+ * @returns none
+ */
 function back() {
     if (page <= 1) {
         return;
@@ -918,6 +926,10 @@ function back() {
 
 }
 
+/**
+ * Goes to the next page of the instructions menu
+ * @returns none
+ */
 function next() {
     if (page >= 4) {
         hide('instructionsMenu');
@@ -943,7 +955,11 @@ function next() {
         document.getElementById('next').innerHTML = dict['close'][lang];
     }
 }
-//
+/**
+ * Creates a notification for the user based on what action the user just did
+ * @param {*} action the action the user did
+ * @returns  the action the user did
+ */
 function notifyUser(action) {
     let notif = document.getElementById('notificationBar');
     notif.innerText = dict['notification'][action][lang];
@@ -952,10 +968,6 @@ function notifyUser(action) {
     }, 3000);
     return action;
 }
-
-
-
-
 
 
 /** 
@@ -1119,14 +1131,21 @@ function changeTheme(newTheme) {
         hide('animationBtn');
         hidePotatoes();
     }
-    hide('settingsMenu');
+    //hide('settingsMenu');
 }
 
+/**
+ *  Changes the chosen language of Potato Timer
+ * @param {*} selectedLang the language the user wishes to see potatotimer in
+ */
 function setLang(selectedLang) {
     window.localStorage.setItem('lang', selectedLang);
     window.location.reload();
 }
 
+/**
+ * Changes all of the elements of the DOM into the proper language
+ */
 function loadLang() {
     let savedLang = window.localStorage.getItem('lang');
     if (savedLang == null) {
@@ -1246,6 +1265,24 @@ function loadSettings() {
         document.getElementById('animationBtn').innerText = dict['enableAnimation'][lang];
     }
 }
+
+/**
+ * Stores all of the current settings into localStorage
+ */
+function saveSettings() {
+    //timer phase settings
+    localStorage.setItem('workMin', document.getElementById('workMin').value);
+    localStorage.setItem('workSec', document.getElementById('workSec').value);
+    localStorage.setItem('shortMin', document.getElementById('shortMin').value);
+    localStorage.setItem('shortSec', document.getElementById('shortSec').value);
+    localStorage.setItem('longMin', document.getElementById('longMin').value);
+    localStorage.setItem('longSec', document.getElementById('longSec').value);
+    //volume settings
+    localStorage.setItem('volume', document.getElementById('volume').value);
+    localStorage.setItem('mute', mute);
+    //animation settings
+    localStorage.setItem('animation', animation);
+}   
 
 /**
  * Manually sets the phase--for testing.
