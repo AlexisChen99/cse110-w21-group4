@@ -1,41 +1,45 @@
- /* The Modal (background) */
- .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-   
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
+/* The Modal (background) */
+.modal {
+  position: fixed; /* Stay in place */   
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  /* Modal Content/Box */
-  .modal-content {
-    background-color: #73d918;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 95%; 
-  }
-  
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
+/* Add Animation - Zoom in the Modal */
+.modalContent {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  max-width: 1280px;
+  width: fit-content;
+  padding: 20px 30px;
+  border: 10px solid gold;
+  border-radius: 25px;
+  color: inherit;
+}
 
-  /* Add Animation - Zoom in the Modal */
-.modal-content {
-    animation-name: zoom;
-    animation-duration: 0.6s;
-    margin: auto;
-    display: block;
-    max-width: 1280px;
-    text-align: center;
-    color: black;
-    padding: 10px 0;
-  }
+.modalPotato {
+  background-color: #73d918;
+}
+
+.modalLight {
+  background-color: white;
+}
   
-  @keyframes zoom {
-    from {transform:scale(0)}
-    to {transform:scale(1)}
+.modalDark {
+ background-color: #333;
+ }
+  
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
 }

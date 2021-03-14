@@ -63,7 +63,7 @@ var dict = {
     },
     'add': {
         en: 'Add',
-        zh: '+',
+        zh: '添加',
         es: 'Agregar',
         ko: '추가',
     },
@@ -201,7 +201,7 @@ var dict = {
         'instrTopic': {
             en: 'Settings',
             zh: '设置',
-            es: 'Configuración', // Copied from earlier--no need to check
+            es: 'Configuración',
             ko: '설정',
         },
         'instrContent': {
@@ -416,6 +416,52 @@ var dict = {
     },
     'top': {
         en: 'Back to Top', // ARIA Back to top of the page
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    'congratsTitle': {
+        en: 'Congratulations!',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    'congrats1': {
+        en: 'It took you ',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    // It took you 5 pomos to finish all of your tasks!
+    // Note that congrats1 is the first half of the variable and congrats2 is the second half
+    // The ordering of language can be different, so it's up to you where the number goes
+    'congrats2': {
+        en: ' pomotatoes to finish all of your tasks!', 
+        //pomotatoes in English, pomodoros in other languages?
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    'potatoDance': {
+        en: 'Dancing potato',
+        zh: '',
+        es: '',
+        ko: '감자가 추고 있어',
+    },
+    'pomotato': {
+        en: 'Pomotato', // Potato
+        zh: '',
+        es: '',
+        ko: '감자',
+    },
+    'openInstr': {
+        en: 'Open Instructions',
+        zh: '',
+        es: '',
+        ko: '',
+    },
+    'openSettings': {
+        en: 'Open Settings',
         zh: '',
         es: '',
         ko: '',

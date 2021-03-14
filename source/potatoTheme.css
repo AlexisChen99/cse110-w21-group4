@@ -69,6 +69,9 @@ p {
     animation: text_hide .3s ease forwards;
 }
 
+.opacityHide:hover, .opacityHide:focus {
+    animation: text_reveal .5s ease forwards;
+}
 noscript {
     position: fixed;
     top: 0;
@@ -98,6 +101,7 @@ noscript div {
 }
 
 #title {
+    position: absolute;
     display: block;
     margin-top: 20px;
     margin-bottom: 18px;
@@ -132,26 +136,30 @@ noscript div {
 }
 
 #options {
+    position: absolute;
+    right: 20px;
     display: flex;
     margin-top: 10px;
-    margin-right: 20px;
     float: right;
 }
 #help {
     font-size: 3rem;
 }
-#help:hover {
-    animation: text_reveal .5s ease forwards;
+
+#settingsIcon {         
+    width: 64px;
+    height: 64px;
+    background-position: center;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
 }
-#settingsIcon {
-    /* position: absolute;
-    top: 3%;
-    right: 5%; */
-    float : right;
-    width: 85%;
+
+.settingsLight {
+    background-image: url(img/settings.png);
 }
-#settingsIcon:hover {
-    animation: text_reveal .5s ease forwards;
+.settingsDark {
+    background-image: url(img/settings-dark.png);
 }
 
 @media screen and (max-width: 768px) {
@@ -160,9 +168,6 @@ noscript div {
     }
 }
 
-#settingsIcon:hover {
-    cursor: pointer;
-}
 
 #circleTimer {
     width: 160px;
@@ -231,9 +236,8 @@ noscript div {
     display: inline-block;
     /* align-items:inherit; */
 }
-.taskContainer:hover {
-    animation: text_reveal .5s ease forwards;
-}
+
+
 
 @keyframes text_reveal {
     100% {

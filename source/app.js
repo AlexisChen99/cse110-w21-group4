@@ -18,30 +18,56 @@ let tasksDone = 0;          // TODO: Change its application
 let pomosDone = 0;          // Number of pomo 'work' phases completed.
 let taskCount = 0;          // Used to keep track of all active tasks
 var uniqueID = 1;           // Used to assign uniqueID's when deleting specific tasks 
-// (may be copied from task list to main)
 let savedTasks = [];
 let volume = 25;
 let theme;                  // Potato, Dark, Light, undefined (Capitalized)
 let mute = false;           // whether the volume is muted
 let animation = true;           // show dancing potatoes or still potatoes
-let congrats;               // the congratulations modal
 let volumeInput;            // the volume input
 
-window.onload = function() {
-    congrats = document.getElementById('congratsScreen');
+const MAX_POTATOES_COMPLETED = 15;
+/**
+ * newPM is a whistle
+ * GenericNotify is a chime (light/dark theme)
+ * tournament is clapping (congrats)
+ * lowTime is a low bell
+ */
+window.onload = function () {
+    let congrats = document.getElementById('congratsScreen');
+
     //make addTask execute on enter press
-    window.addEventListener('keyup', function (e) {
+    window.addEventListener('keypress', function (e) {
         //if the pressed key is the enter key
-        if(e.keyCode === 13) {
+        if (e.key == 'Enter') {
             addTask();
         }
-    })
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
+    });
+
+    // When the user clicks anywhere outside of the modal, close the congrats
+    // screen
+    window.onclick = function (event) {
         if (event.target == congrats) {
-        congrats.style.display = 'none';
+            hide('congratsScreen');
         }
-    } 
+    }
+
+    /**
+     * Function that stores themes, languages, and adds tasks back into the 
+     * website
+     */
+    // Load's users theme, TODO previous input settings, taskList, language
+    loadTheme();
+    loadLang();
+    if (window.localStorage.getItem('returning') == 'true') {
+        loadTasks();
+        if(window.localStorage.getItem('savedSettings') == 'true') {
+            loadSettings();
+        }
+    } else {
+        show('instructionsMenu');
+        next();
+        window.localStorage.setItem('returning', true);
+    }
 }
 
 /**
@@ -51,10 +77,10 @@ window.onload = function() {
  * 
  * @param {string} id The audio block involved with the rooster call
  */
- function playAudio(id) {
+function playAudio(id) {
     volume = (+localStorage.getItem('volume'));
     // Check if the volume is muted
-    if (volume == 0 || mute =='true') {
+    if (volume == 0 || mute == 'true') {
         return;
     }
     const audioObj = document.getElementById(id);
@@ -117,7 +143,7 @@ function toggleAnimation() {
 function setInputTimes(phase) {
     let minutes = document.getElementById(phase + 'Min').value;
     let seconds = document.getElementById(phase + 'Sec').value;
-  
+
     return (+minutes) * 60 + (+seconds);
 }
 
@@ -129,7 +155,7 @@ function setInputTimes(phase) {
  */
 function checkValue(input) {
     let inputValue = document.getElementById(input).value;
-    if(inputValue < 0) {
+    if (inputValue < 0) {
         inputValue = 0;
     } else if (input == 'volume' && inputValue > 100) {
         inputValue = 100;
@@ -145,8 +171,7 @@ function checkValue(input) {
  * If the timer was stopped and resumed, the input times are not modified.
  */
 function start() {
-
-    if(taskCount == 0) {
+    if (taskCount == 0) {
         return;
     }
 
@@ -157,16 +182,17 @@ function start() {
     shortBreakLength = setInputTimes('short');
     longBreakLength = setInputTimes('long');
 
+    window.localStorage.setItem('savedSettings', true);
     secondsRemaining = setTimeRemaining();
-    //document.getElementById('reset').disabled = true;
+
     document.getElementById('start').innerHTML = dict['stop'][lang];
-    document.getElementById('start').onclick = function() { confirmationPrompt('Stop'); };
+    document.getElementById('start').onclick = function () { confirmationPrompt('Stop'); };
     document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
-    
+
     //hide task container
     hideOptions();
 
-    if (taskCount > 0) {    
+    if (taskCount > 0) {
         timer = setInterval(function () {
             // once all the tasks have ended, clear the timer and show congrats screen
             if (taskCount == tasksDone) {
@@ -181,8 +207,8 @@ function start() {
             } else {
                 // Display the time MM:SS
                 MMSS = convertSeconds(secondsRemaining);
-                document.getElementById('timerDisplay').innerHTML = MMSS;
                 document.title = setPageTitle(MMSS);
+                document.getElementById('timerDisplay').innerHTML = MMSS;
                 secondsRemaining--;
 
                 if (secondsRemaining < 0) {
@@ -249,11 +275,7 @@ function updatePhase() {
             // document.getElementById('cycleNum').innerText = (pomosDone % 4) + ' / 4';
 
             if (theme == 'Potato') {
-                if (lang == 'ko' || lang == 'zh') {
-                    circle.className = 'circlePotatoBreakAsian';
-                } else {
-                    circle.className = 'circlePotatoBreak';
-                }
+                circle.className = 'circlePotatoBreak';
             }
         } else {
             // If the pomos completed is divisible by 4
@@ -292,9 +314,9 @@ function updatePhase() {
  * @return {number} The time remaining for the current timer state.
  */
 function setTimeRemaining() {
-    return (phase == 'work') ? workLength :     
-        (phase == 'short break') ? shortBreakLength : 
-        longBreakLength;                        
+    return (phase == 'work') ? workLength :
+        (phase == 'short break') ? shortBreakLength :
+            longBreakLength;
 }
 
 /**
@@ -302,18 +324,27 @@ function setTimeRemaining() {
  *  for each pomo done and displays the congrats screen
  */
 function displayCongrats() {
-    for(let i = 0; i < pomosDone; i++) {
-        let potato = document.createElement('img');
-        if(dance) {
-            potato.src = 'img/potato-dance.gif';
-        } else {
-            potato.src ='img/pomotato.png';
+    // Output potato images to the congrats screen (limit amount of potatoes)
+    // Max Potatoes: 16
+    for (let i = 0; i < pomosDone; i++) {
+        // Prevent Potatoes images from overcrowding screen
+        if (i > MAX_POTATOES_COMPLETED) {
+            break;
         }
-        congrats.appendChild(potato);
+        let potato = document.createElement('img');
+
+        if (animation == 'true') {
+            potato.src = 'img/potato-dance.gif';
+            potato.alt = dict['potatoDance'][lang];
+        } else {
+            potato.src = 'img/pomotato.png';
+            potato.alt = dict['pomotato'][lang];
+        }
+        document.getElementById('potatoImgs').appendChild(potato);
     }
-    document.getElementById("congratsText").innerHTML = 'it took you ' + pomosDone + ' pomos to finish all your tasks';
+    document.getElementById("congratsText").innerHTML = dict['congrats1'][lang] + pomosDone + dict['congrats2'][lang];
     playAudio('victoryAudio');
-    congrats.style.display = 'block';
+    show('congratsScreen');
 }
 
 /** 
@@ -330,7 +361,7 @@ function hidePotatoes() {
  *   Shows a number of dancing potatoe gives based on the pomosDone 
  */
 function showPotatoes() {
-    document.getElementById('cycle'+pomosDone%4).style.display = 'inline';
+    document.getElementById('cycle' + pomosDone % 4).style.display = 'inline';
 }
 
 /**
@@ -365,7 +396,7 @@ function switchPotatoStill() {
     document.getElementById('cycle0').src = 'img/pomotato.png';
     document.getElementById('cycle1').src = 'img/pomotato.png';
     document.getElementById('cycle2').src = 'img/pomotato.png';
-    document.getElementById('cycle3').src = 'img/pomotato.png';   
+    document.getElementById('cycle3').src = 'img/pomotato.png';
 }
 
 /**
@@ -403,24 +434,25 @@ function stop() {
     // console.log('stop the timer and reset everything');
     clearInterval(timer);
     let bg = document.getElementById('background');
-    if(theme == 'Potato' && phase != 'work') {
+    if (theme == 'Potato' && phase != 'work') {
         document.getElementById('circleTimer').className = 'circlePotato';
         bg.classList.replace('potatoBreak', 'potatoWork');
     }
     hidePotatoes();
     phase = 'idle';
-    document.getElementById('timerDisplay').innerHTML='- - : - -';
-    document.getElementById('phaseDisplay').innerHTML=dict['phase'][phase][lang];
+    document.getElementById('timerDisplay').innerHTML = '- - : - -';
+    document.getElementById('phaseDisplay').innerHTML = dict['phase'][phase][lang];
 
     document.getElementById('start').innerHTML = dict['start'][lang];
     document.getElementById('start').onclick = start;
 
     //tasksDone = 0;
     pomosDone = 0;
-    localStorage.setItem('pomosDone',pomosDone);
+    localStorage.setItem('pomosDone', pomosDone);
 
     uniqueID = 1;
     hide('prompt');
+    showOptions();
 }
 
 /** 
@@ -488,14 +520,14 @@ function createTask(text) {
         pinnedTask = document.getElementById(newTask.id + '-copy');
         if (!pinnedTask) {
             createPinnedTask(text, newTask.id);
-            if(theme == 'Dark') {
+            if (theme == 'Dark') {
                 origTask.src = 'img/pinned-dark.png';
                 console.log('dark pin');
             } else {
                 origTask.src = 'img/pinned.png';
             }
         } else {
-            if(theme == 'Dark') {
+            if (theme == 'Dark') {
                 origTask.src = 'img/unpinned-dark.png';
             } else {
                 origTask.src = 'img/unpinned.png';
@@ -536,7 +568,7 @@ function createTask(text) {
 
     if (taskCount == 1) {
         createPinnedTask(text, uniqueID);
-        if(theme == 'Dark') {
+        if (theme == 'Dark') {
             document.getElementById('pin-' + uniqueID).src = 'img/pinned-dark.png';
         } else {
             document.getElementById('pin-' + uniqueID).src = 'img/pinned.png';
@@ -680,7 +712,7 @@ function unpinTask(uniqueID) {
     let pinnedTask = document.getElementById(uniqueID + '-copy');
     const mainTasks = document.getElementById('mainTasks');
     mainTasks.removeChild(pinnedTask);
-    if(theme == 'Dark') {
+    if (theme == 'Dark') {
         document.getElementById('pin-' + uniqueID).src = 'img/unpinned-dark.png';
     } else {
         document.getElementById('pin-' + uniqueID).src = 'img/unpinned.png';
@@ -796,8 +828,8 @@ function confirmationPrompt(action) {
     show('prompt');
     let message = document.getElementById('confirmMessage');
     let confirmBtn = document.getElementById('confirm');
-  
-    if(action == 'Stop') {
+
+    if (action == 'Stop') {
         message.innerHTML = dict['confirmReset'][lang];
         confirmBtn.onclick = stop;
     } else if (action == 'Delete') {
@@ -832,21 +864,35 @@ function hide(id) {
  * 
  */
 function showOptions() {
-    //show task Container
-    document.getElementById('taskManager').classList.replace('opacityHide', 'opacityShow');
-    //show settings icon
-    document.getElementById('settingsIcon').classList.replace('opacityHide', 'opacityShow');
-    //show help icon
     document.getElementById('help').classList.replace('opacityHide', 'opacityShow');
+    document.getElementById('settingsIcon').classList.replace('opacityHide', 'opacityShow');
+    document.getElementById('enterTask').classList.replace('opacityHide', 'opacityShow');
+    document.getElementById('taskAdder').classList.replace('opacityHide', 'opacityShow');
+    document.getElementById('taskBtn').classList.replace('opacityHide', 'opacityShow');
+
+    // let options = document.getElementsByClassName('opacityHide');
+    // for(let i = 0; i < options.length; i++) {
+    //     console.log(options);
+    //     options[i].classList.remove('opacityHide');
+    //     options[i].classList.add('opacityShow');
+    // }
 }
 
 /**
  * 
  */
 function hideOptions() {
-    document.getElementById('taskManager').classList.replace('opacityShow', 'opacityHide'); //hide task Container
-    document.getElementById('settingsIcon').classList.replace('opacityShow', 'opacityHide');//hide settings Icon
-    document.getElementById('help').classList.replace('opacityShow', 'opacityHide');   //hide help icon
+    document.getElementById('help').classList.replace('opacityShow', 'opacityHide');
+    document.getElementById('settingsIcon').classList.replace('opacityShow', 'opacityHide');
+    document.getElementById('enterTask').classList.replace('opacityShow', 'opacityHide');
+    document.getElementById('taskAdder').classList.replace('opacityShow', 'opacityHide');
+    document.getElementById('taskBtn').classList.replace('opacityShow', 'opacityHide');
+    // let options = document.getElementsByClassName('opacityShow');
+    // for(let i = 0; i < options.length; i++) {
+    //     console.log(options);
+    //     options[i].classList.remove('opacityShow');
+    //     options[i].classList.add('opacityHide');
+    // }
 }
 
 
@@ -885,7 +931,7 @@ function next() {
         content.classList.remove('leftAlign');
         content.innerText = content.innerText +
             'Alexis Chen\nElizabeth Cho\nKevin Jang\nMarco Kuan\nAhmad Milad\nRohan Patel\nMiaoqiu Sun\nJessie Zou\n';
-        if(theme == 'Dark') {
+        if (theme == 'Dark') {
             content.innerHTML = content.innerHTML + '<a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-Light-32px.png"></a>';
         } else {
             content.innerHTML = content.innerHTML + '<a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-32px.png"></a>';
@@ -904,18 +950,7 @@ function notifyUser(action) {
 }
 
 
-window.onload = function () {
-    // Load's users theme, TODO previous input settings, taskList, language
-    loadTheme();
-    loadLang();
-    if(window.localStorage.getItem('returning') == 'true') {
-        loadTasks();
-        loadSettings();
-    } else { 
-        window.localStorage.setItem('returning', true);
-        console.log('first time');
-    }
-}
+
 
 
 
@@ -933,44 +968,9 @@ function loadTheme() {
         case 'Light':
             changeTheme('Light');
             break;
-        default: 
+        default:
             //console.log('no previous theme');
             changeTheme('Potato');
-    }
-    
-    //Timer Data
-    if(localStorage.getItem('longMin') != null) {
-        //console.log('setting time settings');
-        document.getElementById('longMin').value = localStorage.getItem('longMin');
-        document.getElementById('longSec').value = localStorage.getItem('longSec');
-        document.getElementById('shortMin').value = localStorage.getItem('shortMin');
-        document.getElementById('shortSec').value = localStorage.getItem('shortSec');
-        document.getElementById('workMin').value = localStorage.getItem('workMin');
-        document.getElementById('workSec').value = localStorage.getItem('workSec');
-    } else {
-        console.log('no previous time settings');
-    }
-
-    //Volume Data
-    if(localStorage.getItem('volume') != null) {
-        volume = Number(localStorage.getItem('volume'));
-        document.getElementById('volume').value = volume;
-    } else {
-        console.log('no previous volume settings');
-    }
-
-    //Mute Data
-    if(localStorage.getItem('mute') == 'true') {
-        toggleMute();
-    } else {
-        console.log('no previous mute settings');
-    }
-
-    //Pomo Data
-    if(localStorage.getItem('pomosDone') != null) {
-        pomosDone = localStorage.getItem('pomosDone');
-    } else {
-        console.log('no previous pomos');
     }
 }
 
@@ -998,7 +998,7 @@ function changeTheme(newTheme) {
 
     if (newTheme == 'Dark') {
         let settingsIcon = document.getElementById('settingsIcon');
-        settingsIcon.src = 'img/settings-dark.png';
+        settingsIcon.classList.replace('settingsLight', 'settingsDark');
 
         let volumeIcon = document.getElementById('volumeIcon');
         if (volume != 0) {
@@ -1031,22 +1031,26 @@ function changeTheme(newTheme) {
             prompt.classList.remove('themeLight');
         }
 
+        let congrats = document.getElementById('congratsContent');
+        congrats.classList.add('modalDark');
+        congrats.classList.remove('modalLight', 'modalPotato');
+
         let userTasks = document.getElementsByClassName('userTask');
         for (let i = 0; i < userTasks.length; i++) {
             userTasks[i].children[1].firstChild.classList.replace('markLight', 'markDark');
             let pinSrc = userTasks[i].children[2].firstChild.src;
-            if(pinSrc.includes('img/pinned.png')) {
+            if (pinSrc.includes('img/pinned.png')) {
                 userTasks[i].children[2].firstChild.src = 'img/pinned-dark.png';
             } else {
                 userTasks[i].children[2].firstChild.src = 'img/unpinned-dark.png';
             }
-            if(userTasks[i].children[4]) {
+            if (userTasks[i].children[4]) {
                 userTasks[i].children[4].firstChild.src = 'img/delete-task-dark.png';
             }
         }
     } else if (newTheme == 'Potato' || newTheme == 'Light') {
         let settingsIcon = document.getElementById('settingsIcon');
-        settingsIcon.src = 'img/settings.png';
+        settingsIcon.classList.replace('settingsDark', 'settingsLight');
 
         let volumeIcon = document.getElementById('volumeIcon');
         if (volume != 0) {
@@ -1081,19 +1085,27 @@ function changeTheme(newTheme) {
             prompt.classList.remove('themeDark');
         }
 
+        let congrats = document.getElementById('congratsContent');
+        congrats.classList.remove('modalDark');
+        if(theme == 'Light') {
+            congrats.classList.add('modalLight');
+        } else {
+            congrats.classList.add('modalPotato');
+        }
+
         let userTasks = document.getElementsByClassName('userTask');
-        for(let i = 0; i < userTasks.length; i++) {
+        for (let i = 0; i < userTasks.length; i++) {
             // console.log('changing tasks');
             userTasks[i].children[1].firstChild.classList.replace('markDark', 'markLight');
             let pinSrc = userTasks[i].children[2].firstChild.src;
-            if(pinSrc.includes('img/pinned-dark.png')) {
+            if (pinSrc.includes('img/pinned-dark.png')) {
                 userTasks[i].children[2].firstChild.src = 'img/pinned.png';
             } else {
                 userTasks[i].children[2].firstChild.src = 'img/unpinned.png';
             }
-            if(userTasks[i].children[4]) {
+            if (userTasks[i].children[4]) {
                 userTasks[i].children[4].firstChild.src = 'img/delete-task.png';
-            }        
+            }
         }
     }
 
@@ -1127,11 +1139,12 @@ function loadLang() {
         window.localStorage.setItem('lang', lang);
     } else {
         lang = savedLang;
-        //console.log('language was saved');
     }
 
     document.documentElement.lang = lang; // <HTML> tag
     document.getElementById('title').innerText = dict['title'][lang];
+    document.getElementById('help').setAttribute('aria-label', dict['help'][lang]);
+    document.getElementById('settingsIcon').setAttribute('aria-label', dict['openSettings'][lang]);
     document.getElementById('phaseDisplay').innerText = dict['phase']['idle'][lang];
     document.getElementById('start').innerText = dict['start'][lang];
     document.getElementById('taskBtn').innerText = dict['tasks'][lang];
@@ -1154,17 +1167,18 @@ function loadLang() {
     document.getElementById('taskHelp').innerText = dict['taskHelp'][lang];
     document.getElementById('closeTasks').innerText = dict['close'][lang];
     let close = document.getElementsByClassName('ariaClose');
-    for(let i = 0; i < close.length; i++) {
-        close.innerText = dict['close'][lang];
+    for (let i = 0; i < close.length; i++) {
+        close[i].innerText = dict['close'][lang];
     }
     document.getElementById('deleteAll').innerText = dict['deleteAll'][lang];
 
     document.getElementById('confirm').innerText = dict['confirm'][lang];
     document.getElementById('cancel').innerText = dict['cancel'][lang];
+    document.getElementById('congratsTitle').innerText = dict['congratsTitle'][lang];
     document.getElementById('instrTitle').innerText = dict['instructions'][lang];
     document.getElementById('back').innerText = dict['back'][lang];
     document.getElementById('next').innerText = dict['next'][lang];
-    if(animation) {
+    if (animation) {
         document.getElementById('animationBtn').innerText = dict['disableAnimation'][lang];
     } else {
         document.getElementById('animationBtn').innerText = dict['enableAnimation'][lang];
@@ -1176,8 +1190,13 @@ function loadLang() {
         for (var i = 0; i < elements.length; i++) {
             var element = elements[i];
             element.style.fontSize = "16.5px";
-        }  
+        }
     }
+    document.getElementById('cycle0').innerText = dict['potatoDance'][lang];
+    document.getElementById('cycle1').innerText = dict['potatoDance'][lang];
+    document.getElementById('cycle2').innerText = dict['potatoDance'][lang];
+    document.getElementById('cycle3').innerText = dict['potatoDance'][lang];
+
 }
 
 /**
@@ -1192,6 +1211,13 @@ function loadTasks() {
 
     for (let i = 0; i < savedTasks.length; i++) {
         createTask(savedTasks[i]);
+    }
+
+    //Pomo Data
+    if (localStorage.getItem('pomosDone') != null) {
+        pomosDone = localStorage.getItem('pomosDone');
+    } else {
+        console.log('no previous pomos');
     }
 }
 
@@ -1209,7 +1235,7 @@ function loadSettings() {
     mute = window.localStorage.getItem('mute');
     changeMuteIcon();
     animation = window.localStorage.getItem('animation');
-    if(animation == 'true') {
+    if (animation == 'true') {
         document.getElementById('animationBtn').innerText = dict['disableAnimation'][lang];
     } else {
         document.getElementById('animationBtn').innerText = dict['enableAnimation'][lang];
@@ -1225,9 +1251,9 @@ function setPhase(newPhase) {
     phase = newPhase;
 }
 
-module.exports = {
-    setPhase,
-    convertSeconds,
-    setTimeRemaining,
-    setPageTitle
- }
+// module.exports = {
+//     setPhase,
+//     convertSeconds,
+//     setTimeRemaining,
+//     setPageTitle
+//  }
