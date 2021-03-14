@@ -4,4 +4,6 @@
 
 <a href="https://miro.com/app/board/o9J_lX_m1Ts=/" target="_blank">Public Miro link</a>
 
-<a href="https://alexischen99.github.io/cse110-w21-group4/source/index.html" target="_blank">Link to Potatimer</a>
+<a href="https://alexischen99.github.io/cse110-w21-group4/source/potato.html" target="_blank">Link to Potatimer</a>
+
+[Status Video 1](https://www.youtube.com/watch?v=rHYlFTZ3qxw&feature=youtu.be)
