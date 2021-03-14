@@ -37,7 +37,7 @@ describe('Testing task creation', () => {
         );
         cy.get('#mainTasks').children().then(
             $el => {
-                expect($el).to.have.lengthOf(3);
+                expect($el).to.have.lengthOf(1);
             }
         );
     });
@@ -66,23 +66,18 @@ describe('Testing task deletion', () => {
     });
 
     it('Check for successful pinned task deletion', () => {
-        cy.get('#3pin').children('#singleDel').click();
+        cy.get('#del-1-copy').click();
         cy.get('#taskListContainer').children().then(
             $el => {
                 expect($el).to.have.lengthOf(4);
             }
         );
-        cy.get('#mainTasks').children().then(
-            $el => {
-                expect($el).to.have.lengthOf(2);
-            }
-        );
-        cy.get('#3pin').should('not.exist');
+        cy.get('#1-copy').should('not.exist');
     });
 
     it('Check for successful unpinned task deletion', () => {
         cy.get('#taskBtn').click();
-        cy.get('#5').children('#singleDel').click();
+        cy.get('#del-5').click();
         cy.get('#taskListContainer').children().then(
             $el => {
                 expect($el).to.have.lengthOf(4);
@@ -90,7 +85,7 @@ describe('Testing task deletion', () => {
         );
         cy.get('#mainTasks').children().then(
             $el => {
-                expect($el).to.have.lengthOf(3);
+                expect($el).to.have.lengthOf(1);
             }
         );
         cy.get('#5').should('not.exist');
