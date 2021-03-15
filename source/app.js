@@ -427,7 +427,7 @@ function setPageTitle(MMSS) {
             phaseSymbol = ' - ';
     }
 
-    return MMSS + phaseSymbol + 'Potato Timer';
+    return MMSS + phaseSymbol + dict['title'][lang];
 }
 
 
@@ -645,7 +645,7 @@ function createPinnedTask(text, uniqueID) {
     let ariaSkip = document.createElement('a');
     ariaSkip.href = '#' + (uniqueID + 1) + '-copy';
     ariaSkip.className = 'ariaSkipTask';
-    ariaSkip.innerText = 'Skip';
+    ariaSkip.innerText = dict['skip'][lang];
     pinTask.appendChild(ariaSkip);
 
     pinTask.appendChild(markBtn);
@@ -1165,6 +1165,7 @@ function loadLang() {
     }
 
     document.documentElement.lang = lang; // <HTML> tag
+    document.title = dict['title'][lang];
     document.getElementById('title').innerText = dict['title'][lang];
     document.getElementById('help').setAttribute('aria-label', dict['help'][lang]);
     document.getElementById('settingsIcon').setAttribute('aria-label', dict['openSettings'][lang]);
