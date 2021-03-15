@@ -2,7 +2,7 @@ var dict = {
     'title': {
         en: 'Potato Timer',
         zh: '土豆计时器',
-        es: 'Temporizador de Patata',
+        es: 'Temporizador de Papa',
         ko: '포테이토 타이머'
     },
     'phase': {
@@ -112,7 +112,7 @@ var dict = {
     'potatoTheme': {
         en: 'Potato',
         zh: '土豆',
-        es: 'Patata',
+        es: 'Papa',
         ko: '감자',
     },
     'workTime': {
@@ -187,11 +187,13 @@ var dict = {
                 'To switch to English, click the gear icon to open the settings menu.\n' + 
                 'Para cambiar el idioma a español, abra el menú de configuración haciendo clic en el icono de engranaje.\n' +
                 '한국어로 바꾸고 싶다면, 기어 아이콘을 눌러서 설정 메뉴를 열세요.\n',
-            es: '\n' +
+            es: 'El Temporizador de Papa es un temporizador pomodoro destinado a mejorar su productividad al hacer que se concentre ' + 
+                'por un tiempo de "trabajo" establecido y un tiempo de "descanso" siguiente. Después de cada cuatro fases de trabajo, se produce un período de descanso más largo. \n' +
                 'To switch to English, click the gear icon to open the settings menu.\n' +
                 '若想中文版，请点击右上角设置图标打开菜单\n' +
                 '한국어로 바꾸고 싶다면, 기어 아이콘을 눌러서 설정 메뉴를 열세요.\n',
-            ko: '\n' +
+            ko: '포테이토 타이머는 포모도로 타이머처럼 설정된 "작업"시간과 다음 "휴식"시간에 집중하도록하여 생산성을 향상시킵니다. ' +
+                '네 개의 작업 단계마다 더 긴 휴식 시간이 발생합니다.\n' +
                 'To switch to English, click the gear icon to open the settings menu.\n' +
                 '若想中文版，请点击右上角设置图标打开菜单\n' +
                 'Para cambiar el idioma a español, abra el menú de configuración haciendo clic en el icono de engranaje.\n',
@@ -218,8 +220,8 @@ var dict = {
                 '你可以调整音量或点击图标静音。\n'+
                 '你可以改变语言模式至English, Español，한국어。',
             es: 'Para abrir las configuraciones, haga clic en el icono de engranaje en la esquina superior derecha.\n' + 
-                'Allí puede cambiar la tema a las temas minimalistas de luz or oscuro, o a nuestra tema patata divertida. ' +
-                '¡Puede desactivar las patatas danzantes en nuestra tema de patatas si le distrean!\n' +
+                'Allí puede cambiar la tema a las temas minimalistas de luz or oscuro, o a nuestra tema papa divertida. ' +
+                '¡Puede desactivar las papas danzantes en nuestra tema de papas si le distrean!\n' +
                 'Puede ajustar cuánto tiempo desea que funcione el temporizador para cada fase.\n' +
                 'Puede ajustar el volumen o hacer clic en el icono para silenciarlo.\n' +
                 'Puede ajustar el idioma a inglés, 中文, 한국어.',
@@ -286,7 +288,7 @@ var dict = {
         'instrContent': {
             en: 'Potato Timer is happily developed by: \n',
             zh: '土豆计时器由以下成员开发：\n',
-            es: 'El temporizador de patata está desarrollado por: \n',
+            es: 'El temporizador de papa está desarrollado por: \n',
             ko: '포테이토 타이머 개발자들: \n',
         },
      },
@@ -452,13 +454,13 @@ var dict = {
     'potatoDance': {
         en: 'Dancing potato',
         zh: '土豆跳舞',
-        es: 'Patata bailando',
+        es: 'Papa bailando',
         ko: '감자가 추고 있어',
     },
     'pomotato': {
         en: 'Pomotato', // Potato
         zh: '周期土豆',
-        es: 'Patata',
+        es: 'Papa',
         ko: '감자',
     },
     'openInstr': {
