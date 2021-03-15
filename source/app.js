@@ -1295,7 +1295,7 @@ function setPhase(newPhase) {
     phase = newPhase;
 }
 
-Module.exports = {
+module.exports = {
      setPhase,
      convertSeconds,
      setTimeRemaining,
