@@ -108,7 +108,7 @@ noscript div {
     margin-left: 30px;
     /* text-shadow: 1px 1px 1px #000; */
     font-family: 'Kaushan Script', cursive;
-    font-size: 25px;
+    font-size: 30px;
     font-variant: small-caps; 
     text-transform: none; 
     font-weight: 100;
@@ -143,7 +143,7 @@ noscript div {
     float: right;
 }
 #help {
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 #settingsIcon {         
@@ -157,9 +157,11 @@ noscript div {
 
 .settingsLight {
     background-image: url(img/settings.png);
+    background-size: 60%;
 }
 .settingsDark {
     background-image: url(img/settings-dark.png);
+    background-size: 40%;
 }
 
 @media screen and (max-width: 768px) {
@@ -446,7 +448,7 @@ button {
     border-radius: 50px;
     color: #fff;
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 400;
     cursor: pointer;
 }
 
