@@ -794,25 +794,6 @@ input {
     border: none;
 }
 
-.top {
-    position: absolute;
-    left: -10000px;
-    top: auto;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    text-decoration: none;
-    font-weight: bolder;
-}
-    
-.top:focus {
-    position: static;
-    width: auto;
-    height: auto;
-    color: inherit;
-    border: 5px solid inherit;
-}   
-
 .contrastDark {
     color: white;
 }
