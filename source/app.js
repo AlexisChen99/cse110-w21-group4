@@ -208,7 +208,7 @@ function start() {
             } else {
                 // Display the time MM:SS
                 MMSS = convertSeconds(secondsRemaining);
-                document.title = setPageTitle(MMSS);
+                document.title = setPageTitle(MMSS)+dict['title'][lang];
                 document.getElementById('timerDisplay').innerHTML = MMSS;
                 secondsRemaining--;
 
@@ -427,7 +427,7 @@ function setPageTitle(MMSS) {
             phaseSymbol = ' - ';
     }
 
-    return MMSS + phaseSymbol + dict['title'][lang];
+    return MMSS + phaseSymbol;
 }
 
 
@@ -1295,7 +1295,7 @@ function setPhase(newPhase) {
     phase = newPhase;
 }
 
-module.exports = {
+Module.exports = {
      setPhase,
      convertSeconds,
      setTimeRemaining,
