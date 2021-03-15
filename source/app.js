@@ -644,7 +644,7 @@ function createPinnedTask(text, uniqueID) {
     let ariaSkip = document.createElement('a');
     ariaSkip.href = '#' + (uniqueID + 1) + '-copy';
     ariaSkip.className = 'ariaSkipTask';
-    ariaSkip.innerText = 'Skip';
+    ariaSkip.innerText = dict['skip'][lang];
     pinTask.appendChild(ariaSkip);
 
     pinTask.appendChild(markBtn);
