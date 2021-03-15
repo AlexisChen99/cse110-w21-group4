@@ -171,30 +171,30 @@ var dict = {
     },
     '1': {
         'instrTopic': {
-            en: 'Introduction', // CHANGED
-            zh: '怎样使用',      // OLD PLEASE CHANGE
+            en: 'Introduction',
+            zh: '怎样使用',
             es: 'Introducción',
-            ko: '소개', // Check
+            ko: '소개',
         },
         'instrContent': {
             en: 'Potato Timer is a Pomodoro Timer meant to improve your productivity by having you focus ' +
                 'for a set "work" time and a following "break" time. After every four work phases, a longer break period occurs.\n' +
-                '若想中文版，请点击右上角设置图标打开菜单。\n' + // These lines should be for users who don't know english (see other three areas)
-                'Para cambiar el idioma a ingles, abra el menú de configuración haciendo clic en el icono de engranaje.\n' +
-                '영어로 바꾸고 싶다면, 기어 아이콘을 눌러서 설정 메뉴를 열세요.\n', // 한국어에 설정 :)
+                '若想中文版，请点击右上角设置图标打开菜单。\n' +
+                'Para cambiar el idioma a español, abra el menú de configuración haciendo clic en el icono de engranaje.\n' +
+                '한국어로 바꾸고 싶다면, 기어 아이콘을 눌러서 설정 메뉴를 열세요.\n',
             zh: '土豆计时器是一个帮助提高效率的番茄钟定时器，其通过使你专注在特定的工作时间' +
                 '并伴随之后的休息时间。在每四个工作阶段后，将会出现一个长休息时段。\n'+
-                'To switch to English, click the gear icon to open the settings menu.\n' + // Translated to something like this 
-                'Para cambiar el idioma a ingles, abra el menú de configuración haciendo clic en el icono de engranaje.\n' +
-                '영어로 바꾸고 싶다면, 기어 아이콘을 눌러서 설정 메뉴를 열세요.\n',
-            es: 'Para cambiar el idioma a ingles, abra el menú de configuración haciendo clic en el icono de engranaje.\n' +
+                'To switch to English, click the gear icon to open the settings menu.\n' + 
+                'Para cambiar el idioma a español, abra el menú de configuración haciendo clic en el icono de engranaje.\n' +
+                '한국어로 바꾸고 싶다면, 기어 아이콘을 눌러서 설정 메뉴를 열세요.\n',
+            es: '\n' +
                 'To switch to English, click the gear icon to open the settings menu.\n' +
                 '若想中文版，请点击右上角设置图标打开菜单\n' +
-                '영어로 바꾸고 싶다면, 기어 아이콘을 눌러서 설정 메뉴를 열세요.\n',
-            ko: '영어로 바꾸고 싶다면, 기어 아이콘을 눌러서 설정 메뉴를 열세요.\n' +
+                '한국어로 바꾸고 싶다면, 기어 아이콘을 눌러서 설정 메뉴를 열세요.\n',
+            ko: '\n' +
                 'To switch to English, click the gear icon to open the settings menu.\n' +
                 '若想中文版，请点击右上角设置图标打开菜单\n' +
-                'Para cambiar el idioma a inglés, abra el menú de configuración haciendo clic en el icono de engranaje.\n',
+                'Para cambiar el idioma a español, abra el menú de configuración haciendo clic en el icono de engranaje.\n',
         },
     },
     '2': {
@@ -210,28 +210,25 @@ var dict = {
                 'In the potato theme, you can disable dancing potatoes if they are too distracting!\n' +
                 'You can adjust how long you want the timer to run for each phase.\n' +
                 'You can adjust the volume or click on the icon to mute it.\n' +
-                'You can change your language to Español, 中文, 한국어.\n' +
-                '',
+                'You can change your language to Español, 中文, 한국어.',
             zh: '点击右上角工具图标打开设置菜单。\n'+
                 '随后你将能切换到亮色或暗色模式，以及我们的趣味土豆模式。\n'+
                 '在土豆模式中，如果你觉得被打扰，你可以取消跳舞的土豆动图。\n'+
                 '你可以调整每个周期的长度。\n'+
                 '你可以调整音量或点击图标静音。\n'+
-                '你可以改变语言模式至English, Español，한국어。\n',
+                '你可以改变语言模式至English, Español，한국어。',
             es: 'Para abrir las configuraciones, haga clic en el icono de engranaje en la esquina superior derecha.\n' + 
                 'Allí puede cambiar la tema a las temas minimalistas de luz or oscuro, o a nuestra tema patata divertida. ' +
                 '¡Puede desactivar las patatas danzantes en nuestra tema de patatas si le distrean!\n' +
                 'Puede ajustar cuánto tiempo desea que funcione el temporizador para cada fase.\n' +
                 'Puede ajustar el volumen o hacer clic en el icono para silenciarlo.\n' +
-                'Puede ajustar el idioma a inglés, 中文, 한국어.\n' +
-                '',
+                'Puede ajustar el idioma a inglés, 中文, 한국어.',
             ko: '설정을 열려면 오른쪽 상단에있는 기어 아이콘을 클릭하세요.\n' + 
                 '설정에서 최소한의 밝고 어두운 테마 또는 재미있는 감자 테마로 변경할 수 있습니다. ' +
                 '감자 테마에서는 춤추는 감자가 너무 산만하다면 비활성화 할 수 있습니다!\n' +
                 '각 단계에서 타이머를 실행할 시간을 조정할 수 있습니다.\n' +
                 '볼륨을 조절하거나 아이콘을 클릭하여 음소거 할 수 있습니다..\n' +
-                '언어를 English, 中文, Español 로 변경할 수 있습니다.\n' +
-                '',
+                '언어를 English, 中文, Español 로 변경할 수 있습니다.',
         },
      },
     '3': {
@@ -328,32 +325,31 @@ var dict = {
             en: 'A task has been added!',
             zh: '该任务已添加!',
             es: 'Se ha agregado una tarea!',
-            ko: '과제가 추가됐습니다!', // Informal :)
-            // Uh 하다 / 되다?
+            ko: '과제가 추가됐습니다!',
         },
         'pinTask': {
             en: 'A task has been pinned!',
             zh: '该任务已放置到主页面!',
             es: 'Se ha fijado una tarea!',
-            ko: '핀이 추가됐어습니다!', // Pin was added
+            ko: '핀이 추가됐습니다!',
         },
         'unpinTask': {
             en: 'A task has been unpinned!',
             zh: '该任务已被取消置顶!',
             es: 'Se ha desanclado una tarea!',
-            ko: '핀을 뺐어!', // Pin was removed
+            ko: '핀을 뺐습니다!',
         },
         'delTask': {
             en: 'A task has been deleted!',
             zh: '该任务已被删除！',
             es: 'Se ha borrado una tarea!',
-            ko: '과제를 삭제됐어!', // 되????????
+            ko: '과제를 삭제됐습니다!',
         },
         'deleteAll': {
             en: 'All tasks have been deleted!',
             zh: '所有任务已被删除!',
             es: 'Todas las tareas han sido borradas!',
-            ko: '과제를 모두 삭제됐어!',
+            ko: '과제를 모두 삭제됐습니다!',
         },
         
     },
@@ -379,37 +375,14 @@ var dict = {
         en: 'Mute volume', // alt="Mute volume"
         zh: '静音',
         es: 'Silencie volumen',
-        ko: '소리를 숨기다', // Check
+        ko: '소리를 숨기다',
     },
     'unmute': {
         en: 'Unmute volume',
         zh: '取消静音',
         es: 'Active el volumen',
-        ko: '소리를 듣다', // ??????
+        ko: '소리를 듣다',
     },
-    'noscript': {
-        'sadPotato': { // alt="Sad Potato is Sad"
-            en: 'Sad Potato is Sad',
-            zh: '土豆很伤心',
-            es: 'Papa Triste',
-            ko: '슬픈 감자',
-        },
-        'jsDisabled': {
-            en: 'Oh no!\n' +
-            'We\'re sorry, but this website application uses JavaScript to operate the timer.\n' +
-            'Please enable JavaScript for the best user experience!',
-            zh: '哦不！\n'+
-            '抱歉，改网站使用JavaScript来运行计时器。\n'+
-            '请启动JavaScript以享受最佳使用感受！',
-            es: 'Ups!\n' +
-            'Lo siento, pero esta aplicación de sitio web utiliza JavaScript para operar el temporizador.\n' +
-            '¡Habilite JavaScript para obtener la mejor experiencia de usuario!',
-            ko: '어머!\n' + 
-            '죄송합니다.이 웹 사이트 응용 프로그램은 JavaScript를 사용하여 타이머를 작동합니다.\n' +
-            '최상의 사용자 경험을 위해 JavaScript를 활성화하십시오!', 
-        },
-    },
-
     'markBtn': { // ARIA Screen Reader aria-label="Mark as done"
         en: 'Mark as Done',
         zh: '标记为已完成',
@@ -470,14 +443,10 @@ var dict = {
         es: '¡Se tomó ',
         ko: '포모도로 ',
     },
-    // It took you 5 pomos to finish all of your tasks!
-    // Note that congrats1 is the first half of the variable and congrats2 is the second half
-    // The ordering of language can be different, so it's up to you where the number goes
-    'congrats2': {
+   'congrats2': {
         en: ' pomotatoes to finish all of your tasks!', 
-        //pomotatoes in English, pomodoros in other languages?
         zh: ' 个土豆来完成所有任务',
-        es: 'pomodoros para terminar todas sus tareas!',
+        es: ' pomodoros para terminar todas sus tareas!',
         ko: ' 개 만에 모든 작업을 완료했습니다!',
     },
     'potatoDance': {
