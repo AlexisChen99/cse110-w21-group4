@@ -44,23 +44,23 @@ describe('Test setPageTitle', () => {
 		MMSS = '10:10';
 	});
 	
-	test('Test "work", return "10:10 Work - Potato Timer"', () => {
+	test('Test "work", return "10:10 Work - "', () => {
 		app.setPhase("work");
-		expect(app.setPageTitle(MMSS)).toBe("10:10 Work - Potato Timer");
+		expect(app.setPageTitle(MMSS)).toBe("10:10 Work - ");
 	});
 
-    test('Test "short break", return "10:10 Break - Potato Timer"', () => {
+    test('Test "short break", return "10:10 Break - "', () => {
 		app.setPhase("short break");
-		expect(app.setPageTitle(MMSS)).toBe("10:10 Break - Potato Timer");
+		expect(app.setPageTitle(MMSS)).toBe("10:10 Break - ");
 	});
 
-    test('Test "long break", return "10:10 Break - Potato Timer"', () => {
+    test('Test "long break", return "10:10 Break - "', () => {
 		app.setPhase("long break");
-		expect(app.setPageTitle(MMSS)).toBe("10:10 Break - Potato Timer");
+		expect(app.setPageTitle(MMSS)).toBe("10:10 Break - ");
 	});
 
-    test('Test "stopped", return "10:10 Stopped - Potato Timer"', () => {
+    test('Test "stopped", return "10:10 Stopped - "', () => {
 		app.setPhase("stopped");
-		expect(app.setPageTitle(MMSS)).toBe("10:10 Stopped - Potato Timer");
+		expect(app.setPageTitle(MMSS)).toBe("10:10 Stopped - ");
 	});
 });
