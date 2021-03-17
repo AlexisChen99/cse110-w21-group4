@@ -13,7 +13,7 @@ function dragElement(elmnt) {
       
   } else {
       /* otherwise, move the DIV from anywhere inside the DIV:*/
-      elmnt.onmousedown = dragMouseDown;
+      elmnt.onmousedown = dragMouseDown; // This line doesn't actually get used?
   }
 
   function dragMouseDown(e) {
