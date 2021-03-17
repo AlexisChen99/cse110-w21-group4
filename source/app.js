@@ -370,41 +370,6 @@ function showPotatoes() {
 }
 
 /**
- * Switches between dancing and still potatoes 
- */
-function toggleDance() {
-    animation = '' + !(animation === 'true');
-    if (animation == 'true') {
-        switchPotatoDance();
-        document.getElementById('animationBtn').innerText = dict['disableAnimation'][lang];
-    } else {
-        switchPotatoStill();
-        document.getElementById('animationBtn').innerText = dict['enableAnimation'][lang];
-    }
-    localStorage.setItem('animation', animation);
-}
-
-/**
- * Makes the src of all the pomotato images a gif
-*/
-function switchPotatoDance() {
-    document.getElementById('cycle0').src = 'img/potato-dance.gif';
-    document.getElementById('cycle1').src = 'img/potato-dance.gif';
-    document.getElementById('cycle2').src = 'img/potato-dance.gif';
-    document.getElementById('cycle3').src = 'img/potato-dance.gif';
-}
-
-/**
- * Makes the src of all the pomotato images a png
- */
-function switchPotatoStill() {
-    document.getElementById('cycle0').src = 'img/pomotato.png';
-    document.getElementById('cycle1').src = 'img/pomotato.png';
-    document.getElementById('cycle2').src = 'img/pomotato.png';
-    document.getElementById('cycle3').src = 'img/pomotato.png';
-}
-
-/**
  * Sets the <title> element for users to see remaining time off-page.
  * 
  * @param {string} MMSS 'MM:SS' form

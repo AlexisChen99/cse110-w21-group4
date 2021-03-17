@@ -10,13 +10,7 @@
     "eslint": "eslint -c .eslintrc.json --ignore-path .lintgitignore ./source --fix",
     "test": "jest --coverage",
     "gendocs": "jsdoc -d ./docs ./source",
-    "cypress:open": "cypress open",
-    "build": "npm run instrument && npm run cp",
-    "preinstrument": "npm run clean",
-    "instrument": "nyc instrument --compact false source build/source",
-    "cp": "mkdir build/source/img && mkdir build/source/audio && cp source/*.css build/source && cp source/img/*.png build/source/img/ && cp source/potato.html build/source && cp source/audio/* build/source/audio/",
-    "clean": "rm -rf build .nyc_output || true",
-    "report:coverage": "nyc report --reporter=html"
+    "cypress:open": "cypress open"
   },
   "repository": {
     "type": "git",

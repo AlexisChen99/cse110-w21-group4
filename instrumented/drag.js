@@ -1,10 +1,10 @@
-function cov_16aqsou0pm() {
-  var path = "C:\\Users\\Hane\\Desktop\\CSE110\\GitHubPages\\GitHubPages\\cse110-w21-group4\\source\\drag.js";
-  var hash = "cb423c16181c7d63e4a5a023b11c34b8c5ba45d5";
+function cov_1tzsba5s22() {
+  var path = "C:\\Users\\Hane\\Desktop\\CSE110\\GitHubPages\\GitHubPages\\myproj\\cse110-w21-group4\\source\\drag.js";
+  var hash = "829f3ef7b917e66a6abb6b04ed6b0c51e969c0c8";
   var global = new Function("return this")();
   var gcv = "__coverage__";
   var coverageData = {
-    path: "C:\\Users\\Hane\\Desktop\\CSE110\\GitHubPages\\GitHubPages\\cse110-w21-group4\\source\\drag.js",
+    path: "C:\\Users\\Hane\\Desktop\\CSE110\\GitHubPages\\GitHubPages\\myproj\\cse110-w21-group4\\source\\drag.js",
     statementMap: {
       "0": {
         start: {
@@ -553,7 +553,7 @@ function cov_16aqsou0pm() {
       "2": [0, 0]
     },
     _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    hash: "cb423c16181c7d63e4a5a023b11c34b8c5ba45d5"
+    hash: "829f3ef7b917e66a6abb6b04ed6b0c51e969c0c8"
   };
   var coverage = global[gcv] || (global[gcv] = {});
 
@@ -564,96 +564,96 @@ function cov_16aqsou0pm() {
   var actualCoverage = coverage[path];
   {
     // @ts-ignore
-    cov_16aqsou0pm = function () {
+    cov_1tzsba5s22 = function () {
       return actualCoverage;
     };
   }
   return actualCoverage;
 }
 
-cov_16aqsou0pm();
-cov_16aqsou0pm().s[0]++;
+cov_1tzsba5s22();
+cov_1tzsba5s22().s[0]++;
 document.addEventListener('DOMContentLoaded', event => {
-  cov_16aqsou0pm().f[0]++;
-  cov_16aqsou0pm().s[1]++;
+  cov_1tzsba5s22().f[0]++;
+  cov_1tzsba5s22().s[1]++;
   dragElement(document.getElementById('settingsMenu'));
-  cov_16aqsou0pm().s[2]++;
+  cov_1tzsba5s22().s[2]++;
   dragElement(document.getElementById('taskMenu'));
 });
 
 function dragElement(elmnt) {
-  cov_16aqsou0pm().f[1]++;
-  var pos1 = (cov_16aqsou0pm().s[3]++, 0),
-      pos2 = (cov_16aqsou0pm().s[4]++, 0),
-      pos3 = (cov_16aqsou0pm().s[5]++, 0),
-      pos4 = (cov_16aqsou0pm().s[6]++, 0);
-  cov_16aqsou0pm().s[7]++;
+  cov_1tzsba5s22().f[1]++;
+  var pos1 = (cov_1tzsba5s22().s[3]++, 0),
+      pos2 = (cov_1tzsba5s22().s[4]++, 0),
+      pos3 = (cov_1tzsba5s22().s[5]++, 0),
+      pos4 = (cov_1tzsba5s22().s[6]++, 0);
+  cov_1tzsba5s22().s[7]++;
 
   if (document.getElementById(elmnt.id + "Header")) {
-    cov_16aqsou0pm().b[0][0]++;
-    cov_16aqsou0pm().s[8]++;
+    cov_1tzsba5s22().b[0][0]++;
+    cov_1tzsba5s22().s[8]++;
 
     /* if present, the header is where you move the DIV from:*/
     elmnt.style.cursor = 'default';
-    cov_16aqsou0pm().s[9]++;
+    cov_1tzsba5s22().s[9]++;
     document.getElementById(elmnt.id + "Header").onmousedown = dragMouseDown;
   } else {
-    cov_16aqsou0pm().b[0][1]++;
-    cov_16aqsou0pm().s[10]++;
+    cov_1tzsba5s22().b[0][1]++;
+    cov_1tzsba5s22().s[10]++;
 
     /* otherwise, move the DIV from anywhere inside the DIV:*/
     elmnt.onmousedown = dragMouseDown;
   }
 
   function dragMouseDown(e) {
-    cov_16aqsou0pm().f[2]++;
-    cov_16aqsou0pm().s[11]++;
-    e = (cov_16aqsou0pm().b[1][0]++, e) || (cov_16aqsou0pm().b[1][1]++, window.event);
-    cov_16aqsou0pm().s[12]++;
+    cov_1tzsba5s22().f[2]++;
+    cov_1tzsba5s22().s[11]++;
+    e = (cov_1tzsba5s22().b[1][0]++, e) || (cov_1tzsba5s22().b[1][1]++, window.event);
+    cov_1tzsba5s22().s[12]++;
     e.preventDefault(); // get the mouse cursor position at startup:
 
-    cov_16aqsou0pm().s[13]++;
+    cov_1tzsba5s22().s[13]++;
     pos3 = e.clientX;
-    cov_16aqsou0pm().s[14]++;
+    cov_1tzsba5s22().s[14]++;
     pos4 = e.clientY;
-    cov_16aqsou0pm().s[15]++;
+    cov_1tzsba5s22().s[15]++;
     document.onmouseup = closeDragElement; // call a function whenever the cursor moves:
 
-    cov_16aqsou0pm().s[16]++;
+    cov_1tzsba5s22().s[16]++;
     document.onmousemove = elementDrag;
-    cov_16aqsou0pm().s[17]++;
+    cov_1tzsba5s22().s[17]++;
     e.target.style.cursor = 'move';
   }
 
   function elementDrag(e) {
-    cov_16aqsou0pm().f[3]++;
-    cov_16aqsou0pm().s[18]++;
-    e = (cov_16aqsou0pm().b[2][0]++, e) || (cov_16aqsou0pm().b[2][1]++, window.event);
-    cov_16aqsou0pm().s[19]++;
+    cov_1tzsba5s22().f[3]++;
+    cov_1tzsba5s22().s[18]++;
+    e = (cov_1tzsba5s22().b[2][0]++, e) || (cov_1tzsba5s22().b[2][1]++, window.event);
+    cov_1tzsba5s22().s[19]++;
     e.preventDefault(); // calculate the new cursor position:
 
-    cov_16aqsou0pm().s[20]++;
+    cov_1tzsba5s22().s[20]++;
     pos1 = pos3 - e.clientX;
-    cov_16aqsou0pm().s[21]++;
+    cov_1tzsba5s22().s[21]++;
     pos2 = pos4 - e.clientY;
-    cov_16aqsou0pm().s[22]++;
+    cov_1tzsba5s22().s[22]++;
     pos3 = e.clientX;
-    cov_16aqsou0pm().s[23]++;
+    cov_1tzsba5s22().s[23]++;
     pos4 = e.clientY; // set the element's new position:
 
-    cov_16aqsou0pm().s[24]++;
+    cov_1tzsba5s22().s[24]++;
     elmnt.style.top = elmnt.offsetTop - pos2 + "px";
-    cov_16aqsou0pm().s[25]++;
+    cov_1tzsba5s22().s[25]++;
     elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
   }
 
   function closeDragElement() {
-    cov_16aqsou0pm().f[4]++;
-    cov_16aqsou0pm().s[26]++;
+    cov_1tzsba5s22().f[4]++;
+    cov_1tzsba5s22().s[26]++;
 
     /* stop moving when mouse button is released:*/
     document.onmouseup = null;
-    cov_16aqsou0pm().s[27]++;
+    cov_1tzsba5s22().s[27]++;
     document.onmousemove = null;
   }
 }
