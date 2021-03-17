@@ -7,3 +7,5 @@
 <a href="https://alexischen99.github.io/cse110-w21-group4/source/potato.html" target="_blank">Link to Potatimer</a>
 
 [Status Video 1](https://www.youtube.com/watch?v=rHYlFTZ3qxw&feature=youtu.be)
+
+[Final Video - Public](https://www.youtube.com/watch?v=GGl0wEsuZuw)
