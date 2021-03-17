@@ -136,7 +136,7 @@ describe('Testing theme change', () => {
     });
 });
 
-/*describe('Testing volume change', () => {
+describe('Testing volume change', () => {
     beforeEach(() => {
         cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
         cy.get("#next").click();
@@ -148,13 +148,52 @@ describe('Testing theme change', () => {
     it('Check general volume change', () => {
         cy.get('#settingsIcon').click();
         cy.get('#volume').clear().type('20{enter}');
+        cy.get("#closeSettings").click();
         cy.getLocalStorage('volume').should('equal', '20');
+    });
+
+    it('Check volume 0', () => {
+        cy.get('#settingsIcon').click();
+        cy.get('#volume').clear().type('0{enter}');
+        cy.get("#closeSettings").click();
+        cy.getLocalStorage('volume').should('equal', '0');
     });
 
     it('Check mute', () => {
         cy.get('#settingsIcon').click();
-        cy.get('#volume').clear().type('0{enter}');
-        cy.getLocalStorage('volume').should('equal', '0');
+        cy.get("#volumeIcon").click();
         cy.get('#volumeIcon').contains('mute');
+        cy.getLocalStorage('volume').should('equal', '0');
     });
-});*/
+});
+
+describe('Testing time change', () => {
+    beforeEach(() => {
+        cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
+        cy.get("#next").click();
+        cy.get("#next").click();
+        cy.get("#next").click();
+        cy.get("#next").click();
+    });
+
+    it('Check general volume change', () => {
+        cy.get('#settingsIcon').click();
+        cy.get('#volume').clear().type('20{enter}');
+        cy.get("#closeSettings").click();
+        cy.getLocalStorage('volume').should('equal', '20');
+    });
+
+    it('Check volume 0', () => {
+        cy.get('#settingsIcon').click();
+        cy.get('#volume').clear().type('0{enter}');
+        cy.get("#closeSettings").click();
+        cy.getLocalStorage('volume').should('equal', '0');
+    });
+
+    it('Check mute', () => {
+        cy.get('#settingsIcon').click();
+        cy.get("#volumeIcon").click();
+        cy.get('#volumeIcon').contains('mute');
+        cy.getLocalStorage('volume').should('equal', '0');
+    });
+});
