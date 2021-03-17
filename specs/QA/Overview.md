@@ -10,4 +10,4 @@ On app.js we have 93.68% statement coverage through Cypress and 5.84% statement 
 
 We have not extensively tested drag.js or lang.js. lang.js is simply a dict, and doesn't serve any direct functionality, so there is nothing to test. drag.js we did attempt to test but our coverage is relatively poor due to a known issue on Cypress's end. Testing dragging and dropping is apparently limited through Cypress, as shown in [this issue](https://github.com/cypress-io/cypress/issues/845). Also, we were able to test that drag and drop actually functions, just specifically not events triggered by the drag+drop.
 
-As a result, we have almost full coverage of all the functionalities in our code. Detailed tests can be found in Jest [here](../../../cse110-w21-group4/source/tests/app.spec.js) and Cypress [here](../../../cse110-w21-group4/cypress/integration/e2e.spec.js).
+As a result, we have almost full coverage of all the functionalities in our code. Detailed tests can be found in Jest [here](../../source/tests/app.spec.js) and Cypress [here](../../cypress/integration/e2e.spec.js).
