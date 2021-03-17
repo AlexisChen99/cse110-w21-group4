@@ -8,4 +8,4 @@
 
 [Status Video 1](https://www.youtube.com/watch?v=rHYlFTZ3qxw&feature=youtu.be)
 
-[Final Video - Public](https://www.youtube.com/watch?v=GGl0wEsuZuw)
+[Final Video - Public](https://www.youtube.com/watch?v=gdThl75jBeM)
