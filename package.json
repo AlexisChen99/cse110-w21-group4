@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AlexisChen99/cse110-w21-group4.git"
+    "url": "git+https://github.com/elc049/cse110-w21-group4.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AlexisChen99/cse110-w21-group4/issues"
+    "url": "https://github.com/elc049/cse110-w21-group4/issues"
   },
-  "homepage": "https://github.com/AlexisChen99/cse110-w21-group4#readme",
+  "homepage": "https://github.com/elc049/cse110-w21-group4#readme",
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.2",
     "cypress": "^6.6.0",

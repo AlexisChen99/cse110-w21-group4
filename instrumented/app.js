@@ -13686,11 +13686,11 @@ function next() {
     if (theme == 'Dark') {
       cov_1kv0dtav1t().b[73][0]++;
       cov_1kv0dtav1t().s[445]++;
-      content.innerHTML = content.innerHTML + '<a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-Light-32px.png alt="GitHub"></a>';
+      content.innerHTML = content.innerHTML + '<a href="https://github.com/elc049/cse110-w21-group4"><img src="img/GitHub-Mark-Light-32px.png alt="GitHub"></a>';
     } else {
       cov_1kv0dtav1t().b[73][1]++;
       cov_1kv0dtav1t().s[446]++;
-      content.innerHTML = content.innerHTML + '<a href="https://github.com/AlexisChen99/cse110-w21-group4"><img src="img/GitHub-Mark-32px.png" alt="GitHub"></a>';
+      content.innerHTML = content.innerHTML + '<a href="https://github.com/elc049/cse110-w21-group4"><img src="img/GitHub-Mark-32px.png" alt="GitHub"></a>';
     }
 
     cov_1kv0dtav1t().s[447]++;
