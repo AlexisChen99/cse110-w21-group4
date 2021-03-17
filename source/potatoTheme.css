@@ -1,6 +1,10 @@
 /*---------------------------------
          Background Display
 ---------------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
 
 body {
     margin: 0;
@@ -48,12 +52,39 @@ p {
     margin-bottom: 0px;
 }
 
+.showing {
+    display: block;
+}
+
 .hidden {
     display: none;
 }
 
-.showing {
-    display: block;
+.opacityShow {
+    opacity: 1;
+}
+
+.opacityHide {
+    /* opacity: 0; */
+    animation: text_hide .3s ease forwards;
+}
+
+.opacityHide:hover, .opacityHide:focus {
+    animation: text_reveal .5s ease forwards;
+}
+noscript {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    z-index: 10000;
+}
+
+noscript div {
+    padding: 20px 40px;
+    font-size: 2rem;
 }
 /*---------------------------------
          Main Page Display
@@ -70,13 +101,14 @@ p {
 }
 
 #title {
+    position: absolute;
     display: block;
-    margin-top: 30px;
+    margin-top: 20px;
     margin-bottom: 18px;
     margin-left: 30px;
     /* text-shadow: 1px 1px 1px #000; */
-    font-family: Georgia,serif;
-    font-size: 20px;
+    font-family: 'Kaushan Script', cursive;
+    font-size: 30px;
     font-variant: small-caps; 
     text-transform: none; 
     font-weight: 100;
@@ -84,33 +116,52 @@ p {
 }
 
 #phaseWrapper {
-    display: flex;
+    display: block;
     justify-content: center;
     width: 100%;
+    margin-top: 60px;
+}
+
+#cycleNum {
+    display: block;
+    margin: auto;
+    font-size: 1.5rem;
 }
 
 #phaseDisplay {
     display: inline-block;
     margin: auto;
-    /* margin: 70px 0px 30px 0px; */
     text-shadow: 1px 1px 1px #000;
-    font-size: 32px;
+    font-size: 40px;
 }
 
 #options {
+    position: absolute;
+    right: 20px;
     display: flex;
     margin-top: 10px;
-    margin-right: 20px;
     float: right;
 }
 #help {
-    font-size: 3rem;
+    font-size: 2rem;
 }
-#settingsIcon {
-    /* position: absolute;
-    top: 3%;
-    right: 5%; */
-    float : right;
+
+#settingsIcon {         
+    width: 64px;
+    height: 64px;
+    background-position: center;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+}
+
+.settingsLight {
+    background-image: url(img/settings.png);
+    background-size: 60%;
+}
+.settingsDark {
+    background-image: url(img/settings-dark.png);
+    background-size: 40%;
 }
 
 @media screen and (max-width: 768px) {
@@ -119,13 +170,10 @@ p {
     }
 }
 
-#settingsIcon:hover {
-    cursor: pointer;
-}
 
 #circleTimer {
-    width: 150px;
-    height: 150px;
+    width: 160px;
+    height: 160px;
     margin-top: 10px;
     margin-right: auto;
     margin-left: auto;
@@ -150,13 +198,19 @@ p {
 }
 
 .circlePotatoBreak {
-    border: 8px solid rgb(134, 130, 120);
-    background-color: rgb(134, 130, 120);
-    box-shadow: 0 0 50px rgb(206, 190, 146),0 0 150px rgb(206, 190, 146);
+    border: 8px solid rgb(223, 223, 182);
+    background-color: rgb(223, 223, 182);
+    box-shadow: 0 0 50px rgb(214, 207, 138),0 0 150px rgb(236, 198, 91);
+}
+
+.circlePotatoBreakAsian {
+    border: 8px solid rgb(248, 205, 111);
+    background-color: rgb(248, 205, 111);
+    box-shadow: 0 0 50px rgb(216, 210, 158),0 0 150px rgb(240, 213, 140);
 }
 
 #timerDisplay {
-    margin:25px auto;
+    margin:31px auto;
     padding: 26px 0px;
     font-size: 40px;
     text-shadow: 1px 1px 1px #000;
@@ -164,37 +218,60 @@ p {
 }
 
 .buttonWrapper {
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .buttonWrapper button {
     display: inline-block;
-    min-width: 150px;
+    min-width: 100px;
     width: fit-content;
-    height: 75px;
+    height: 50px;
     margin: auto;
     white-space: normal;
 }
 
-#reset {
-    display: none;
-}
 #enterTask {
     border-radius: 18px;
 }
 
 .taskContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: inline-block;
+    /* align-items:inherit; */
+}
+
+
+
+@keyframes text_reveal {
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes text_hide {
+    100% {
+        opacity: 0;
+    }
+}
+
+#enterTask {
+    margin-top: 30px;
+    height: 40px;
+    width: 300px;
 }
 
 #taskAdder {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px 0;
+    width: fit-content;
+    height: 52px;
     font-size: 20px;
-    width: 300px;
-    
+}
+
+#notificationBar {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 30px;
+    font-size: 1.3rem;
+    font-weight: 400;
 }
 
 @media screen and (max-width: 479px) {
@@ -209,8 +286,11 @@ p {
         width: fit-content;
     }
     .taskContainer {
+        display: flex;
         width: 100vw;
-        text-align: left;
+        flex-direction: column;
+        align-items: center;
+        
     }
     #enterTask {
         width: 60%;
@@ -221,11 +301,7 @@ p {
     }
 }
 
-input[type="text"] {
-    margin-top: 30px;
-    height:40px;
-    width: 300px;
-}
+
 /*---------------------------------
          Language DropDown
 ---------------------------------*/
@@ -245,24 +321,42 @@ input[type="text"] {
     width: 64px;
     height: 64px;
   }
-  
-  .footer {
-      position: absolute;
-      bottom: 15px;
-      display: flex;
-      justify-content: flex-end;
-      width: 100%;
-  }
 
-  .footer button:hover {
-      background: none;
-  }
+/*--------------------------------
+        Instructions Menu Display
+---------------------------------*/
 
-  .footer a {
-      position: relative;
-      /* margin-left: auto; */
-      margin-right: 50px;
-  }
+#instructionsMenu {
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.3rem;
+    padding: 20px 40px;
+    
+}
+
+#instrTopic {
+    font-size: 1.65rem;
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+#instrContent {
+    font-size: 1.4rem;
+    line-height: 1.5;
+    margin-top: -10px;
+}
+#instrContent a img {
+    margin-top: 10px;
+}
+.leftAlign{
+    text-align: left;
+}
+
+#page {
+    font-size: 1.4rem;
+}
+
 /*---------------------------------
          Settings Menu Display
 ---------------------------------*/
@@ -270,17 +364,20 @@ input[type="text"] {
     position: absolute;
     top: 0%;
     left: 0%;
+    right: 0%;
     overflow: hidden;
     min-height: 200px;
     max-width: 768px;
     border: 5px solid #000;
     border-radius: 50px 50px 50px 50px;
     box-shadow: inset 0 -1px 10px 3px #6d6d6d;
-    font-size: 38px;
-    cursor: move;
+    font-size: 31px;
     z-index: 999;
 }
 
+#settingsMenu {
+    max-width: 380px;
+}
 .taskHelp {
     font-size: 17px;
     margin: 5px 0px;
@@ -293,6 +390,7 @@ input[type="text"] {
     background-image: -webkit-gradient(linear, left bottom, left top, from(#eee), to(#fff));
     background-image: linear-gradient(0deg, #eee, #fff);
 }
+
 
  #settingsMenuHeader {
     padding: 10px;
@@ -337,6 +435,12 @@ input[type="text"] {
     margin-right: 20px;
 }
 
+
+#selectTheme {
+    margin: 0 0; 
+    font-size: 18px;
+}
+
 button {
     margin: 0 10px;
     padding: 10px 15px;
@@ -344,55 +448,64 @@ button {
     border-radius: 50px;
     color: #fff;
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 400;
     cursor: pointer;
 }
 
 .mainButton {
     background-color: #333;
+    font-size: 20px;
+    height: 52px;
+}
+
+#animationBtn {
+    font-size: 18px;
+    margin: auto;
+    margin-top: 20px;
 }
 
 .darkButton {
     background-color: #999;
 }
 
-.textDark {
-    color: #333;
-}
 button:hover {
     background-color: rgb(100, 100, 100);
 }
 
 .userInputContainer {
     margin: 20px 20px 20px 20px;
-    padding-left: 25px;
+    padding-left: 15px;
     padding-right: 15px;
-    padding-bottom: 20px;
-    max-width: 350px;
+    /* max-width: 350px; */
     text-align: right;
 }
 
 .fieldLabel {
-    font-size: 24px;
+    font-size: 21px;
 }
 
 input {
     text-align: center;
-    font-size: 20px;
+    font-size: 18px;
 }
 .customTime {
     width: 60px;
 }
 
+.customVolume {
+    width: 60px;
+}
+
 #volume {
     display: inline-block;
-    width: 75px;
+    /* width: fit-content; */
 }
 
 #volumeIcon {
     display: inline-block;
     width: 40px;
-    margin-right: 20px;
+    margin-left: 11px;
+    margin-right: 10px;
     vertical-align: middle;
     cursor: pointer;
 }
@@ -409,17 +522,14 @@ input {
 
 .userInputContainer p {
     display: inline;
-    margin: 0 -10px;
+    margin: 0 -5px;
+    font-size: 25px;
 }
 
-
 #langContainer button {
-    /* background: none;
-    border: none; */
     padding: 0;
+    margin-bottom: 20px;
     font-size: 0.4em;
-    /* color: black; */
-
 }
 
 /* @media screen and (max-width: 768px) {
@@ -453,7 +563,7 @@ input {
     top: 60px;
     right: auto;
     bottom: auto;
-    padding-left: 20px;
+    padding-left: 10px;
     color: red;
     font-size: 20px;
     font-weight: bold;
@@ -479,15 +589,26 @@ input {
     text-align: left;
     display: flex;
     margin: auto;
-    max-height: 60px;
+    /* border-top: solid 2px; */
+    border-bottom: solid 2px;
+    border-left: solid 4px;
+    border-radius: 10px 0px 0px 10px;
+
 }
 
+.userTask:first-child {
+    border-top: solid 2px;
+}
+
+.userTask:last-child {
+    border-bottom: solid 2px;
+}
 .markCircle {
-    min-width: 30px;
+    min-width: 20px;
     margin-left: 10px;
     display: block;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     cursor: pointer;
     /* background-color: black; */
@@ -508,18 +629,36 @@ input {
 
 .userTask img {
     display: inline-block;
-    height: 30px;
+    height: 25px;
     cursor: pointer;
     margin: 4px;
 }
 
+.userTask .smallIcon img {
+    height: 20px;
+}
 .userTask p {
     display: inline;
     font-size: 25px;
     margin-left: 12px;
     margin-bottom: 15px;
     margin-top: 7px;
+    max-width: 540px;
+    flex-grow: 1;
+    overflow-wrap: break-word;
 }
+
+/* .pinnedTask {
+    border-bottom: 4px solid;
+    border-left: 4px solid;
+    border-radius: 10px 0px 0px 10px;
+} */
+
+/* .pinnedTask:first-child {
+    border-top: 4px solid;
+} */
+
+
 
 @media screen and (max-width: 768px) {
     .tasksTitle {
@@ -534,7 +673,7 @@ input {
 }
 
 #mainTasks {
-    margin: 0 auto;
+    margin: 10px auto;
     max-width: 768px;
     max-height: 28vh;
     overflow-y: scroll;
@@ -598,6 +737,9 @@ input {
     left: 20%;
 }
 
+
+
+
 /* ------------------
  *   ARIA 
  * ---------------- */
@@ -605,6 +747,7 @@ input {
     background: none;
     border: none;
     padding: 0;
+    color: inherit;
 }
 
 .transparent:hover {
@@ -626,32 +769,41 @@ input {
     height: auto;
 }
 
-#ariaCloseTasks {
+.ariaSkipTask {
+    text-decoration: none;
+    color: inherit;
+}
+
+.ariaClose {
     position: absolute;
     left: -10000px;
     top: auto;
+    margin-bottom: 10px;
     width: 1px;
     height: 1px;
     overflow: hidden;
+    border: none;
+    background: none;
 }
 
-#ariaCloseTasks:focus {
+.ariaClose:focus {
     position: static;
     width: auto;
     height: auto;
+    color: inherit;
+    border: none;
 }
 
-.top {
-    position: absolute;
-    left: -10000px;
-    top: auto;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
+.contrastDark {
+    color: white;
 }
 
-.top:focus {
-    position: static;
-    width: auto;
-    height: auto;
+.contrastLight {
+    color: #333;
+}
+
+
+
+#reset {
+    display: none;
 }

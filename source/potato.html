@@ -19,102 +19,103 @@
         <p id="title">Potato Timer</p>
 
         <div id="options">
-            <button class="transparent" aria-label="Open Instructions" onclick="show('instructionsMenu')" id="help">
+            <button class="transparent opacityShow" id="help" onclick="show('instructionsMenu'); next()"
+                aria-label="Open Instructions">
                 ?</button>
-
-            <!-- Instructions Menu -->
-            <div class="menu hidden" id="instructionsMenu">
-                <p>Instructions</p>
-                <p id="instrTopic"> [filler]</p>
-                <p id="instrContent"> [filler content Potato Timer is a Pomodoro timer meant to improve your
-                    productivity by
-                    breaking up your focus for a set "work" time and a following "break" time.
-                    After every four "work" phases, a longer break period happens. To switch to another language
-                    (English,
-                    Chinese, Spanish, Korean), click on the globe icon.]</p>
-                <button class="mainButton" id="back">Back</button>
-                <span id="page">1 of 5</span>
-                <button class="mainButton" id="next">Next</button>
-            </div>
-            <!-- End of Instructions Menu -->
-
-            <button class="transparent" onclick="show('settingsMenu')" >
-                <img src="img/settings.png" alt="Settings" id="settingsIcon">
-            </button>
-
-            <!-- Settings Menu -->
-            <div class="menu hidden" id="settingsMenu">
-                <div class="headerDark" id="settingsMenuHeader"></div>
-                <p id="settingsTitle">Settings</p>
-                <button class="close transparent" id="closeSettings" onclick="hide('settingsMenu')">Close</button>
-                <div id="chooseTheme">
-                    <p style="margin: 0 0; font-size: 18px;" id="selectTheme">Select a Theme</p><br>
-                    <button class="mainButton" id="lightTheme" onclick="changeTheme('Light')">Light</button>
-                    <button class="mainButton" id="darkTheme" onclick="changeTheme('Dark')">Dark</button>
-                    <button class="mainButton" id="potatoTheme" onclick="changeTheme('Potato')">Potato</button>
-                </div>
-
-                <div class="userInputContainer">
-                    <div>
-                        <label for="work" class="fieldLabel" id="workTime">Work Time</label>
-                        <input type="number" class="customTime" id="workMin" value="25" min="0" max="59" maxlength="2">
-                        <p>:</p>
-                        <input type="number" class="customTime" id="workSec" value="00" min="0" max="59" maxlength="2">
-                    </div>
-
-                    <div>
-                        <label for="shortBreak" class="fieldLabel" id="shortTime">Short Break</label>
-                        <input type="number" class="customTime" id="shortMin" value="5" min="0" max="59" maxlength="2">
-                        <p>:</p>
-                        <input type="number" class="customTime" id="shortSec" value="00" min="0" max="59" maxlength="2">
-                    </div>
-
-                    <div>
-                        <label for="longBreak" class="fieldLabel" id="longTime">Long Break</label>
-                        <input type="number" class="customTime" id="longMin" value="25" min="0" max="59" maxlength="2">
-                        <p>:</p>
-                        <input type="number" class="customTime" id="longSec" value="00" min="0" max="59" maxlength="2">
-                    </div>
-                    <div>
-                        <label for="volume" class="fieldLabel" id="volumeLabel">Volume (%)</label>
-                        <input type="number" class="customVolume" id="volume" value="10" min="0" max="100">
-                        <button class="transparent" onclick="toggleMute()">
-                            <img src="img/volume.png" alt="Mute?" id="volumeIcon">
-                        </button>
-                    </div>
-                    <button class="mainButton showing" onclick="toggleDance()">Toggle Dancing</button>
-                </div>
-
-                <span id="langContainer">
-                    <button class="transparent lightThemeText" id="English" onclick="setLang('en')">English</button>
-                    <button class="transparent lightThemeText" id="Spanish" onclick="setLang('es')">Español</button>
-                    <button class="transparent lightThemeText" id="Chinese" onclick="setLang('zh')">中文</button>
-                    <button class="transparent lightThemeText" id="Korean" onclick="setLang('ko')"
-                        onblur="hide('settingsMenu')">한국어</button>
-                </span>
-            </div>
-            <!-- End of Settings Menu -->
+            <button class="settingsLight opacityShow" id="settingsIcon" onclick="show('settingsMenu')"
+                aria-label="Open Settings"></button>
         </div>
 
-
-        <!-- Start of Congrats Screen -->
-
-        <div id="congratsScreen" class = "modal">   
-            <div class="modal-content">
-                <h1>Congratulations!</h1>
-                <p id="congratsText">It took you $pomosDone pomos to complete your task</p>
+        <!-- Instructions Menu -->
+        <div class="menu hidden" id="instructionsMenu">
+            <p id="instrTitle">Instructions</p>
+            <p id="instrTopic"></p>
+            <p class="leftAlign" id="instrContent"></p>
+            <div class="instrNav">
+                <button class="mainButton" id="back" onclick="back()">Back</button>
+                <span id="page"></span>
+                <button class="mainButton" id="next" onclick="next()">Next</button>
             </div>
         </div>
+        <!-- End of Instructions Menu -->
 
-        <!-- End of Congrats Screen -->
+
+        <!-- Settings Menu -->
+        <div class="menu hidden" id="settingsMenu">
+            <div class="headerDark" id="settingsMenuHeader"></div>
+            <p id="settingsTitle">Settings</p>
+            <button class="close transparent" id="closeSettings" onclick="hide('settingsMenu')">Close</button>
+            <div id="chooseTheme">
+                <p id="selectTheme">Select a Theme</p><br>
+                <button class="mainButton" id="lightTheme" onclick="changeTheme('Light')">Light</button>
+                <button class="mainButton" id="darkTheme" onclick="changeTheme('Dark')">Dark</button>
+                <button class="mainButton" id="potatoTheme" onclick="changeTheme('Potato')">Potato</button>
+            </div>
+
+            <div class="userInputContainer">
+                <div>
+                    <label for="work" class="fieldLabel" id="workTime">Work Time</label>
+                    <input type="number" class="customTime" id="workMin" value="25" min="0" max="59" maxlength="2"
+                        onblur="checkValue('workMin')">
+                    <p>:</p>
+                    <input type="number" class="customTime" id="workSec" value="00" min="0" max="59" maxlength="2"
+                        onblur="checkValue('workSec')">
+                </div>
+
+                <div>
+                    <label for="shortBreak" class="fieldLabel" id="shortTime">Short Break</label>
+                    <input type="number" class="customTime" id="shortMin" value="5" min="0" max="59" maxlength="2"
+                        autocomplete="off" onblur="checkValue('shortMin')">
+                    <p>:</p>
+                    <input type="number" class="customTime" id="shortSec" value="00" min="0" max="59" maxlength="2"
+                        autocomplete="off" onblur="checkValue('shortSec')">
+                </div>
+
+                <div>
+                    <label for="longBreak" class="fieldLabel" id="longTime">Long Break</label>
+                    <input type="number" class="customTime" id="longMin" value="25" min="0" max="59" maxlength="2"
+                        autocomplete="off" onblur="checkValue('longMin')">
+                    <p>:</p>
+                    <input type="number" class="customTime" id="longSec" value="00" min="0" max="59" maxlength="2"
+                        autocomplete="off" onblur="checkValue('longSec')">
+                </div>
+
+                <!--
+                <div>
+                    <label for="cycleLength" class="fieldLabel" id="cycleLength">Length of Cycle</label>
+                    <input type="number" class="customTime" id="cycleLength" value="4">
+                    </div>
+                -->
+
+                <div>
+                    <label for="volume" class="fieldLabel" id="volumeTitle">Volume (%)</label>
+                    <input type="number" class="customVolume" id="volume" value="25" min="0" max="100"
+                        autocomplete="off" onblur="checkValue('volume')">
+                    <button class="transparent" onclick="toggleMute()">
+                        <img src="img/volume.png" alt="Mute volume" id="volumeIcon">
+                    </button>
+                </div>
+            </div>
+            <button class="mainButton showing" id="animationBtn" onclick="toggleAnimation()">Disable Potato
+                Animation</button>
+            <span id="langContainer">
+                <button class="transparent lightThemeText" id="English" onclick="setLang('en')">English</button>
+                <button class="transparent lightThemeText" id="Spanish" onclick="setLang('es')">Español</button>
+                <button class="transparent lightThemeText" id="Chinese" onclick="setLang('zh')">中文</button>
+                <button class="transparent lightThemeText" id="Korean" onclick="setLang('ko')">한국어</button>
+            </span>
+            <button class="ariaClose" onclick="hide('settingsMenu')">Close</button>
+        </div>
+        <!-- End of Settings Menu -->
 
         <div id="phaseWrapper">
+            <!-- <p id="cycleNum">1 / 4</p> -->
             <p id="phaseDisplay">Idle</p>
         </div>
 
         <audio id="breakToWorkAudio" src='audio/newPM.mp3'></audio>
         <audio id="workToBreakAudio" src='audio/GenericNotify.mp3'></audio>
-        <audio id="victoryAudio" src = 'audio/Tournament1st.mp3'></audio>
+        <audio id="victoryAudio" src='audio/Tournament1st.mp3'></audio>
 
         <div id="circleTimer">
             <p class="timer" id="timerDisplay">- - : - -</p>
@@ -122,7 +123,20 @@
 
         <div class="buttonWrapper">
             <button class="mainButton" id="start" alt="start" onclick="start()">Start</button>
-            <button class="mainButton" id="taskBtn" onclick="show('taskMenu')">Tasks</button>
+        </div>
+
+        <div id="notificationBar">
+            Welcome Back!
+        </div>
+
+        <div id="mainTasks">
+        </div>
+
+        <div class="taskContainer" id="taskManager">
+            <input class="opacityShow" id="enterTask" type="text" placeholder="Enter a Task To Start" autocomplete="off"
+                required>
+            <button class="mainButton opacityShow" id="taskAdder" onclick="addTask()">Add</button>
+            <button class="mainButton opacityShow" id="taskBtn" onclick="show('taskMenu')">Tasks</button>
         </div>
 
         <!-- Task Menu -->
@@ -131,37 +145,52 @@
             <p id="tasksTitle">Tasks</p>
             <button class="close transparent" id="closeTasks" onclick="hide('taskMenu')">Close</button>
             <button class="close transparent" id="deleteAll" onclick="confirmationPrompt('Delete')">Delete All</button>
-            <p class="taskHelp">Mark a task as complete. Pin a task to the main display. </p>
-            <div id="taskListContainer"> </div>
-            <button id="ariaCloseTasks" onclick="hide('taskMenu')">Close</button>
+            <p class="taskHelp" id="taskHelp">Mark a task as complete. Pin a task to the main display. </p>
+            <div id="taskListContainer">
+            </div>
+            <button class="ariaClose" onclick="hide('taskMenu')">Close</button>
         </div>
 
-        <div class="taskContainer">
-            <input type="text" id="enterTask" placeholder="Enter a Task To Start" autocomplete="off" required>
-            <button class="mainButton" id="taskAdder" onclick="addTask()">Add</button>
-        </div>
-        <div id="mainTasks">
-
-        </div><br>
         <!-- End of content wrapper -->
     </div>
 
     <div class="hidden" id="prompt">
         <div id="confirmMessage">Unexpected Error</div>
         <button class="mainButton" id="confirm">Confirm</button>
-        <button class="mainButton" id="cancel">Cancel</button>
+        <button class="mainButton" id="cancel" onclick="hide('prompt')">Cancel</button>
     </div>
 
-    <img src="img/potato-dance.gif" id="cycle0" class="hidden">
-    <img src="img/potato-dance.gif" id="cycle1" class="hidden">
-    <img src="img/potato-dance.gif" id="cycle2" class="hidden">
-    <img src="img/potato-dance.gif" id="cycle3" class="hidden">
+    <!-- Start of Congrats Screen -->
 
-    <a href="#contentWrapper" class="top">Back to Top</a>
+    <div id="congratsScreen" class="modal hidden">
+        <div class="modalContent" id="congratsContent">
+            <h1 id="congratsTitle">Congratulations!</h1>
+            <ul id="potatoImgs">
+
+            </ul>
+            <p id="congratsText">It took you $pomosDone pomos to complete your task</p>
+            <button class="ariaClose" onclick="hide('congratsScreen')">Close</button>
+        </div>
+    </div>
+
+    <!-- End of Congrats Screen -->
+
+    <img src="img/potato-dance.gif" alt="Dancing Potato" id="cycle0" class="hidden">
+    <img src="img/potato-dance.gif" alt="Dancing Potato" id="cycle1" class="hidden">
+    <img src="img/potato-dance.gif" alt="Dancing Potato" id="cycle2" class="hidden">
+    <img src="img/potato-dance.gif" alt="Dancing Potato" id="cycle3" class="hidden">
+
     <noscript>
         <img src="img/potential-potato-images/d5e1fcfc372db1f0-line-creators-stickers-dancing-potato-example-with-gif-animation.gif"
-            alt="Potato is Sad"> <br>
-        We're sorry, but this website application uses JavaScript to operate the timer.<br>
-        Please enable JavaScript for the best user experience!<br>
+            alt="Sad Potato is Sad" id="sadPotato">
+        <div id="jsDisabled">Oh no! <br>
+            We're sorry, but this website application uses JavaScript to operate the timer.<br>
+            Please enable JavaScript for the best user experience!<br><br>
+            抱歉，改网站使用JavaScript来运行计时器。<br>
+            请启动JavaScript以享受最佳使用感受！<br><br>
+            Lo siento, pero esta aplicación de sitio web utiliza JavaScript para operar el temporizador.<br>
+            ¡Habilite JavaScript para obtener la mejor experiencia de usuario!'<br><br>
+            죄송합니다.이 웹 사이트 응용 프로그램은 JavaScript를 사용하여 타이머를 작동합니다.<br>
+            최상의 사용자 경험을 위해 JavaScript를 활성화하십시오!</div>
     </noscript>
 </body>
