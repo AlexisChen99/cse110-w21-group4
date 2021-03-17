@@ -1,6 +1,8 @@
 # QA/Testing Results
 [app.js Cypress coverage report](../../coverage/lcov-report/app.js.html)  
+![Cypress coverage report](./covapp.png)  
 [drag.js coverage report](../../coverage/lcov-report/drag.js.html)  
+![Cypress coverage report](./covdrag.png)   
 
 ![Cypress coverage report](./res.png)  
 ![Jest coverage report](./jest.png)  

@@ -1,7 +1,7 @@
 //End to End tests, divided by action/task
 describe('Testing task creation', () => {
     beforeEach(() => {
-        cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
+        cy.visit('https://AlexisChen99.github.io/cse110-w21-group4/source/potato.html');
         cy.get("#next").click();
         cy.get("#next").click();
         cy.get("#next").click();
@@ -104,7 +104,7 @@ describe('Testing task creation', () => {
 
 describe('Testing task deletion', () => {
     beforeEach(() => {
-        cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
+        cy.visit('https://AlexisChen99.github.io/cse110-w21-group4/source/potato.html');
         cy.get("#next").click();
         cy.get("#next").click();
         cy.get("#next").click();
@@ -180,7 +180,7 @@ describe('Testing task deletion', () => {
 
 describe('Testing theme change', () => {
     beforeEach(() => {
-        cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
+        cy.visit('https://AlexisChen99.github.io/cse110-w21-group4/source/potato.html');
         cy.get("#next").click();
         cy.get("#next").click();
         cy.get("#next").click();
@@ -234,7 +234,7 @@ describe('Testing theme change', () => {
 
 describe('Testing volume change', () => {
     beforeEach(() => {
-        cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
+        cy.visit('https://AlexisChen99.github.io/cse110-w21-group4/source/potato.html');
         cy.get("#next").click();
         cy.get("#next").click();
         cy.get("#next").click();
@@ -306,7 +306,7 @@ describe('Testing volume change', () => {
 
 describe('Testing time change', () => {
     beforeEach(() => {
-        cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
+        cy.visit('https://AlexisChen99.github.io/cse110-w21-group4/source/potato.html');
         cy.get("#next").click();
         cy.get("#next").click();
         cy.get("#next").click();
@@ -347,7 +347,7 @@ describe('Testing time change', () => {
 
 describe('Testing task pin', () => {
     beforeEach(() => {
-        cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
+        cy.visit('https://AlexisChen99.github.io/cse110-w21-group4/source/potato.html');
         cy.get("#next").click();
         cy.get("#next").click();
         cy.get("#next").click();
@@ -423,7 +423,7 @@ describe('Testing task pin', () => {
 
 describe('Testing task mark', () => {
     beforeEach(() => {
-        cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
+        cy.visit('https://AlexisChen99.github.io/cse110-w21-group4/source/potato.html');
         cy.get("#next").click();
         cy.get("#next").click();
         cy.get("#next").click();
@@ -483,7 +483,7 @@ describe('Testing task mark', () => {
 
 describe('Testing localstorage', () => {
     beforeEach(() => {
-        cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
+        cy.visit('https://AlexisChen99.github.io/cse110-w21-group4/source/potato.html');
         cy.get("#next").click();
         cy.get("#next").click();
         cy.get("#next").click();
@@ -665,7 +665,7 @@ describe('Testing localstorage', () => {
 
 describe('Testing Intro pages', () => {
     it('Navigate through pages on instructions menu', () => {
-        cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
+        cy.visit('https://AlexisChen99.github.io/cse110-w21-group4/source/potato.html');
         cy.get("#next").click();
         cy.get("#next").click();
         cy.get("#next").click(); // Last page when next turns to close
@@ -687,7 +687,7 @@ describe('Testing Intro pages', () => {
 describe('Testing the Timer', () => {
 
     beforeEach(() => {
-        cy.visit('https://alexischen99.github.io/cse110-w21-group4/source/potato.html');
+        cy.visit('https://AlexisChen99.github.io/cse110-w21-group4/source/potato.html');
         cy.get("#next").click();
         cy.get("#next").click();
         cy.get("#next").click();
