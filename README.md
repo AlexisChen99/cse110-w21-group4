@@ -8,6 +8,8 @@
 
 [Status Video 1](https://www.youtube.com/watch?v=rHYlFTZ3qxw&feature=youtu.be)
 
+[Coverage Report](https://github.com/AlexisChen99/cse110-w21-group4/blob/main/specs/QA/Overview.md)
+
 [Final Video - Public](https://www.youtube.com/watch?v=gdThl75jBeM)
 
 [Final Video - Private](https://www.youtube.com/watch?v=zSleTAR-aSI)
