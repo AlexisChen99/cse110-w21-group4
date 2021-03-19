@@ -1,4 +1,6 @@
-# cse110-w21-group4
+# cse110-w21-group4 
+## Potato Timer
+### Alexis Chen, Elizabeth Cho, Kevin Jang, Marco Kuan, Ahmad Milad, Rohan Patel, Miaoqiu Sun, Jessie Zou
 
 <a href="https://www.youtube.com/watch?v=Gd6j-zVnezI&feature=youtu.be" target="_blank">Intro Video</a>
 
@@ -13,3 +15,7 @@
 [Final Video - Public](https://www.youtube.com/watch?v=gdThl75jBeM)
 
 [Final Video - Private](https://www.youtube.com/watch?v=zSleTAR-aSI)
+
+![image](https://user-images.githubusercontent.com/60748722/111731020-d7c84980-882f-11eb-9160-e3d66e82cfd5.png)
+![image](https://user-images.githubusercontent.com/60748722/111731020-d7c84980-882f-11eb-9160-e3d66e82cfd5.png)
+![image](https://user-images.githubusercontent.com/60748722/111731020-d7c84980-882f-11eb-9160-e3d66e82cfd5.png)
