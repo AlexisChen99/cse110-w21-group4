@@ -6,6 +6,8 @@ See C4 diagrams listed [here](https://github.com/AlexisChen99/cse110-w21-group4/
 
 Just go to the website <a href="https://alexischen99.github.io/cse110-w21-group4/source/potato.html" target="_blank">here</a>
 
+If you want to run it locally just open potato.html in a vscode live server
+
 ### Explanation of code layout
 
 drag.js contains some code to allow us to drag our menus
