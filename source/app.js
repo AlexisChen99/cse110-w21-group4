@@ -1,11 +1,12 @@
-/**
+/* global dict:readonly */
+/*
  * Audio
  * newPM is a whistle
  * GenericNotify is a chime (light/dark theme)
  * tournament is clapping (congrats)
  * lowTime is a low bell
  */
-/**
+/*
  * Phases: idle, work, short break, long break (lowercase)
  * 
  * i = idle, W = work, b = short break, B = long break
@@ -30,7 +31,6 @@ let volume = 25;
 let theme;                  // Potato, Dark, Light, undefined (Capitalized)
 let mute = false;           // whether the volume is muted
 let animation = true;           // show dancing potatoes or still potatoes
-let volumeInput;            // the volume input
 
 const MAX_POTATOES_COMPLETED = 15;
 /**
@@ -95,14 +95,14 @@ function playAudio(id) {
     audioObj.play();
 }
 
-/**
- * Flips the value of mute from string 'true' or 'false'.
- */
-function toggleMute() {
-    mute = '' + !(mute === 'true');
-    changeMuteIcon();
-    window.localStorage.setItem('mute', mute);
-}
+// /**
+//  * Flips the value of mute from string 'true' or 'false'.
+//  */
+// function toggleMute() {
+//     mute = '' + !(mute === 'true');
+//     changeMuteIcon();
+//     window.localStorage.setItem('mute', mute);
+// }
 
 /**
  * Changes the icon and ARIA of the mute volume.
@@ -126,21 +126,21 @@ function changeMuteIcon() {
     }
 }
 
-/**
- * Disables or enables the dancing potato animation. 
- * @returns Flag if animations are turned on or off
- */
-function toggleAnimation() {
-    animation = '' + !(animation === 'true');
-    if (animation == 'true') {
-        document.getElementById('animationBtn').innerText = dict['disableAnimation'][lang];
-    } else {
-        hidePotatoes();
-        document.getElementById('animationBtn').innerText = dict['enableAnimation'][lang];
-    }
-    localStorage.setItem('animation', animation);
-    return animation;
-}
+// /**
+//  * Disables or enables the dancing potato animation. 
+//  * @returns Flag if animations are turned on or off
+//  */
+// function toggleAnimation() {
+//     animation = '' + !(animation === 'true');
+//     if (animation == 'true') {
+//         document.getElementById('animationBtn').innerText = dict['disableAnimation'][lang];
+//     } else {
+//         hidePotatoes();
+//         document.getElementById('animationBtn').innerText = dict['enableAnimation'][lang];
+//     }
+//     localStorage.setItem('animation', animation);
+//     return animation;
+// }
 
 /**
  * Sets the input times when the cycle isn't in progress.
@@ -154,24 +154,24 @@ function setInputTimes(phase) {
     return (+minutes) * 60 + (+seconds);
 }
 
-/**
- * Checks each input after user leaves the input to see if they entered a number
- * beyond the min and max. If so, change the overflowed number to min/max.
- * Locally stores every input, so each place that uses this should take from local storage.
- * @param {number} input 
- */
-function checkValue(input) {
-    let inputValue = document.getElementById(input).value;
-    if (inputValue < 0) {
-        inputValue = 0;
-    } else if (input == 'volume' && inputValue > 100) {
-        inputValue = 100;
-    } else if (input != 'volume' && inputValue >= 60) {
-        inputValue = 59;
-    }
-    document.getElementById(input).value = inputValue;
-    localStorage.setItem(input, inputValue);
-}
+// /**
+//  * Checks each input after user leaves the input to see if they entered a number
+//  * beyond the min and max. If so, change the overflowed number to min/max.
+//  * Locally stores every input, so each place that uses this should take from local storage.
+//  * @param {number} input 
+//  */
+// function checkValue(input) {
+//     let inputValue = document.getElementById(input).value;
+//     if (inputValue < 0) {
+//         inputValue = 0;
+//     } else if (input == 'volume' && inputValue > 100) {
+//         inputValue = 100;
+//     } else if (input != 'volume' && inputValue >= 60) {
+//         inputValue = 59;
+//     }
+//     document.getElementById(input).value = inputValue;
+//     localStorage.setItem(input, inputValue);
+// }
 
 /**
  * Precondition: there must be at least one task in order to start the timer.
@@ -382,7 +382,7 @@ function showPotatoes() {
 }
 
 /**
- * Sets the <title> element for users to see remaining time off-page.
+ * Sets the title element for users to see remaining time off-page.
  * 
  * @param {string} MMSS 'MM:SS' form
  * @return {string} New page title

@@ -26,7 +26,7 @@ app.js contains the bulk of the code required for the Potato Timer. The top of t
 1. load event listeners on page load
 2. Settings Functions
     - mute functions
-    - funtions to control phase lengths
+    - functions to control phase lengths
     - function to toggle animations
 3. functions related to starting the timer and changing the phase of the timer
 4. functions related to the congrats screen
