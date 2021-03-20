@@ -1,4 +1,11 @@
 /**
+ * Audio
+ * newPM is a whistle
+ * GenericNotify is a chime (light/dark theme)
+ * tournament is clapping (congrats)
+ * lowTime is a low bell
+ */
+/**
  * Phases: idle, work, short break, long break (lowercase)
  * 
  * i = idle, W = work, b = short break, B = long break
@@ -27,10 +34,11 @@ let volumeInput;            // the volume input
 
 const MAX_POTATOES_COMPLETED = 15;
 /**
- * newPM is a whistle
- * GenericNotify is a chime (light/dark theme)
- * tournament is clapping (congrats)
- * lowTime is a low bell
+ * Adds event listeners to the congratulations screen so a user can click anywhere outside the screen
+ * To close it.
+ * Loads the user's locally saved theme and language.
+ * If it is the user's first time, the instructions menu will automatically show up.
+ * Otherwise, the user's tasks and saved settings will be loaded from local storage.
  */
 window.onload = function () {
     let congrats = document.getElementById('congratsScreen');
@@ -72,8 +80,7 @@ window.onload = function () {
 
 /**
  * Play the audio from break to work
- * id:   'breakToWorkAudio',         'workToBreakAudio'
- *      ,'victoryAudio'
+ * 'breakToWorkAudio', 'workToBreakAudio', 'victoryAudio'
  * 
  * @param {string} id The audio block involved with the sound called
  */
@@ -167,8 +174,13 @@ function checkValue(input) {
 }
 
 /**
+ * Precondition: there must be at least one task in order to start the timer.
  * Starts the timer and decrements the timer's MM:SS every second.
- * If the timer was stopped and resumed, the input times are not modified.
+ * Will save the settings after every time the start button is pressed and hides the 
+ * options to give the user a more focused screen.
+ * After every work phase, the timer will switch to displaying the break phase and its time.
+ * If the user completes all of their tasks while the timer is running, 
+ * then the timer stops and a congratulations screen is shown.
  */
 function start() {
     if (taskCount == 0) {
@@ -242,7 +254,7 @@ function start() {
  * Converts the seconds in the remaining time to the format {min}:{sec}
  * MM:SS
  * 
- * @param {time of the webapp} secondsRemaining 
+ * @param {string} secondsRemaining 
  */
 function convertSeconds(secondsRemaining) {
     minutes = Math.floor(secondsRemaining / 60);
@@ -311,7 +323,7 @@ function updatePhase() {
 
 /**
  * Checks what the current timer state is from 
- * 'work', 'short break', 'long break', 'stopped'
+ * 'work', 'short break', or 'long break'
  * to know what the timer should start counting down with.
  * 
  * @return {number} The time remaining for the current timer state.
@@ -324,7 +336,7 @@ function setTimeRemaining() {
 
 /**
  *  Appends a pomotato to the congrats screen
- *  for each pomo done and displays the congrats screen
+ *  for each pomo done and displays the congrats screen.
  */
 function displayCongrats() {
     document.getElementById('potatoImgs').innerHTML = '';
@@ -353,7 +365,7 @@ function displayCongrats() {
 }
 
 /** 
- * hides all of the dancing potato gifs 
+ * Hides all of the dancing potato gifs.
  */
 function hidePotatoes() {
     document.getElementById('cycle0').style.display = 'none';
@@ -363,7 +375,7 @@ function hidePotatoes() {
 }
 
 /**
- *   Shows a number of dancing potatoe gives based on the pomosDone 
+ * Shows a number of dancing potatoes based on the pomosDone.
  */
 function showPotatoes() {
     document.getElementById('cycle' + pomosDone % 4).style.display = 'inline';
@@ -766,8 +778,9 @@ function deleteAllTasks() {
 }
 
 /**
- * If task 1 gets deleted, no change
- * @param {*} uniqueID 
+ * @event deleteTask() 
+ * Updates all userTasks in the task list so their ARIA skip links will link
+ * To the next task based on the next task's ID.
  */
 function setARIASkip() {
     let taskListContainer = document.getElementById('taskListContainer');
@@ -779,6 +792,11 @@ function setARIASkip() {
     }
 }
 
+/**
+ * @event unpinTask()
+ * Updates all userTasks in the main task list so their ARIA skip links will link
+ * To the next task based on the next task's ID.
+ */
 function setPinnedSkip() {
     let mainTasks = document.getElementById('mainTasks');
     let pinnedTaskList = mainTasks.children;
@@ -810,7 +828,6 @@ function confirmationPrompt(action) {
 
 /**
  * Shows an element by changing its display to block.
- * 
  * @param {string} id The id of the element to show.
  */
 function show(id) {
@@ -833,8 +850,10 @@ function hide(id) {
     elem.classList.replace('showing', 'hidden');
 }
 
-/** 
- * Shows the various options and buttons available to the user
+/**
+ * @event stop() 
+ * Shows the various options and buttons available to the user.
+ * Triggers when a user presses the stop button or reaches the congrats screen.
  */
 function showOptions() {
     document.getElementById('help').classList.replace('opacityHide', 'opacityShow');
@@ -852,7 +871,9 @@ function showOptions() {
 }
 
 /**
- * Hides the various options and buttons available to the user
+ * @event start()
+ * Hides the various options and buttons available to the user.
+ * Triggers when a user clicks the start button.
  */
 function hideOptions() {
     document.getElementById('help').classList.replace('opacityShow', 'opacityHide');
@@ -872,7 +893,6 @@ function hideOptions() {
 var page = 0;
 /**
  * Goes to the previous page of the instructions menu
- * @returns none
  */
 function back() {
     if (page <= 1) {
@@ -893,7 +913,6 @@ function back() {
 
 /**
  * Goes to the next page of the instructions menu
- * @returns none
  */
 function next() {
     document.getElementById('next').innerHTML = dict['next'][lang];
@@ -923,7 +942,7 @@ function next() {
 }
 /**
  * Creates a notification for the user based on what action the user just did
- * @param {*} action the action the user did
+ * @param {string} action the action the user did
  * @returns  the action the user did
  */
 function notifyUser(action) {
@@ -937,7 +956,7 @@ function notifyUser(action) {
 
 
 /** 
- * Save user's last theme and settings selected locally 
+ * Loads a user's last theme and settings selected locally.
  */
 function loadTheme() {
     switch (window.localStorage.getItem('theme')) {
@@ -957,10 +976,9 @@ function loadTheme() {
 }
 
 /**
- * Changes the theme.
- * 
- * @event loadTheme() When the website is loaded.
- * @event button    When the user selects a theme.
+ * Changes the theme and stores the new theme locally.
+ * @event loadTheme()
+ * @event button
  * @param {string} newTheme The theme to change to.
  */
 function changeTheme(newTheme) {
@@ -1101,8 +1119,9 @@ function changeTheme(newTheme) {
 }
 
 /**
- *  Changes the chosen language of Potato Timer
- * @param {*} selectedLang the language the user wishes to see potatotimer in
+ * @event button
+ * Changes the chosen language of Potato Timer
+ * @param {string} selectedLang the language the user wishes to see potatotimer in
  */
 function setLang(selectedLang) {
     window.localStorage.setItem('lang', selectedLang);
@@ -1110,7 +1129,9 @@ function setLang(selectedLang) {
 }
 
 /**
- * Changes all of the elements of the DOM into the proper language
+ * Changes all of the elements of the DOM into the proper language.
+ * Stores the new language in local storage.
+ * The default language is English. 
  */
 function loadLang() {
     let savedLang = window.localStorage.getItem('lang');
@@ -1191,8 +1212,7 @@ function loadLang() {
 }
 
 /**
- * Loads the tasks from local storage and creates them again
- * @returns 
+ * Loads the tasks from local storage and creates them again.
  */
 function loadTasks() {
     let savedTasks = JSON.parse(localStorage.getItem('savedTasks'));
@@ -1234,7 +1254,9 @@ function loadSettings() {
 }
 
 /**
- * Stores all of the current settings into localStorage
+ * @event closeSettings The close button(s) on settings is pressed.
+ * @event start() 
+ * Stores all of the current settings into localStorage.
  */
 function saveSettings() {
     //timer phase settings
@@ -1252,8 +1274,8 @@ function saveSettings() {
 }   
 
 /**
- * Manually sets the phase--for testing.
- * 
+ * (For Testing)
+ * Manually sets the phase. 
  * @param {string} newPhase The phase to change to.
  */
 function setPhase(newPhase) {
