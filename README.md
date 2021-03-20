@@ -12,6 +12,8 @@
 
 [Coverage Report](https://github.com/AlexisChen99/cse110-w21-group4/blob/main/specs/QA/Overview.md)
 
+[Engineering Doc](https://github.com/AlexisChen99/cse110-w21-group4/blob/main/specs/engineering%20doc.md)
+
 [Final Video - Public](https://www.youtube.com/watch?v=gdThl75jBeM)
 
 [Final Video - Private](https://www.youtube.com/watch?v=zSleTAR-aSI)
