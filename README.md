@@ -11,9 +11,9 @@
 
 [Engineering Doc](https://github.com/AlexisChen99/cse110-w21-group4/blob/main/specs/engineering%20doc.md)
 
-<a href="https://github.com/AlexisChen99/cse110-w21-group4/blob/main/docs/JSDoc_%20Source_%20app.js.pdf">JSDoc: app.js</a>
+[JSDoc: app.js](https://alexischen99.github.io/cse110-w21-group4/docs/app.js.html) [(pdf)](https://github.com/AlexisChen99/cse110-w21-group4/blob/main/docs/JSDoc_%20Source_%20app.js.pdf)
 
-<a href="https://github.com/AlexisChen99/cse110-w21-group4/blob/main/docs/JSDoc_%20Global.pdf">JSDoc: method descriptions</a>
+[JSDoc: method descriptions](https://alexischen99.github.io/cse110-w21-group4/docs/global.html) [(pdf)](https://github.com/AlexisChen99/cse110-w21-group4/blob/main/docs/JSDoc_%20Global.pdf)
 
 [Coverage Report](https://github.com/AlexisChen99/cse110-w21-group4/blob/main/specs/QA/Overview.md)
 
