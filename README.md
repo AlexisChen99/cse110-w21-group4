@@ -11,6 +11,10 @@
 
 [Engineering Doc](https://github.com/AlexisChen99/cse110-w21-group4/blob/main/specs/engineering%20doc.md)
 
+<a href="https://github.com/AlexisChen99/cse110-w21-group4/blob/main/docs/JSDoc_%20Source_%20app.js.pdf">JSDoc: app.js</a>
+
+<a href="https://github.com/AlexisChen99/cse110-w21-group4/blob/main/docs/JSDoc_%20Global.pdf">JSDoc: method descriptions</a>
+
 [Coverage Report](https://github.com/AlexisChen99/cse110-w21-group4/blob/main/specs/QA/Overview.md)
 
 <a href="https://miro.com/app/board/o9J_lX_m1Ts=/" target="_blank">Planning and Roadmap</a>
