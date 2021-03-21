@@ -1,7 +1,9 @@
 # QA/Testing Results
-[app.js Cypress coverage report](../../coverage/lcov-report/app.js.html)  
+[app.js Cypress coverage report](https://alexischen99.github.io/cse110-w21-group4/coverage/lcov-report/app.js.html) [(code)](../../coverage/lcov-report/app.js.html) 
+
 ![Cypress coverage report](./covapp.png)  
-[drag.js coverage report](../../coverage/lcov-report/drag.js.html)  
+
+[drag.js coverage report](https://alexischen99.github.io/cse110-w21-group4/coverage/lcov-report/drag.js.html)[(code)](../../coverage/lcov-report/drag.js.html)  
 ![Cypress coverage report](./covdrag.png)   
 
 ![Cypress coverage report](./res.png)  
