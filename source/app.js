@@ -861,6 +861,7 @@ function showOptions() {
     document.getElementById('enterTask').classList.replace('opacityHide', 'opacityShow');
     document.getElementById('taskAdder').classList.replace('opacityHide', 'opacityShow');
     document.getElementById('taskBtn').classList.replace('opacityHide', 'opacityShow');
+    document.getElementById('title').classList.replace('opacityHide', 'opacityShow');
 
     // let options = document.getElementsByClassName('opacityHide');
     // for(let i = 0; i < options.length; i++) {
@@ -881,6 +882,7 @@ function hideOptions() {
     document.getElementById('enterTask').classList.replace('opacityShow', 'opacityHide');
     document.getElementById('taskAdder').classList.replace('opacityShow', 'opacityHide');
     document.getElementById('taskBtn').classList.replace('opacityShow', 'opacityHide');
+    document.getElementById('title').classList.replace('opacityShow', 'opacityHide');
     // let options = document.getElementsByClassName('opacityShow');
     // for(let i = 0; i < options.length; i++) {
     //     console.log(options);
